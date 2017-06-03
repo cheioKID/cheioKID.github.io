@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>hallo</title>
-  </head>
-
-  <body>
-	  hallo ich bin cheio
-  </body>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>hallo</title>
+		<style type="text/css">
+			body{
+				background-color: SeaGreen;
+			}			
+		</style>
+		<script type="text/javascript">
+			window.onload = function() {
+				arrival();
+				function randwidth() {
+					return Math.round(Math.random()*40);
+				}
+				function randx() {
+					return Math.round(Math.random()*document.body.clientWidth);
+				}
+				function randopacity() {
+					return Math.round(Math.random()*10)/10;
+				}
+				function arrival() {
+					var x = randx();
+					var y = 0;
+					var m = document.createElement("img");
+					m.src = "flake.png";
+					m.width = randwidth().toString();
+					m.style.opacity = randopacity().toString();
+					m.style.position = "absolute";
+					m.style.left = x + "px";
+					document.body.appendChild(m);
+					setInterval(function() {
+						arrival();
+					},2000);
+				}
+			}
+		</script>
+					
+		<script type="text/javascript">
+		    	window.onload = function() {
+	    			setInterval(function() {
+	    				setClock();
+	    				if(savem == 00 && saves <= 15) {
+						document.getElementById("clock").style.fontSize = "50px";
+						document.getElementById("clock").style.color = "DarkSeaGreen";
+	    				}
+	    				else {
+		    				document.getElementById("clock").style.fontSize = "37px";
+						document.getElementById("clock").style.color = "Azure";
+		    			}
+		    		}, 1000);
+		    	}
+		    	var savem;
+		    	var saves;
+		    	function setClock() {
+		    		var clock = new Date();
+		    		var hours = clock.getHours();
+		    		var minutes = clock.getMinutes(); savem = minutes;
+		    		var seconds = clock.getSeconds(); saves = seconds;
+		    		if(hours == 0) hours = 12;
+		    		else if(hours <= 9) hours = "0" + hours;
+		    		if(minutes <= 9) minutes = "0" + minutes;
+		    		if(seconds <= 9) seconds = "0" + seconds;
+		    		document.getElementById("clock").innerHTML = hours + ":" + minutes + ":" + seconds;	
+		    	}
+		</script>
+			
+	</head>
+	<body background='hhh.jpg'>
+		<div id="clock" style='text-align:center;'></div>
+	</body>
 </html>
