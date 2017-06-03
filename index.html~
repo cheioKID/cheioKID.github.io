@@ -71,7 +71,7 @@
 		<div id='edit'>
 			<form action='' method='post'>
 				<center>
-					<textarea id='ta' name='sometext' placehoder='you can text here' autofocus >
+					<textarea id='ta' name='sometext' cols='100' rows='10' placehoder='you can text here' autofocus >
 					</textarea>
 				</center>
 			</form>
