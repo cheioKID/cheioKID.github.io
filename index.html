@@ -6,36 +6,35 @@
 		<style type="text/css">
 			body{
 				background-color: SeaGreen;
-			}			
-		</style>
-		<script type="text/javascript">
-			window.onload = function() {
-				arrival();
-				function randwidth() {
-					return Math.round(Math.random()*40);
-				}
-				function randx() {
-					return Math.round(Math.random()*document.body.clientWidth);
-				}
-				function randopacity() {
-					return Math.round(Math.random()*10)/10;
-				}
-				function arrival() {
-					var x = randx();
-					var y = 0;
-					var m = document.createElement("img");
-					m.src = "flake.png";
-					m.width = randwidth().toString();
-					m.style.opacity = randopacity().toString();
-					m.style.position = "absolute";
-					m.style.left = x + "px";
-					document.body.appendChild(m);
-					setInterval(function() {
-						arrival();
-					},2000);
-				}
 			}
-		</script>
+			#clock{
+				height:50px;
+				text-align:center;
+			}
+			#ta{
+				position:relative;
+				top:77px;
+				opacity:0.7;
+				box-shadow: rgba(27, 31, 35, 0.075) 0px 1px 2px 0px inset;
+				color: Black;
+				background-color: LightGrey;
+				font-family: -apple-system,BlinkMacSystemFont,monaco,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+				font-size: 23px;
+				padding: 8px;
+				font-weight: 400;
+				height: 473px;
+				width: 682px;
+				max-width: 100%;
+				min-height: 373px;
+				border:none;
+				font-synthesis: weight style;
+				overflow: auto;
+				overflow-wrap: break-word;
+				resize: vertical;
+				vertical-align: middle;
+
+}							
+		</style>		
 					
 		<script type="text/javascript">
 		    	window.onload = function() {
@@ -68,6 +67,14 @@
 			
 	</head>
 	<body background='hhh.jpg'>
-		<div id="clock" style='text-align:center;'></div>
+		<div id="clock"></div>
+		<div id='edit'>
+			<form action='' method='post'>
+				<center>
+					<textarea id='ta' name='sometext' cols='100' rows='10' placehoder='you can text here' autofocus >
+					</textarea>
+				</center>
+			</form>
+		</div>
 	</body>
 </html>
