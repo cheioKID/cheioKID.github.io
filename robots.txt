@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://cheioKID.github.io/sitemap.xml
