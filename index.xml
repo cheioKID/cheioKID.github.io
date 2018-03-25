@@ -35,6 +35,95 @@
     </item>
     
     <item>
+      <title>Deploy Hugo on github.io</title>
+      <link>https://cheioKID.github.io/post/note/deploy-hugo/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/deploy-hugo/</guid>
+      
+        <description>&lt;p&gt;Finally it works!&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the steps&lt;/p&gt;
+
+&lt;p&gt;###generate new blogs&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo new site blogs
+cd blogs
+git init
+git remote add origin git@github.com:cheioKID/Blogs.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###change the baseURL to github.io&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###apple the theme&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane
+cp -r themes/jane/exampleSite/content ./
+cp themes/jane/exampleSite/config.toml ./
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###add markdown files
+with head like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+title: &amp;quot;For example&amp;quot;
+date: 2018-3-25
+#lastmod: 2017-08-31T15:43:48+08:00
+draft: false
+tags: [&amp;quot;preview&amp;quot;, &amp;quot;English&amp;quot;, &amp;quot;tag-2&amp;quot;]
+categories: [&amp;quot;English&amp;quot;, &amp;quot;index&amp;quot;]
+author: &amp;quot;cheio&amp;quot;
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+date: 2018-03-22
+title: &amp;quot;example&amp;quot;
+tags:
+    - hello
+    - goodbye
+categories:
+    - foo
+comment: true
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###push to remote&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git add .
+git commit -m &amp;quot;hello&amp;quot;
+git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###add submodule&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -f -b master https://github.com/cheioKID/cheioKID.github.io.git public
+git add .
+git commit -m &amp;quot;Initial commit&amp;quot;
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;if &lt;code&gt;&#39;public&#39; already exists and is not a valid git repo&lt;/code&gt; is arised, try &lt;code&gt;rm -rf public&lt;/code&gt; and &lt;code&gt;git rm -r --cached public/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;###push github.io&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo --cleanDestinationDir
+cd public
+git add .
+git commit -m &amp;quot;Build website&amp;quot;
+git push origin master
+cd ..
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>循环比赛</title>
       <link>https://cheioKID.github.io/post/algorithm/cycling-competition/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>

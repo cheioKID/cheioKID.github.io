@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Note on hello goodbye</title>
+    <link>https://cheioKID.github.io/tags/note/</link>
+    <description>Recent content in Note on hello goodbye</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/note/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deploy Hugo on github.io</title>
+      <link>https://cheioKID.github.io/post/note/deploy-hugo/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/deploy-hugo/</guid>
+      <description>Finally it works!
+Here&amp;rsquo;s the steps
+###generate new blogs
+hugo new site blogs cd blogs git init git remote add origin git@github.com:cheioKID/Blogs.git  ###change the baseURL to github.io
+baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;  ###apple the theme
+git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane cp -r themes/jane/exampleSite/content ./ cp themes/jane/exampleSite/config.toml ./  ###add markdown files with head like this
+--- title: &amp;quot;For example&amp;quot; date: 2018-3-25 #lastmod: 2017-08-31T15:43:48+08:00 draft: false tags: [&amp;quot;preview&amp;quot;, &amp;quot;English&amp;quot;, &amp;quot;tag-2&amp;quot;] categories: [&amp;quot;English&amp;quot;, &amp;quot;index&amp;quot;] author: &amp;quot;cheio&amp;quot; ---  or</description>
+    </item>
+    
+  </channel>
+</rss>
