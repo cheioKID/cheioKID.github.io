@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Divide and Conquer on hello goodbye</title>
+    <title>Divide and Conquer on cheio</title>
     <link>https://cheioKID.github.io/tags/divide-and-conquer/</link>
-    <description>Recent content in Divide and Conquer on hello goodbye</description>
+    <description>Recent content in Divide and Conquer on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>循环比赛</title>
+      <title>Cycling competition</title>
       <link>https://cheioKID.github.io/post/algorithm/cycling-competition/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/algorithm/cycling-competition/</guid>
-      <description>循环比赛 Cycling competition 描述 设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛</description>
+      <description>Cycling competition 循环比赛 描述 设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛</description>
     </item>
     
   </channel>

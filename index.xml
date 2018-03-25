@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>hello goodbye</title>
+    <title>cheio</title>
     <link>https://cheioKID.github.io/</link>
-    <description>Recent content on hello goodbye</description>
+    <description>Recent content on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 20 Aug 2017 21:38:52 +0800</lastBuildDate>
@@ -35,199 +35,7 @@
     </item>
     
     <item>
-      <title>Deploy Hugo on github.io</title>
-      <link>https://cheioKID.github.io/post/note/deploy-hugo/</link>
-      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/note/deploy-hugo/</guid>
-      
-        <description>
-
-&lt;p&gt;Finally it works!&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s the steps&lt;/p&gt;
-
-&lt;h2 id=&#34;generate-new-blogs&#34;&gt;generate new blogs&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo new site blogs
-cd blogs
-git init
-git remote add origin git@github.com:cheioKID/Blogs.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;change-the-baseurl-to-github-io&#34;&gt;change the baseURL to github.io&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;apple-the-theme&#34;&gt;apple the theme&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane
-cp -r themes/jane/exampleSite/content ./
-cp themes/jane/exampleSite/config.toml ./
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;add-markdown-files&#34;&gt;add markdown files&lt;/h2&gt;
-
-&lt;p&gt;with head like this&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
-title: &amp;quot;For example&amp;quot;
-date: 2018-3-25
-#lastmod: 2017-08-31T15:43:48+08:00
-draft: false
-tags: [&amp;quot;preview&amp;quot;, &amp;quot;English&amp;quot;, &amp;quot;tag-2&amp;quot;]
-categories: [&amp;quot;English&amp;quot;, &amp;quot;index&amp;quot;]
-author: &amp;quot;cheio&amp;quot;
----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;or&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
-date: 2018-03-22
-title: &amp;quot;example&amp;quot;
-tags:
-    - hello
-    - goodbye
-categories:
-    - foo
-comment: true
----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;push-to-remote&#34;&gt;push to remote&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git add .
-git commit -m &amp;quot;hello&amp;quot;
-git push origin master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;add-submodule&#34;&gt;add submodule&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -f -b master https://github.com/cheioKID/cheioKID.github.io.git public
-git add .
-git commit -m &amp;quot;Initial commit&amp;quot;
-git push -u origin master
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;if &lt;code&gt;&#39;public&#39; already exists and is not a valid git repo&lt;/code&gt; is arised, try &lt;code&gt;rm -rf public&lt;/code&gt; and &lt;code&gt;git rm -r --cached public/&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;push-github-io&#34;&gt;push github.io&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo --cleanDestinationDir
-cd public
-git add .
-git commit -m &amp;quot;Build website&amp;quot;
-git push origin master
-cd ..
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>循环比赛</title>
-      <link>https://cheioKID.github.io/post/algorithm/cycling-competition/</link>
-      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/algorithm/cycling-competition/</guid>
-      
-        <description>
-
-&lt;h1 id=&#34;循环比赛&#34;&gt;循环比赛&lt;/h1&gt;
-
-&lt;h2 id=&#34;cycling-competition&#34;&gt;Cycling competition&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;描述&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛共进行N-1天，要求每天没有选手轮空。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;输入&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;M&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;输出&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;表格形式的比赛安排表&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;样例输入&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;  3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;样例输出&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;  1 2 3 4 5 6 7 8 
-  2 1 4 3 6 5 8 7
-  3 4 1 2 7 8 5 6
-  4 3 2 1 8 7 6 5
-  5 6 7 8 1 2 3 4
-  6 5 8 7 2 1 4 3
-  7 8 5 6 3 4 1 2
-  8 7 6 5 4 3 2 1
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;​&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;提示&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;M的大小不会超过8&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;#include &amp;lt;iostream&amp;gt;
-using namespace std;
-int table[256][256]={0};
-void match(int n) {
-    int size=1&amp;lt;&amp;lt;n;
-    int half=size/2;
-    if(n==1) {
-        table[0][0]=1;
-        table[0][1]=2;
-        table[1][0]=2;
-        table[1][1]=1;
-    } else {
-        match(n-1);
-        for (int i=0; i&amp;lt;half; i++) {
-            for (int j=0; j&amp;lt;half; j++) {
-                table[half+i][half+j]=table[i][j];
-                table[i][half+j]=table[i][j]+half;
-                table[i+half][j]=table[i][j]+half;
-            }
-        }
-    }
-}
-int main() {
-    int n;
-    cin&amp;gt;&amp;gt;n;
-    int size=1&amp;lt;&amp;lt;n;
-    match(n);
-    for (int i=0; i&amp;lt;size; i++) {
-        for (int j=0; j&amp;lt;size; j++) {
-            cout&amp;lt;&amp;lt;table[i][j]&amp;lt;&amp;lt;&amp;quot; &amp;quot;;
-        }
-        cout&amp;lt;&amp;lt;endl;
-    }
-    return 0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>比饭量</title>
+      <title>Compare Appetite</title>
       <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
       
@@ -235,9 +43,9 @@ int main() {
       
         <description>
 
-&lt;h1 id=&#34;比饭量&#34;&gt;比饭量&lt;/h1&gt;
+&lt;h1 id=&#34;compare-appetite&#34;&gt;Compare Appetite&lt;/h1&gt;
 
-&lt;h2 id=&#34;compare-appetite&#34;&gt;Compare Appetite&lt;/h2&gt;
+&lt;h2 id=&#34;比饭量&#34;&gt;比饭量&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;描述&lt;/li&gt;
@@ -400,6 +208,209 @@ C=((c&amp;gt;b)+(b&amp;gt;a));
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;to get true assertions&amp;rsquo; numbers. Thanks to &lt;code&gt;C&lt;/code&gt; &amp;rsquo;s feature, true means &lt;code&gt;1&lt;/code&gt; , false means &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Cycling competition</title>
+      <link>https://cheioKID.github.io/post/algorithm/cycling-competition/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/algorithm/cycling-competition/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;cycling-competition&#34;&gt;Cycling competition&lt;/h1&gt;
+
+&lt;h2 id=&#34;循环比赛&#34;&gt;循环比赛&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;描述&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛共进行N-1天，要求每天没有选手轮空。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;M&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;表格形式的比赛安排表&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;样例输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;样例输出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  1 2 3 4 5 6 7 8 
+  2 1 4 3 6 5 8 7
+  3 4 1 2 7 8 5 6
+  4 3 2 1 8 7 6 5
+  5 6 7 8 1 2 3 4
+  6 5 8 7 2 1 4 3
+  7 8 5 6 3 4 1 2
+  8 7 6 5 4 3 2 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;提示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;M的大小不会超过8&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+int table[256][256]={0};
+void match(int n) {
+    int size=1&amp;lt;&amp;lt;n;
+    int half=size/2;
+    if(n==1) {
+        table[0][0]=1;
+        table[0][1]=2;
+        table[1][0]=2;
+        table[1][1]=1;
+    } else {
+        match(n-1);
+        for (int i=0; i&amp;lt;half; i++) {
+            for (int j=0; j&amp;lt;half; j++) {
+                table[half+i][half+j]=table[i][j];
+                table[i][half+j]=table[i][j]+half;
+                table[i+half][j]=table[i][j]+half;
+            }
+        }
+    }
+}
+int main() {
+    int n;
+    cin&amp;gt;&amp;gt;n;
+    int size=1&amp;lt;&amp;lt;n;
+    match(n);
+    for (int i=0; i&amp;lt;size; i++) {
+        for (int j=0; j&amp;lt;size; j++) {
+            cout&amp;lt;&amp;lt;table[i][j]&amp;lt;&amp;lt;&amp;quot; &amp;quot;;
+        }
+        cout&amp;lt;&amp;lt;endl;
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Deploy Hugo on github.io</title>
+      <link>https://cheioKID.github.io/post/note/deploy-hugo/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/deploy-hugo/</guid>
+      
+        <description>
+
+&lt;p&gt;Finally it works!&lt;/p&gt;
+
+  &lt;iframe style=&#34;max-width: 100%&#34;
+      class=&#34;music163&#34;
+      frameborder=&#34;no&#34;
+      border=&#34;0&#34;
+      marginwidth=&#34;0&#34;
+      marginheight=&#34;0&#34;
+      width=&#34;330&#34;
+      height=&#34;86&#34;
+      src=&#34;//music.163.com/outchain/player?type=2&amp;id=22518760&amp;auto=0&amp;height=66&#34;&gt;
+    &lt;/iframe&gt;
+
+&lt;h1 id=&#34;here-s-the-steps&#34;&gt;Here&amp;rsquo;s the steps&lt;/h1&gt;
+
+&lt;h2 id=&#34;generate-new-blogs&#34;&gt;generate new blogs&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo new site blogs
+cd blogs
+git init
+git remote add origin git@github.com:cheioKID/Blogs.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;change-the-baseurl-to-github-io&#34;&gt;change the baseURL to github.io&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;apple-the-theme&#34;&gt;apple the theme&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane
+cp -r themes/jane/exampleSite/content ./
+cp themes/jane/exampleSite/config.toml ./
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;add-markdown-files&#34;&gt;add markdown files&lt;/h2&gt;
+
+&lt;p&gt;with head like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+title: &amp;quot;For example&amp;quot;
+date: 2018-3-25
+#lastmod: 2017-08-31T15:43:48+08:00
+draft: false
+tags: [&amp;quot;preview&amp;quot;, &amp;quot;English&amp;quot;, &amp;quot;tag-2&amp;quot;]
+categories: [&amp;quot;English&amp;quot;, &amp;quot;index&amp;quot;]
+author: &amp;quot;cheio&amp;quot;
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+date: 2018-03-22
+title: &amp;quot;example&amp;quot;
+tags:
+    - hello
+    - goodbye
+categories:
+    - foo
+comment: true
+---
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;push-to-remote&#34;&gt;push to remote&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git add .
+git commit -m &amp;quot;hello&amp;quot;
+git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;add-submodule&#34;&gt;add submodule&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -f -b master https://github.com/cheioKID/cheioKID.github.io.git public
+git add .
+git commit -m &amp;quot;Initial commit&amp;quot;
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;if &lt;code&gt;&#39;public&#39; already exists and is not a valid git repo&lt;/code&gt; is arised, try &lt;code&gt;rm -rf public&lt;/code&gt; and &lt;code&gt;git rm -r --cached public/&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;push-github-io&#34;&gt;push github.io&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo --cleanDestinationDir
+cd public
+git add .
+git commit -m &amp;quot;Build website&amp;quot;
+git push origin master
+cd ..
+&lt;/code&gt;&lt;/pre&gt;
 </description>
       
     </item>
