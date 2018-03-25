@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hello goodbye</title>
-    <link>http://cheioKID.github.io/</link>
+    <link>https://cheioKID.github.io/</link>
     <description>Recent content on hello goodbye</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
+    <language>en</language>
     <lastBuildDate>Sun, 20 Aug 2017 21:38:52 +0800</lastBuildDate>
     
-        <atom:link href="http://cheioKID.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://cheioKID.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>http://cheioKID.github.io/about/</link>
+      <link>https://cheioKID.github.io/about/</link>
       <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/about/</guid>
+      <guid>https://cheioKID.github.io/about/</guid>
       
         <description>&lt;p&gt;Hugo is a static site engine written in Go.&lt;/p&gt;
 
@@ -35,11 +35,289 @@
     </item>
     
     <item>
+      <title>循环比赛</title>
+      <link>https://cheioKID.github.io/post/algorithm/cycling-competition/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/algorithm/cycling-competition/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;循环比赛&#34;&gt;循环比赛&lt;/h1&gt;
+
+&lt;h2 id=&#34;cycling-competition&#34;&gt;Cycling competition&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;描述&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛共进行N-1天，要求每天没有选手轮空。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;M&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;表格形式的比赛安排表&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;样例输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;样例输出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;  1 2 3 4 5 6 7 8 
+  2 1 4 3 6 5 8 7
+  3 4 1 2 7 8 5 6
+  4 3 2 1 8 7 6 5
+  5 6 7 8 1 2 3 4
+  6 5 8 7 2 1 4 3
+  7 8 5 6 3 4 1 2
+  8 7 6 5 4 3 2 1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;提示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;M的大小不会超过8&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+int table[256][256]={0};
+void match(int n) {
+    int size=1&amp;lt;&amp;lt;n;
+    int half=size/2;
+    if(n==1) {
+        table[0][0]=1;
+        table[0][1]=2;
+        table[1][0]=2;
+        table[1][1]=1;
+    } else {
+        match(n-1);
+        for (int i=0; i&amp;lt;half; i++) {
+            for (int j=0; j&amp;lt;half; j++) {
+                table[half+i][half+j]=table[i][j];
+                table[i][half+j]=table[i][j]+half;
+                table[i+half][j]=table[i][j]+half;
+            }
+        }
+    }
+}
+int main() {
+    int n;
+    cin&amp;gt;&amp;gt;n;
+    int size=1&amp;lt;&amp;lt;n;
+    match(n);
+    for (int i=0; i&amp;lt;size; i++) {
+        for (int j=0; j&amp;lt;size; j++) {
+            cout&amp;lt;&amp;lt;table[i][j]&amp;lt;&amp;lt;&amp;quot; &amp;quot;;
+        }
+        cout&amp;lt;&amp;lt;endl;
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>比饭量</title>
+      <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
+      <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/algorithm/compare-appetite/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;比饭量&#34;&gt;比饭量&lt;/h1&gt;
+
+&lt;h2 id=&#34;compare-appetite&#34;&gt;Compare Appetite&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;描述&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;3个人比饭量，每人说了两句话：
+A说：B比我吃的多，C和我吃的一样多
+B说：A比我吃的多，A也比C吃的多
+C说：我比B吃得多，B比A吃的多。
+事实上，饭量和正确断言的个数是反序的关系。
+请编程按饭量的大小输出3个人的顺序。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;无输入&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;输出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;按照饭量大小输出3人顺序，比如：
+ABC&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;样例输入&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;无
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;样例输出&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;无
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+int main() {
+    int a,b,c,A,B,C;
+    char arr[] = &amp;quot;ABC&amp;quot;;
+    for (a=0; a&amp;lt;=2; a++) {
+        for (b=0; b&amp;lt;=2; b++) {
+            for (c=0; c&amp;lt;=2; c++) {
+                A=((b&amp;gt;a)+(c==a));
+                B=((a&amp;gt;b)+(a&amp;gt;c));
+                C=((c&amp;gt;b)+(b&amp;gt;a));
+                if(a==0 &amp;amp;&amp;amp; A!=2) break;
+                if(a==1 &amp;amp;&amp;amp; A!=1) break;
+                if(a==2 &amp;amp;&amp;amp; A!=0) break;
+                if(b==0 &amp;amp;&amp;amp; B!=2) break;
+                if(b==1 &amp;amp;&amp;amp; B!=1) break;
+                if(b==2 &amp;amp;&amp;amp; B!=0) break;
+                if(c==0 &amp;amp;&amp;amp; C!=2) break;
+                if(c==0 &amp;amp;&amp;amp; C==1) break;
+                if(c==1 &amp;amp;&amp;amp; C!=1) break;
+                if(c==2 &amp;amp;&amp;amp; C!=0) break;
+                if(A+B+C == 3) {
+                    int n[3],no1,no2,no3,min,i,tmp;
+                    n[0]=a;
+                    n[1]=b;
+                    n[2]=c;
+                    for (i=0,min=3; i&amp;lt;3; i++) {
+                        if(n[i]&amp;lt;min) {
+                            min=n[i];
+                            no1=i;
+                        }
+                    }
+                    tmp=min;
+                    for (i=0,min=3; i&amp;lt;3; i++) {
+                        if(n[i]&amp;lt;min &amp;amp;&amp;amp; n[i]&amp;gt;tmp) {
+                            min=n[i];
+                            no2=i;
+                        }
+                    }
+                    
+                    for (i=0,min=tmp; i&amp;lt;3; i++) {
+                        if(n[i]&amp;gt;min) {
+                            min=n[i];
+                            no3=i;
+                        }
+                    }
+                    cout&amp;lt;&amp;lt;arr[no1]&amp;lt;&amp;lt;arr[no2]&amp;lt;&amp;lt;arr[no3];
+                }
+            }
+        }
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However, there is something wrong with&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;if(c==0 &amp;amp;&amp;amp; C!=2) break;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;it will suddenly quit the &lt;code&gt;for (c=0; c&amp;lt;=2; c++)&lt;/code&gt; circle. I wonder why, but it is still not solved.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;#include &amp;lt;iostream&amp;gt;
+using namespace std;
+int main() {
+    int a,b,c,A,B,C;
+    char arr[] = &amp;quot;ABC&amp;quot;;
+    for (a=0; a&amp;lt;=2; a++) {
+        for (b=0; b&amp;lt;=2; b++) {
+            for (c=0; c&amp;lt;=2; c++) {
+                A=((b&amp;gt;a)+(c==a));
+                B=((a&amp;gt;b)+(a&amp;gt;c));
+                C=((c&amp;gt;b)+(b&amp;gt;a));
+                if(a==0 &amp;amp;&amp;amp; A!=2) break;
+                if(a==1 &amp;amp;&amp;amp; A!=1) break;
+                if(a==2 &amp;amp;&amp;amp; A!=0) break;
+                if(b==0 &amp;amp;&amp;amp; B!=2) break;
+                if(b==1 &amp;amp;&amp;amp; B!=1) break;
+                if(b==2 &amp;amp;&amp;amp; B!=0) break;
+                //if(c==0 &amp;amp;&amp;amp; C!=2) break; what&#39;s wrong?
+                if(c==0 &amp;amp;&amp;amp; C==1) break;
+                if(c==1 &amp;amp;&amp;amp; C!=1) break;
+                if(c==2 &amp;amp;&amp;amp; C!=0) break;
+                if(A+B+C == 3) {
+                    int n[3],no1,no2,no3,min,i,tmp;
+                    n[0]=a;
+                    n[1]=b;
+                    n[2]=c;
+                    for (i=0,min=3; i&amp;lt;3; i++) {
+                        if(n[i]&amp;lt;min) {
+                            min=n[i];
+                            no1=i;
+                        }
+                    }
+                    tmp=min;
+                    for (i=0,min=3; i&amp;lt;3; i++) {
+                        if(n[i]&amp;lt;min &amp;amp;&amp;amp; n[i]&amp;gt;tmp) {
+                            min=n[i];
+                            no2=i;
+                        }
+                    }
+                    
+                    for (i=0,min=tmp; i&amp;lt;3; i++) {
+                        if(n[i]&amp;gt;min) {
+                            min=n[i];
+                            no3=i;
+                        }
+                    }
+                    cout&amp;lt;&amp;lt;arr[no1]&amp;lt;&amp;lt;arr[no2]&amp;lt;&amp;lt;arr[no3];
+                }
+            }
+        }
+    }
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That is &lt;code&gt;Assertion&lt;/code&gt; problem, we can use&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;A=((b&amp;gt;a)+(c==a));
+B=((a&amp;gt;b)+(a&amp;gt;c));
+C=((c&amp;gt;b)+(b&amp;gt;a));
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;to get true assertions&amp;rsquo; numbers. Thanks to &lt;code&gt;C&lt;/code&gt; &amp;rsquo;s feature, true means &lt;code&gt;1&lt;/code&gt; , false means &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Jane Theme Preview</title>
-      <link>http://cheioKID.github.io/post/jane-theme-preview/</link>
+      <link>https://cheioKID.github.io/post/jane-theme-preview/</link>
       <pubDate>Tue, 06 Mar 2018 16:01:23 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/post/jane-theme-preview/</guid>
+      <guid>https://cheioKID.github.io/post/jane-theme-preview/</guid>
       
         <description>&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt; is created by &lt;a href=&#34;http://daringfireball.net/&#34;&gt;Daring Fireball&lt;/a&gt;, the original guideline is &lt;a href=&#34;http://daringfireball.net/projects/markdown/syntax&#34;&gt;here&lt;/a&gt;. Its syntax, however, varies between different parsers or editors.&lt;/p&gt;
 
@@ -374,10 +652,10 @@ __double underscores__
     
     <item>
       <title>Shortcodes Preview</title>
-      <link>http://cheioKID.github.io/post/shortcodes-preview/</link>
+      <link>https://cheioKID.github.io/post/shortcodes-preview/</link>
       <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/post/shortcodes-preview/</guid>
+      <guid>https://cheioKID.github.io/post/shortcodes-preview/</guid>
       
         <description>&lt;h2 id=&#34;what-a-shortcode-is&#34;&gt;What a Shortcode is&lt;/h2&gt;
 
@@ -770,10 +1048,10 @@ __double underscores__
     
     <item>
       <title>English Creating a New Theme</title>
-      <link>http://cheioKID.github.io/post/english-preview/</link>
+      <link>https://cheioKID.github.io/post/english-preview/</link>
       <pubDate>Thu, 31 Aug 2017 15:43:48 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/post/english-preview/</guid>
+      <guid>https://cheioKID.github.io/post/english-preview/</guid>
       
         <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 
@@ -1873,10 +2151,10 @@ $ vi themes/zafta/layouts/_default/single.html
     
     <item>
       <title>This is a very long title This is a very long title This is a very long title This is a very long title This is a very long title</title>
-      <link>http://cheioKID.github.io/post/this-is-a-very-long-title/</link>
+      <link>https://cheioKID.github.io/post/this-is-a-very-long-title/</link>
       <pubDate>Wed, 30 Aug 2017 15:43:48 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/post/this-is-a-very-long-title/</guid>
+      <guid>https://cheioKID.github.io/post/this-is-a-very-long-title/</guid>
       
         <description>&lt;p&gt;This is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long title&lt;/p&gt;
 </description>
@@ -1885,10 +2163,10 @@ $ vi themes/zafta/layouts/_default/single.html
     
     <item>
       <title>Creating a New Theme</title>
-      <link>http://cheioKID.github.io/post/creating-a-new-theme/</link>
+      <link>https://cheioKID.github.io/post/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://cheioKID.github.io/post/creating-a-new-theme/</guid>
+      <guid>https://cheioKID.github.io/post/creating-a-new-theme/</guid>
       
         <description>
 
@@ -2989,10 +3267,10 @@ $ vi themes/zafta/layouts/_default/single.html
     
     <item>
       <title>(Hu)go Template Primer</title>
-      <link>http://cheioKID.github.io/post/goisforlovers/</link>
+      <link>https://cheioKID.github.io/post/goisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://cheioKID.github.io/post/goisforlovers/</guid>
+      <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
       
         <description>
 
@@ -3052,7 +3330,7 @@ functions.&lt;/p&gt;
 &lt;p&gt;Each go template has a struct (object) made available to it. In hugo each
 template is passed either a page or a node struct depending on which type of
 page you are rendering. More details are available on the
-&lt;a href=&#34;http://cheioKID.github.io/layout/variables&#34;&gt;variables&lt;/a&gt; page.&lt;/p&gt;
+&lt;a href=&#34;https://cheioKID.github.io/layout/variables&#34;&gt;variables&lt;/a&gt; page.&lt;/p&gt;
 
 &lt;p&gt;A variable is accessed by referencing the variable name.&lt;/p&gt;
 
@@ -3069,7 +3347,7 @@ page you are rendering. More details are available on the
 
 &lt;p&gt;Go template ship with a few functions which provide basic functionality. The go
 template system also provides a mechanism for applications to extend the
-available functions with their own. &lt;a href=&#34;http://cheioKID.github.io/layout/functions&#34;&gt;Hugo template
+available functions with their own. &lt;a href=&#34;https://cheioKID.github.io/layout/functions&#34;&gt;Hugo template
 functions&lt;/a&gt; provide some additional functionality we believe
 are useful for building websites. Functions are called by using their name
 followed by the required parameters separated by spaces. Template
@@ -3257,7 +3535,7 @@ you want to inside of your templates.&lt;/p&gt;
 &lt;h2 id=&#34;using-content-page-parameters&#34;&gt;Using Content (page) Parameters&lt;/h2&gt;
 
 &lt;p&gt;In each piece of content you can provide variables to be used by the
-templates. This happens in the &lt;a href=&#34;http://cheioKID.github.io/content/front-matter&#34;&gt;front matter&lt;/a&gt;.&lt;/p&gt;
+templates. This happens in the &lt;a href=&#34;https://cheioKID.github.io/content/front-matter&#34;&gt;front matter&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;An example of this is used in this documentation site. Most of the pages
 benefit from having the table of contents provided. Sometimes the TOC just
@@ -3337,10 +3615,10 @@ so, such as in this example:&lt;/p&gt;
     
     <item>
       <title>Getting Started with Hugo</title>
-      <link>http://cheioKID.github.io/post/hugoisforlovers/</link>
+      <link>https://cheioKID.github.io/post/hugoisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://cheioKID.github.io/post/hugoisforlovers/</guid>
+      <guid>https://cheioKID.github.io/post/hugoisforlovers/</guid>
       
         <description>
 
@@ -3351,7 +3629,7 @@ appropriate version for your os and architecture.&lt;/p&gt;
 
 &lt;p&gt;Save it somewhere specific as we will be using it in the next step.&lt;/p&gt;
 
-&lt;p&gt;More complete instructions are available at &lt;a href=&#34;http://cheioKID.github.io/overview/installing/&#34;&gt;installing hugo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;More complete instructions are available at &lt;a href=&#34;https://cheioKID.github.io/overview/installing/&#34;&gt;installing hugo&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;step-2-build-the-docs&#34;&gt;Step 2. Build the Docs&lt;/h2&gt;
 
@@ -3426,10 +3704,10 @@ Having nearly instant feedback enables you to have your creativity flow without 
     
     <item>
       <title>Migrate to Hugo from Jekyll</title>
-      <link>http://cheioKID.github.io/post/migrate-from-jekyll/</link>
+      <link>https://cheioKID.github.io/post/migrate-from-jekyll/</link>
       <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://cheioKID.github.io/post/migrate-from-jekyll/</guid>
+      <guid>https://cheioKID.github.io/post/migrate-from-jekyll/</guid>
       
         <description>
 
@@ -3455,7 +3733,7 @@ With Jekyll, something that looked like&lt;/p&gt;
 
 &lt;h2 id=&#34;create-your-hugo-configuration-file&#34;&gt;Create your Hugo configuration file&lt;/h2&gt;
 
-&lt;p&gt;Hugo can read your configuration as JSON, YAML or TOML. Hugo supports parameters custom configuration too. Refer to the &lt;a href=&#34;http://cheioKID.github.io/overview/configuration/&#34;&gt;Hugo configuration documentation&lt;/a&gt; for details.&lt;/p&gt;
+&lt;p&gt;Hugo can read your configuration as JSON, YAML or TOML. Hugo supports parameters custom configuration too. Refer to the &lt;a href=&#34;https://cheioKID.github.io/overview/configuration/&#34;&gt;Hugo configuration documentation&lt;/a&gt; for details.&lt;/p&gt;
 
 &lt;h2 id=&#34;set-your-configuration-publish-folder-to-site&#34;&gt;Set your configuration publish folder to &lt;code&gt;_site&lt;/code&gt;&lt;/h2&gt;
 
@@ -3481,13 +3759,13 @@ git submodule add -b gh-pages git@github.com:your-username/your-repo.git public
 
 &lt;h2 id=&#34;convert-jekyll-templates-to-hugo-templates&#34;&gt;Convert Jekyll templates to Hugo templates&lt;/h2&gt;
 
-&lt;p&gt;That&amp;rsquo;s the bulk of the work right here. The documentation is your friend. You should refer to &lt;a href=&#34;http://jekyllrb.com/docs/templates/&#34;&gt;Jekyll&amp;rsquo;s template documentation&lt;/a&gt; if you need to refresh your memory on how you built your blog and &lt;a href=&#34;http://cheioKID.github.io/layout/templates/&#34;&gt;Hugo&amp;rsquo;s template&lt;/a&gt; to learn Hugo&amp;rsquo;s way.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s the bulk of the work right here. The documentation is your friend. You should refer to &lt;a href=&#34;http://jekyllrb.com/docs/templates/&#34;&gt;Jekyll&amp;rsquo;s template documentation&lt;/a&gt; if you need to refresh your memory on how you built your blog and &lt;a href=&#34;https://cheioKID.github.io/layout/templates/&#34;&gt;Hugo&amp;rsquo;s template&lt;/a&gt; to learn Hugo&amp;rsquo;s way.&lt;/p&gt;
 
 &lt;p&gt;As a single reference data point, converting my templates for &lt;a href=&#34;http://heyitsalex.net/&#34;&gt;heyitsalex.net&lt;/a&gt; took me no more than a few hours.&lt;/p&gt;
 
 &lt;h2 id=&#34;convert-jekyll-plugins-to-hugo-shortcodes&#34;&gt;Convert Jekyll plugins to Hugo shortcodes&lt;/h2&gt;
 
-&lt;p&gt;Jekyll has &lt;a href=&#34;http://jekyllrb.com/docs/plugins/&#34;&gt;plugins&lt;/a&gt;; Hugo has &lt;a href=&#34;http://cheioKID.github.io/doc/shortcodes/&#34;&gt;shortcodes&lt;/a&gt;. It&amp;rsquo;s fairly trivial to do a port.&lt;/p&gt;
+&lt;p&gt;Jekyll has &lt;a href=&#34;http://jekyllrb.com/docs/plugins/&#34;&gt;plugins&lt;/a&gt;; Hugo has &lt;a href=&#34;https://cheioKID.github.io/doc/shortcodes/&#34;&gt;shortcodes&lt;/a&gt;. It&amp;rsquo;s fairly trivial to do a port.&lt;/p&gt;
 
 &lt;h3 id=&#34;implementation&#34;&gt;Implementation&lt;/h3&gt;
 
@@ -3605,10 +3883,10 @@ Liquid::Template.register_tag(&#39;image&#39;, Jekyll::ImageTag)
     
     <item>
       <title>Syntax Highlighting</title>
-      <link>http://cheioKID.github.io/post/syntax-highlighting/</link>
+      <link>https://cheioKID.github.io/post/syntax-highlighting/</link>
       <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
       
-      <guid>http://cheioKID.github.io/post/syntax-highlighting/</guid>
+      <guid>https://cheioKID.github.io/post/syntax-highlighting/</guid>
       
         <description>&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function helloWorld () {
   alert(&amp;quot;Hello, World!&amp;quot;)
