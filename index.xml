@@ -323,16 +323,7 @@ int main() {
 
 &lt;p&gt;Finally it works!&lt;/p&gt;
 
-  &lt;iframe style=&#34;max-width: 100%&#34;
-      class=&#34;music163&#34;
-      frameborder=&#34;no&#34;
-      border=&#34;0&#34;
-      marginwidth=&#34;0&#34;
-      marginheight=&#34;0&#34;
-      width=&#34;330&#34;
-      height=&#34;86&#34;
-      src=&#34;//music.163.com/outchain/player?type=2&amp;id=22518760&amp;auto=0&amp;height=66&#34;&gt;
-    &lt;/iframe&gt;
+&lt;iframe src=&#34;https://open.spotify.com/embed/track/2pNwQBjJppt8v3sZojH1aj&#34; width=&#34;300&#34; height=&#34;380&#34; frameborder=&#34;0&#34; allowtransparency=&#34;true&#34; allow=&#34;encrypted-media&#34;&gt;&lt;/iframe&gt;
 
 &lt;h1 id=&#34;here-s-the-steps&#34;&gt;Here&amp;rsquo;s the steps&lt;/h1&gt;
 
