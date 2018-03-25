@@ -47,7 +47,7 @@
 
 &lt;p&gt;Here&amp;rsquo;s the steps&lt;/p&gt;
 
-&lt;h3 id=&#34;generate-new-blogs&#34;&gt;generate new blogs&lt;/h3&gt;
+&lt;h1 id=&#34;generate-new-blogs&#34;&gt;generate new blogs&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo new site blogs
 cd blogs
@@ -55,19 +55,19 @@ git init
 git remote add origin git@github.com:cheioKID/Blogs.git
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;change-the-baseurl-to-github-io&#34;&gt;change the baseURL to github.io&lt;/h3&gt;
+&lt;h1 id=&#34;change-the-baseurl-to-github-io&#34;&gt;change the baseURL to github.io&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;apple-the-theme&#34;&gt;apple the theme&lt;/h3&gt;
+&lt;h1 id=&#34;apple-the-theme&#34;&gt;apple the theme&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane
 cp -r themes/jane/exampleSite/content ./
 cp themes/jane/exampleSite/config.toml ./
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;add-markdown-files&#34;&gt;add markdown files&lt;/h3&gt;
+&lt;h1 id=&#34;add-markdown-files&#34;&gt;add markdown files&lt;/h1&gt;
 
 &lt;p&gt;with head like this&lt;/p&gt;
 
@@ -96,14 +96,14 @@ comment: true
 ---
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;push-to-remote&#34;&gt;push to remote&lt;/h3&gt;
+&lt;h1 id=&#34;push-to-remote&#34;&gt;push to remote&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git add .
 git commit -m &amp;quot;hello&amp;quot;
 git push origin master
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;add-submodule&#34;&gt;add submodule&lt;/h3&gt;
+&lt;h1 id=&#34;add-submodule&#34;&gt;add submodule&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;git submodule add -f -b master https://github.com/cheioKID/cheioKID.github.io.git public
 git add .
@@ -113,7 +113,7 @@ git push -u origin master
 
 &lt;p&gt;if &lt;code&gt;&#39;public&#39; already exists and is not a valid git repo&lt;/code&gt; is arised, try &lt;code&gt;rm -rf public&lt;/code&gt; and &lt;code&gt;git rm -r --cached public/&lt;/code&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;push-github-io&#34;&gt;push github.io&lt;/h3&gt;
+&lt;h1 id=&#34;push-github-io&#34;&gt;push github.io&lt;/h1&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;hugo --cleanDestinationDir
 cd public

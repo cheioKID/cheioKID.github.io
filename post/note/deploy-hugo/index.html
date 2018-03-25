@@ -187,10 +187,6 @@ generate new blogs hugo new site blogs cd blogs git init git remote add origin g
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
 <ul>
-<li>
-<ul>
-<li>
-<ul>
 <li><a href="#generate-new-blogs">generate new blogs</a></li>
 <li><a href="#change-the-baseurl-to-github-io">change the baseURL to github.io</a></li>
 <li><a href="#apple-the-theme">apple the theme</a></li>
@@ -198,8 +194,6 @@ generate new blogs hugo new site blogs cd blogs git init git remote add origin g
 <li><a href="#push-to-remote">push to remote</a></li>
 <li><a href="#add-submodule">add submodule</a></li>
 <li><a href="#push-github-io">push github.io</a></li>
-</ul></li>
-</ul></li>
 </ul>
 </nav>
   </div>
@@ -213,7 +207,7 @@ generate new blogs hugo new site blogs cd blogs git init git remote add origin g
 
 <p>Here&rsquo;s the steps</p>
 
-<h3 id="generate-new-blogs">generate new blogs</h3>
+<h1 id="generate-new-blogs">generate new blogs</h1>
 
 <pre><code class="language-shell">hugo new site blogs
 cd blogs
@@ -221,19 +215,19 @@ git init
 git remote add origin git@github.com:cheioKID/Blogs.git
 </code></pre>
 
-<h3 id="change-the-baseurl-to-github-io">change the baseURL to github.io</h3>
+<h1 id="change-the-baseurl-to-github-io">change the baseURL to github.io</h1>
 
 <pre><code class="language-toml">baseurl = &quot;https://cheioKID.github.io/&quot;
 </code></pre>
 
-<h3 id="apple-the-theme">apple the theme</h3>
+<h1 id="apple-the-theme">apple the theme</h1>
 
 <pre><code class="language-shell">git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane
 cp -r themes/jane/exampleSite/content ./
 cp themes/jane/exampleSite/config.toml ./
 </code></pre>
 
-<h3 id="add-markdown-files">add markdown files</h3>
+<h1 id="add-markdown-files">add markdown files</h1>
 
 <p>with head like this</p>
 
@@ -262,14 +256,14 @@ comment: true
 ---
 </code></pre>
 
-<h3 id="push-to-remote">push to remote</h3>
+<h1 id="push-to-remote">push to remote</h1>
 
 <pre><code class="language-shell">git add .
 git commit -m &quot;hello&quot;
 git push origin master
 </code></pre>
 
-<h3 id="add-submodule">add submodule</h3>
+<h1 id="add-submodule">add submodule</h1>
 
 <pre><code class="language-shell">git submodule add -f -b master https://github.com/cheioKID/cheioKID.github.io.git public
 git add .
@@ -279,7 +273,7 @@ git push -u origin master
 
 <p>if <code>'public' already exists and is not a valid git repo</code> is arised, try <code>rm -rf public</code> and <code>git rm -r --cached public/</code></p>
 
-<h3 id="push-github-io">push github.io</h3>
+<h1 id="push-github-io">push github.io</h1>
 
 <pre><code class="language-shell">hugo --cleanDestinationDir
 cd public
