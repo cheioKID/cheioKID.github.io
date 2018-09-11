@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on cheio</title>
+    <link>https://cheioKID.github.io/tags/git/</link>
+    <description>Recent content in Git on cheio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 21 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Git note</title>
+      <link>https://cheioKID.github.io/post/note/git-note/</link>
+      <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/git-note/</guid>
+      <description>#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂</description>
+    </item>
+    
+  </channel>
+</rss>

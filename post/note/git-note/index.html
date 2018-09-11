@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Git note - cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/note/git-note/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Git note" />
+<meta property="og:description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/note/git-note/" />
+
+
+
+<meta property="article:published_time" content="2017-11-21T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-11-21T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Git note">
+<meta itemprop="description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂">
+
+
+<meta itemprop="datePublished" content="2017-11-21T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-11-21T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1027">
+
+
+
+<meta itemprop="keywords" content="Git,Software Engineer," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git note"/>
+<meta name="twitter:description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Git note</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-11-21 </span>
+        <div class="post-category">
+            
+              <a href="/categories/git/"> Git </a>
+            
+          </div>
+        <span class="more-meta"> 1027 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>#git笔记</p>
+
+<ul>
+<li>版本控制系统Git，代码托管采用Github仓库
+###初始化</li>
+<li>在目录下通过<code>git init</code> 初始化空仓库Initialized empty Git repository
+###暂存区</li>
+
+<li><p>通过<code>git add</code>指令将修改添加到暂存区</p></li>
+
+<li><p>通过<code>git status</code>查看状态<strong>是否commit</strong></p></li>
+
+<li><p>通过<code>git rm &lt;filename&gt;</code>删除版本库中的文件，实现和工作区的同步</p></li>
+
+<li><p>通过<code>git commit</code>提交修改，<code>git commit -m “commit name&quot;</code> 为本次commit命名</p></li>
+</ul>
+
+<pre><code class="language-bash">git add . # add all
+git add   # add changed files
+# use git rm --cached &lt;file&gt; to unstage
+git status
+git commit -m 'Initial commit'
+</code></pre>
+
+<p>###版本
+- 通过<code>git log</code>查看版本控制记录，即<strong>commit历史记录</strong>
+-  <code>git log --pretty=oneline breif info</code>
+###回退
+- 通过<code>git reset --hard HEAD^</code>回退到上一个版本，撤销最近一次commit <code>HEAD</code>代表当前版本，<code>HEAD^</code>代表当前版本的上一个版本，<code>HEAD^^</code>代表当前版本的上一个版本的上一个版本
+- 通过<code>git reset —hard &lt;commit-id&gt;</code>回退到指定id的版本
+- 通过<code>git checkout -- &lt;filename&gt;</code>撤销工作区的修改
+###分支
+- 通过<code>git checkout -b &lt;branch-name&gt;</code>创建并切换到该分支<strong>branch</strong>，<code>git branch</code>查看当前分支(带*)，分支之间的修改不互相影响，通过<code>git merge branch-name</code>将某分支合并到当前分支
+- 不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改
+- 通过<code>git stash</code>保存现场，创建新的分支，修复bug，然后合并到<strong>master</strong>分支，<code>git stash pop</code>回到现场，继续工作
+- 通常增加新的功能，采取创建新的<strong>feature</strong>分支，在合并之前可以通过<code>git branch -D &lt;name&gt;</code>删除分支
+###远端仓库
+- 通过<code>git push &lt;remote-name&gt; &lt;branch-name&gt;</code>推送分支到远程仓库
+- 通过<code>git pull</code>抓取最新的提交，和本地合并，解决冲突，然后<strong>push</strong>
+- 切换到某分支，通过<code>git tag &lt;name&gt;</code>，为分支最近一次的commit定义标签<strong>tag</strong>，<code>git tag</code>查看所有标签</p>
+
+<hr />
+
+<p>命令<code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签；
+ 命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；
+ 命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；
+ 命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。</p>
+
+<p>####初始提交到远端仓库</p>
+
+<pre><code class="language-bash">#初始提交到远端仓库
+git add .
+git pull origin master --allow-unrelated-histories
+</code></pre>
+
+<p>####git &ndash;help</p>
+
+<pre><code>usage: git [--version][--help] [-C &lt;path&gt;][-c name=value]
+           [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager][--no-replace-objects] [--bare]
+           [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+           &lt;command&gt; [&lt;args&gt;]
+</code></pre>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2017-11-21</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/git/">Git</a>
+          
+          <a href="/tags/software-engineer/">Software Engineer</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/shortcodes-preview/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Shortcodes Preview</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/english-preview/">
+            <span class="next-text nav-default">English Creating a New Theme</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

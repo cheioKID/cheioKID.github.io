@@ -52,6 +52,13 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/note/git-note/</loc>
+    <lastmod>2017-11-21T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/english-preview/</loc>
     <lastmod>2017-08-31T15:43:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -232,6 +239,20 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/tags/git/</loc>
+    <lastmod>2017-11-21T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/categories/git/</loc>
+    <lastmod>2017-11-21T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/github/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -360,6 +381,13 @@
   <url>
     <loc>https://cheioKID.github.io/categories/shortcodes/</loc>
     <lastmod>2018-03-07T16:01:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/software-engineer/</loc>
+    <lastmod>2017-11-21T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

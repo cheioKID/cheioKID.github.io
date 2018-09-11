@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2018-09-11T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-11T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="452">
+<meta itemprop="wordCount" content="386">
 
 
 
@@ -162,7 +162,7 @@
               <a href="/categories/java/"> Java </a>
             
           </div>
-        <span class="more-meta"> 452 words </span>
+        <span class="more-meta"> 386 words </span>
         <span class="more-meta"> 1 min read </span>
       </div>
     </header>
@@ -228,7 +228,8 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 
 <p>最后采用了一种拙劣的方法catch到了<code>FTPConnectionClosedException</code></p>
 
-<pre><code class="language-java">try {
+<pre><code class="language-java">    		    	try {
+    		    		//used for check connection
     		    		ftpClient.listFiles();
 					} catch (Exception e) {
 						
@@ -241,20 +242,6 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 				    		Log.info(&quot;successfully relogin for time out exception&quot;);
 						}
 					}
-    		    	
-    		    	if(code &gt; 0) {
-    		    		if(ftp.renameDealtFile(filename)) {
-    		    			Log.info(&quot;rename &quot; + filename + &quot; successfully, please check done_&quot; + filename + &quot; files&quot;);
-    		    		} else {
-    		    			Log.error(&quot;rename &quot; + filename + &quot; failed, check FTP errors&quot;);
-    		    		}
-    		    	} else {
-    		    		if(ftp.renameFailedFile(filename)) {
-    		    			Log.info(&quot;rename &quot; + filename + &quot; successfully, please check failed_&quot; + filename + &quot; files&quot;);
-    		    		} else {
-    		    			Log.error(&quot;rename &quot; + filename + &quot; failed, check FTP errors&quot;);
-    		    		}
-    		    	}
 </code></pre>
 
     </div>

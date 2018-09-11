@@ -90,7 +90,8 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 
 &lt;p&gt;最后采用了一种拙劣的方法catch到了&lt;code&gt;FTPConnectionClosedException&lt;/code&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;try {
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    		    	try {
+    		    		//used for check connection
     		    		ftpClient.listFiles();
 					} catch (Exception e) {
 						
@@ -103,20 +104,6 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 				    		Log.info(&amp;quot;successfully relogin for time out exception&amp;quot;);
 						}
 					}
-    		    	
-    		    	if(code &amp;gt; 0) {
-    		    		if(ftp.renameDealtFile(filename)) {
-    		    			Log.info(&amp;quot;rename &amp;quot; + filename + &amp;quot; successfully, please check done_&amp;quot; + filename + &amp;quot; files&amp;quot;);
-    		    		} else {
-    		    			Log.error(&amp;quot;rename &amp;quot; + filename + &amp;quot; failed, check FTP errors&amp;quot;);
-    		    		}
-    		    	} else {
-    		    		if(ftp.renameFailedFile(filename)) {
-    		    			Log.info(&amp;quot;rename &amp;quot; + filename + &amp;quot; successfully, please check failed_&amp;quot; + filename + &amp;quot; files&amp;quot;);
-    		    		} else {
-    		    			Log.error(&amp;quot;rename &amp;quot; + filename + &amp;quot; failed, check FTP errors&amp;quot;);
-    		    		}
-    		    	}
 &lt;/code&gt;&lt;/pre&gt;
 </description>
       
@@ -1225,6 +1212,80 @@ __double underscores__
 &lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
   &lt;iframe src=&#34;//player.vimeo.com/video/146022717&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
  &lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>Git note</title>
+      <link>https://cheioKID.github.io/post/note/git-note/</link>
+      <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/git-note/</guid>
+      
+        <description>&lt;p&gt;#git笔记&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;版本控制系统Git，代码托管采用Github仓库
+###初始化&lt;/li&gt;
+&lt;li&gt;在目录下通过&lt;code&gt;git init&lt;/code&gt; 初始化空仓库Initialized empty Git repository
+###暂存区&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git add&lt;/code&gt;指令将修改添加到暂存区&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git status&lt;/code&gt;查看状态&lt;strong&gt;是否commit&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git rm &amp;lt;filename&amp;gt;&lt;/code&gt;删除版本库中的文件，实现和工作区的同步&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git commit&lt;/code&gt;提交修改，&lt;code&gt;git commit -m “commit name&amp;quot;&lt;/code&gt; 为本次commit命名&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add . # add all
+git add   # add changed files
+# use git rm --cached &amp;lt;file&amp;gt; to unstage
+git status
+git commit -m &#39;Initial commit&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;###版本
+- 通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;
+-  &lt;code&gt;git log --pretty=oneline breif info&lt;/code&gt;
+###回退
+- 通过&lt;code&gt;git reset --hard HEAD^&lt;/code&gt;回退到上一个版本，撤销最近一次commit &lt;code&gt;HEAD&lt;/code&gt;代表当前版本，&lt;code&gt;HEAD^&lt;/code&gt;代表当前版本的上一个版本，&lt;code&gt;HEAD^^&lt;/code&gt;代表当前版本的上一个版本的上一个版本
+- 通过&lt;code&gt;git reset —hard &amp;lt;commit-id&amp;gt;&lt;/code&gt;回退到指定id的版本
+- 通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改
+###分支
+- 通过&lt;code&gt;git checkout -b &amp;lt;branch-name&amp;gt;&lt;/code&gt;创建并切换到该分支&lt;strong&gt;branch&lt;/strong&gt;，&lt;code&gt;git branch&lt;/code&gt;查看当前分支(带*)，分支之间的修改不互相影响，通过&lt;code&gt;git merge branch-name&lt;/code&gt;将某分支合并到当前分支
+- 不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改
+- 通过&lt;code&gt;git stash&lt;/code&gt;保存现场，创建新的分支，修复bug，然后合并到&lt;strong&gt;master&lt;/strong&gt;分支，&lt;code&gt;git stash pop&lt;/code&gt;回到现场，继续工作
+- 通常增加新的功能，采取创建新的&lt;strong&gt;feature&lt;/strong&gt;分支，在合并之前可以通过&lt;code&gt;git branch -D &amp;lt;name&amp;gt;&lt;/code&gt;删除分支
+###远端仓库
+- 通过&lt;code&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt;&lt;/code&gt;推送分支到远程仓库
+- 通过&lt;code&gt;git pull&lt;/code&gt;抓取最新的提交，和本地合并，解决冲突，然后&lt;strong&gt;push&lt;/strong&gt;
+- 切换到某分支，通过&lt;code&gt;git tag &amp;lt;name&amp;gt;&lt;/code&gt;，为分支最近一次的commit定义标签&lt;strong&gt;tag&lt;/strong&gt;，&lt;code&gt;git tag&lt;/code&gt;查看所有标签&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;命令&lt;code&gt;git push origin &amp;lt;tagname&amp;gt;&lt;/code&gt;可以推送一个本地标签；
+ 命令&lt;code&gt;git push origin --tags&lt;/code&gt;可以推送全部未推送过的本地标签；
+ 命令&lt;code&gt;git tag -d &amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个本地标签；
+ 命令&lt;code&gt;git push origin :refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个远程标签。&lt;/p&gt;
+
+&lt;p&gt;####初始提交到远端仓库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#初始提交到远端仓库
+git add .
+git pull origin master --allow-unrelated-histories
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;####git &amp;ndash;help&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;usage: git [--version][--help] [-C &amp;lt;path&amp;gt;][-c name=value]
+           [--exec-path[=&amp;lt;path&amp;gt;]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager][--no-replace-objects] [--bare]
+           [--git-dir=&amp;lt;path&amp;gt;] [--work-tree=&amp;lt;path&amp;gt;] [--namespace=&amp;lt;name&amp;gt;]
+           &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;
+</description>
       
     </item>
     

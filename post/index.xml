@@ -84,6 +84,15 @@
     </item>
     
     <item>
+      <title>Git note</title>
+      <link>https://cheioKID.github.io/post/note/git-note/</link>
+      <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/git-note/</guid>
+      <description>#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂</description>
+    </item>
+    
+    <item>
       <title>English Creating a New Theme</title>
       <link>https://cheioKID.github.io/post/english-preview/</link>
       <pubDate>Thu, 31 Aug 2017 15:43:48 +0800</pubDate>
