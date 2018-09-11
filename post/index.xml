@@ -21,6 +21,24 @@
     </item>
     
     <item>
+      <title>LL(1) Grammer</title>
+      <link>https://cheioKID.github.io/post/cs/ll1/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
+      <description>####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果</description>
+    </item>
+    
+    <item>
+      <title>Mad Max: Fury Road</title>
+      <link>https://cheioKID.github.io/post/mad-max/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/mad-max/</guid>
+      <description>##Max和Furiosa以及其他同伴之间的友情 Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。 只剩</description>
+    </item>
+    
+    <item>
       <title>Compare Appetite</title>
       <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
@@ -89,7 +107,7 @@
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/git-note/</guid>
-      <description>#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂</description>
+      <description>git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git</description>
     </item>
     
     <item>
@@ -112,24 +130,6 @@
       
       <guid>https://cheioKID.github.io/post/this-is-a-very-long-title/</guid>
       <description>This is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long title</description>
-    </item>
-    
-    <item>
-      <title>Mad Max: Fury Road</title>
-      <link>https://cheioKID.github.io/post/mad-max/</link>
-      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/mad-max/</guid>
-      <description>##Max 和Furiosa以及其他同伴之间的友情## Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。 只剩三发</description>
-    </item>
-    
-    <item>
-      <title>LL(1) Grammer</title>
-      <link>https://cheioKID.github.io/post/cs/ll1/</link>
-      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
-      <description>####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果</description>
     </item>
     
     <item>

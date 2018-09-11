@@ -6,7 +6,7 @@
     <description>Recent content in Cs on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 29 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/categories/cs/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>LL(1) Grammer</title>
       <link>https://cheioKID.github.io/post/cs/ll1/</link>
-      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
       <description>####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果</description>

@@ -110,6 +110,297 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
     </item>
     
     <item>
+      <title>LL(1) Grammer</title>
+      <link>https://cheioKID.github.io/post/cs/ll1/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
+      
+        <description>&lt;p&gt;####LL(1)分析表的构造&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;####预测分析过程&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。&lt;/li&gt;
+&lt;li&gt;如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。&lt;/li&gt;
+&lt;li&gt;如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。&lt;/li&gt;
+&lt;li&gt;循环到符号栈和输入栈都为空，则预测分析完毕。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;####紧急错误恢复&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include&amp;lt;string.h&amp;gt;
+#include&amp;lt;stdio.h&amp;gt;
+int ll1[5][6]={{1,0,0,1,99,99},
+				{0,2,0,0,3,3},
+				{4,99,0,4,99,99},
+				{0,6,5,0,6,6},
+				{8,99,0,7,99,99}};
+
+int main() {
+	char stack[10] = {&#39;$&#39;,&#39;E&#39;};
+	char input[10];
+	char str[10];
+	char ch;//当前看到的字符
+	int i,j,m,n;
+	int l = 1;//栈的大小
+	int k = 0;//当前看到的字符的指针
+	int action;
+	int step = 1;
+	int length = 0;
+	
+	printf(&amp;quot;请输入，输入$结束:&amp;quot;);
+	do {
+		scanf(&amp;quot;%c&amp;quot;,&amp;amp;ch);
+		if(ch == &#39;\n&#39;)
+			continue;
+		input[length]=ch;
+		str[length]=ch;
+		length++;
+	} while(ch != &#39;$&#39;);
+
+	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
+	printf(&amp;quot;No\t栈\t\t\t输入\t动作\t\t\n&amp;quot;);
+	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
+	
+	do {
+		ch=str[k];
+		
+		printf(&amp;quot;%d\t&amp;quot;,step);
+		
+		for(i=0;i&amp;lt;=l;i++)
+			printf(&amp;quot;%c&amp;quot;,stack[i]);
+		printf(&amp;quot;\t\t\t&amp;quot;);
+
+		for(i=0;i&amp;lt;k;i++) {
+			input[i]=&#39; &#39;;
+			printf(&amp;quot;%c&amp;quot;,input[i]);
+		}
+		for(i=k;i&amp;lt;length;i++)
+			printf(&amp;quot;%c&amp;quot;,input[i]);
+		printf(&amp;quot;\t&amp;quot;);
+
+		switch(ch) {
+			case &#39;i&#39;:
+				j=0;break;
+			case &#39;+&#39;:
+				j=1;break;
+			case &#39;*&#39;:
+				j=2;break;
+			case &#39;(&#39;:
+				j=3;break;
+			case &#39;)&#39;:
+				j=4;break;
+			case &#39;$&#39;:
+				j=5;break;
+			defult:
+				j=-1;break;
+		}/* switch(ch)*/
+		
+		if(j != -1) { //看到非终结符
+			if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
+				if(stack[l] != 39) { //栈顶元素为E,T,F
+					switch(stack[l]) {
+						case&#39;E&#39;:
+							m=0; break;
+						case&#39;T&#39;:
+							m=2;break;
+						case &#39;F&#39;:
+							m=4;break;
+						default:
+							m=-1;break;
+					}
+				} else { //栈顶元素为E&#39;,T&#39;
+					switch(stack[l-1]) {
+						case&#39;E&#39;:
+							m=1; break;
+						case &#39;T&#39;:
+							m=3;break;
+						default:
+							m=-1;break;
+					}
+				}/* if(stack[l]) == &#39;&#39;&#39;*/
+			}/*if stack[l] != ch*/
+			
+			if(m != -1) { //栈顶元素为任一非终结符
+				if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
+					if(stack[l] == &#39;i&#39; || 
+							stack[l] == &#39;+&#39; || 
+							stack[l] == &#39;*&#39; || 
+							stack[l] == &#39;(&#39; || 
+							stack[l] == &#39;)&#39;) {
+						l=l+1;
+						printf(&amp;quot;%c被弹出&amp;quot;,ch);
+						step+=1;
+						//break;
+					}
+
+
+					action=ll1[m][j]; //根据非终结符和终结符得到产生式动作
+					if(action == 1) {
+						printf(&amp;quot;输出E→TE&#39;\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;T&#39;;
+						stack[l-1]=39;
+						stack[l-2]=&#39;E&#39;;
+						step=step+1;
+						
+					} else if(action == 2) {
+						printf(&amp;quot;输出E&#39;→+TE&#39;\n&amp;quot;);
+						n=4;
+						l=l+n-2;
+						stack[l]=&#39;+&#39;;
+						stack[l-1]=&#39;T&#39;;
+						stack[l-2]=39;
+						stack[l-3]=&#39;E&#39;;
+						step = step+1;
+
+					} else if(action == 3) {
+						printf(&amp;quot;输出E&#39;→𝜀\n&amp;quot;);
+						l=l-2;//无任何元素入栈
+						step=step+1;
+
+					} else if(action == 4) {
+						printf(&amp;quot;输出T→FT&#39;\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;F&#39;;
+						stack[l-1]=39;
+						stack[l-2]=&#39;T&#39;;
+						step = step+1;
+					} else if(action == 5) {
+						printf(&amp;quot;输出T&#39;→*FT&#39;\n&amp;quot;);
+						n=4;
+						l=l+n-2;
+						stack[l]=&#39;*&#39;;
+						stack[l-1]=&#39;F&#39;;
+						stack[l-2]=39;
+						stack[l-3]=&#39;T&#39;;
+						step = step+1;
+					} else if(action == 6) {
+						printf(&amp;quot;输出T&#39;→𝜀\n&amp;quot;);
+						l=l-2;
+						step = step+1;
+					} else if(action == 7) {
+						printf(&amp;quot;输出F→(E)\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;(&#39;;
+						stack[l-1]=&#39;E&#39;;
+						stack[l-2]=&#39;)&#39;;
+						step = step+1;
+					} else if(action == 8) {
+						printf(&amp;quot;输出F→i\n&amp;quot;);
+						n=1;
+						l=l+n-1;
+						stack[l]=&#39;i&#39;;
+						step=step+1;
+					} else if(action == 0){
+						printf(&amp;quot;出错：跳过%c\n&amp;quot;,ch);
+						k+=1;
+						step+=1;
+					} else if(action == 99) {
+						if(m==0 || m==2 || m==4) {
+							printf(&amp;quot;出错：%c正好在%c的同步记号集合中，
+									无需跳过任何记号;%c被弹出\n&amp;quot;,
+									ch,stack[l],stack[l]);
+							l=l-1;
+						}
+						else if(m==1 || m==3) {
+							printf(&amp;quot;出错：%c正好在%c%c的同步记号集合中
+									，无需跳过任何记号;%c%c被弹出\n&amp;quot;,
+									ch,stack[l-1],stack[l],stack[l-1],stack[l]);
+							l=l-2;
+						}
+						else
+							printf(&amp;quot;不是正确的非终结符\n&amp;quot;);
+					} else {
+						printf(&amp;quot;未定义的错误&amp;quot;);	
+					}//判断查表所得的动作
+
+				} else { // 栈顶元素和当前看到的字符匹配
+					if(ch == &#39;$&#39; &amp;amp;&amp;amp; stack[l] == &#39;$&#39;) {
+						printf(&amp;quot;分析成功，结束\n&amp;quot;);
+						exit(0);
+					} else {
+						printf(&amp;quot;匹配%c\n&amp;quot;,ch);
+						l=l-1; //栈的大小减一
+						k=k+1; //输入指针调整
+						step+=1;
+					}
+				}
+			} else {
+				printf(&amp;quot;出错，跳过\n&amp;quot;);
+				exit(0);
+			} 
+		} else { //没有看到正确的终结符
+			printf(&amp;quot;错误的终结符\n&amp;quot;);
+			exit(0);
+		}
+	} while(l&amp;gt;=0); //栈大小
+
+	return 0;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Mad Max: Fury Road</title>
+      <link>https://cheioKID.github.io/post/mad-max/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/mad-max/</guid>
+      
+        <description>&lt;p&gt;##Max和Furiosa以及其他同伴之间的友情&lt;/p&gt;
+
+&lt;p&gt;Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。&lt;/p&gt;
+
+&lt;p&gt;只剩三发子弹，Max两发未中，心情沉重地准备用最后一发子弹击毙射灯，Furiosa来到Max身后，准备接过Max手里的枪，Max回头，继续瞄准，咬牙，心情沉重地递给了Furiosa，紧张的回头，听到Furiosa沉静的声音说道 &lt;em&gt;Don&amp;rsquo;t breathe&lt;/em&gt; ，击毙了射灯。Max终于微微放松了，晃了晃脑袋。&lt;/p&gt;
+
+&lt;p&gt;引擎需要冷却，Max提着汽油箱往后走，转身告诉Furiosa先继续前进，Furiosa担心如果Max未回来怎么办，Max做出一副轻松的样子说到 &lt;em&gt;Well, you keep moving&lt;/em&gt; ，注视了一秒，转身消失在雾霭中。&lt;/p&gt;
+
+&lt;p&gt;爆炸声响起，一个身影在靠近，Furiosa举起枪，皱起眉紧紧盯着前方，看到Max的熟悉的身影后，放下手臂，眼中的液体闪动了一下。&lt;/p&gt;
+
+&lt;p&gt;Max一直提着一个袋子，拿着一个方向盘，经过Furioa时微微抬头看了一眼，走向了Nux，将方向盘递给Nux，然后放下袋子，找出了一只靴子递给Nux。Nux装上方向盘，露出开心的笑容，真是一个单纯的孩子。&lt;/p&gt;
+
+&lt;p&gt;Furiosa邀请Max同行，Max注视着Furiosa，又移开目光，&lt;em&gt;I&amp;rsquo;ll make my own way&lt;/em&gt; ，Max说着点了点头。Furiosa低下头，Max静静的看着她，缓缓移开了目光&lt;/p&gt;
+
+&lt;p&gt;##Max有没有看到Angharad滚到车轮下&lt;/p&gt;
+
+&lt;p&gt;Angharad落下车后，Max转头看到Boss的车驶向她，但Boss调转了方向，Angharad得以幸存。Max已经浸湿了双眼，曾经未能拯救的小女孩的回忆再次闪现。&lt;/p&gt;
+
+&lt;p&gt;Furiosa反复问Max &lt;em&gt;Did you see it&lt;/em&gt;, Max重复回答 _She went under the wheels_。&lt;/p&gt;
+
+&lt;p&gt;Max曾经没有拯救的小女孩也是死于车轮之下。我想，Max的悲伤并不在于Angharad，而是再次亲眼看到自己无力拯救葬身于车轮下的人。&lt;/p&gt;
+
+&lt;p&gt;##期待2019年的Max4
+汤老湿的眼睛可以表达真挚的情感，汤老湿再见！
+18年汤老湿的毒液要上映了，期待&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Compare Appetite</title>
       <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
@@ -1222,13 +1513,18 @@ __double underscores__
       
       <guid>https://cheioKID.github.io/post/note/git-note/</guid>
       
-        <description>&lt;p&gt;#git笔记&lt;/p&gt;
+        <description>
+
+&lt;h1 id=&#34;git笔记&#34;&gt;git笔记&lt;/h1&gt;
 
 &lt;ul&gt;
-&lt;li&gt;版本控制系统Git，代码托管采用Github仓库
-###初始化&lt;/li&gt;
-&lt;li&gt;在目录下通过&lt;code&gt;git init&lt;/code&gt; 初始化空仓库Initialized empty Git repository
-###暂存区&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;版本控制系统Git，代码托管采用Github仓库&lt;/p&gt;
+
+&lt;h3 id=&#34;初始化&#34;&gt;初始化&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在目录下通过&lt;code&gt;git init&lt;/code&gt; 初始化空仓库Initialized empty Git repository&lt;/p&gt;
+
+&lt;h3 id=&#34;暂存区&#34;&gt;暂存区&lt;/h3&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git add&lt;/code&gt;指令将修改添加到暂存区&lt;/p&gt;&lt;/li&gt;
 
@@ -1246,38 +1542,55 @@ git status
 git commit -m &#39;Initial commit&#39;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;###版本
-- 通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;
--  &lt;code&gt;git log --pretty=oneline breif info&lt;/code&gt;
-###回退
-- 通过&lt;code&gt;git reset --hard HEAD^&lt;/code&gt;回退到上一个版本，撤销最近一次commit &lt;code&gt;HEAD&lt;/code&gt;代表当前版本，&lt;code&gt;HEAD^&lt;/code&gt;代表当前版本的上一个版本，&lt;code&gt;HEAD^^&lt;/code&gt;代表当前版本的上一个版本的上一个版本
-- 通过&lt;code&gt;git reset —hard &amp;lt;commit-id&amp;gt;&lt;/code&gt;回退到指定id的版本
-- 通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改
-###分支
-- 通过&lt;code&gt;git checkout -b &amp;lt;branch-name&amp;gt;&lt;/code&gt;创建并切换到该分支&lt;strong&gt;branch&lt;/strong&gt;，&lt;code&gt;git branch&lt;/code&gt;查看当前分支(带*)，分支之间的修改不互相影响，通过&lt;code&gt;git merge branch-name&lt;/code&gt;将某分支合并到当前分支
-- 不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改
-- 通过&lt;code&gt;git stash&lt;/code&gt;保存现场，创建新的分支，修复bug，然后合并到&lt;strong&gt;master&lt;/strong&gt;分支，&lt;code&gt;git stash pop&lt;/code&gt;回到现场，继续工作
-- 通常增加新的功能，采取创建新的&lt;strong&gt;feature&lt;/strong&gt;分支，在合并之前可以通过&lt;code&gt;git branch -D &amp;lt;name&amp;gt;&lt;/code&gt;删除分支
-###远端仓库
-- 通过&lt;code&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt;&lt;/code&gt;推送分支到远程仓库
-- 通过&lt;code&gt;git pull&lt;/code&gt;抓取最新的提交，和本地合并，解决冲突，然后&lt;strong&gt;push&lt;/strong&gt;
-- 切换到某分支，通过&lt;code&gt;git tag &amp;lt;name&amp;gt;&lt;/code&gt;，为分支最近一次的commit定义标签&lt;strong&gt;tag&lt;/strong&gt;，&lt;code&gt;git tag&lt;/code&gt;查看所有标签&lt;/p&gt;
+&lt;h3 id=&#34;版本&#34;&gt;版本&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;git log --pretty=oneline breif info&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;回退&#34;&gt;回退&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git reset --hard HEAD^&lt;/code&gt;回退到上一个版本，撤销最近一次commit &lt;code&gt;HEAD&lt;/code&gt;代表当前版本，&lt;code&gt;HEAD^&lt;/code&gt;代表当前版本的上一个版本，&lt;code&gt;HEAD^^&lt;/code&gt;代表当前版本的上一个版本的上一个版本&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git reset —hard &amp;lt;commit-id&amp;gt;&lt;/code&gt;回退到指定id的版本&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改&lt;/p&gt;
+
+&lt;h3 id=&#34;分支&#34;&gt;分支&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -b &amp;lt;branch-name&amp;gt;&lt;/code&gt;创建并切换到该分支&lt;strong&gt;branch&lt;/strong&gt;，&lt;code&gt;git branch&lt;/code&gt;查看当前分支(带*)，分支之间的修改不互相影响，通过&lt;code&gt;git merge branch-name&lt;/code&gt;将某分支合并到当前分支&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git stash&lt;/code&gt;保存现场，创建新的分支，修复bug，然后合并到&lt;strong&gt;master&lt;/strong&gt;分支，&lt;code&gt;git stash pop&lt;/code&gt;回到现场，继续工作&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通常增加新的功能，采取创建新的&lt;strong&gt;feature&lt;/strong&gt;分支，在合并之前可以通过&lt;code&gt;git branch -D &amp;lt;name&amp;gt;&lt;/code&gt;删除分支&lt;/p&gt;
+
+&lt;h3 id=&#34;远端仓库&#34;&gt;远端仓库&lt;/h3&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt;&lt;/code&gt;推送分支到远程仓库&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git pull&lt;/code&gt;抓取最新的提交，和本地合并，解决冲突，然后&lt;strong&gt;push&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;切换到某分支，通过&lt;code&gt;git tag &amp;lt;name&amp;gt;&lt;/code&gt;，为分支最近一次的commit定义标签&lt;strong&gt;tag&lt;/strong&gt;，&lt;code&gt;git tag&lt;/code&gt;查看所有标签&lt;/p&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;命令&lt;code&gt;git push origin &amp;lt;tagname&amp;gt;&lt;/code&gt;可以推送一个本地标签；
- 命令&lt;code&gt;git push origin --tags&lt;/code&gt;可以推送全部未推送过的本地标签；
- 命令&lt;code&gt;git tag -d &amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个本地标签；
- 命令&lt;code&gt;git push origin :refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个远程标签。&lt;/p&gt;
+命令&lt;code&gt;git push origin --tags&lt;/code&gt;可以推送全部未推送过的本地标签；
+命令&lt;code&gt;git tag -d &amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个本地标签；
+命令&lt;code&gt;git push origin :refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个远程标签。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;####初始提交到远端仓库&lt;/p&gt;
+&lt;h4 id=&#34;初始提交到远端仓库&#34;&gt;初始提交到远端仓库&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#初始提交到远端仓库
 git add .
 git pull origin master --allow-unrelated-histories
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;####git &amp;ndash;help&lt;/p&gt;
+&lt;h3 id=&#34;git-help&#34;&gt;git &amp;ndash;help&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;usage: git [--version][--help] [-C &amp;lt;path&amp;gt;][-c name=value]
            [--exec-path[=&amp;lt;path&amp;gt;]] [--html-path] [--man-path] [--info-path]
@@ -2400,296 +2713,6 @@ $ vi themes/zafta/layouts/_default/single.html
       <guid>https://cheioKID.github.io/post/this-is-a-very-long-title/</guid>
       
         <description>&lt;p&gt;This is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long title&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>Mad Max: Fury Road</title>
-      <link>https://cheioKID.github.io/post/mad-max/</link>
-      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/mad-max/</guid>
-      
-        <description>&lt;p&gt;##Max 和Furiosa以及其他同伴之间的友情##&lt;/p&gt;
-
-&lt;p&gt;Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。&lt;/p&gt;
-
-&lt;p&gt;只剩三发子弹，Max两发未中，心情沉重地准备用最后一发子弹击毙射灯，Furiosa来到Max身后，准备接过Max手里的枪，Max回头，继续瞄准，咬牙，心情沉重地递给了Furiosa，紧张的回头，听到Furiosa沉静的声音说道 _Don&amp;rsquo;t breathe_，击毙了射灯。Max终于微微放松了，晃了晃脑袋。&lt;/p&gt;
-
-&lt;p&gt;引擎需要冷却，Max提着汽油箱往后走，转身告诉Furiosa先继续前进，Furiosa担心如果Max未回来怎么办，Max做出一副轻松的样子说到_Well, you keep moving_，注视了一秒，转身消失在雾霭中。&lt;/p&gt;
-
-&lt;p&gt;爆炸声响起，一个身影在靠近，Furiosa举起枪，皱起眉紧紧盯着前方，看到Max的熟悉的身影后，放下手臂，眼中的液体闪动了一下。&lt;/p&gt;
-
-&lt;p&gt;Max一直提着一个袋子，拿着一个方向盘，经过Furioa时微微抬头看了一眼，走向了Nux，将方向盘递给Nux，然后放下袋子，找出了一只靴子递给Nux。Nux装上方向盘，露出开心的笑容，真是一个单纯的孩子。&lt;/p&gt;
-
-&lt;p&gt;Furiosa邀请Max同行，Max注视着Furiosa，又移开目光，_I&amp;rsquo;ll make my own way_，Max说着点了点头。Furiosa低下头，Max静静的看着她，缓缓移开了目光&lt;/p&gt;
-
-&lt;p&gt;##Max有没有看到Angharad滚到车轮下##&lt;/p&gt;
-
-&lt;p&gt;Angharad落下车后，Max转头看到Boss的车驶向她，但Boss调转了方向，Angharad得以幸存。Max已经浸湿了双眼，曾经未能拯救的小女孩的回忆再次闪现。&lt;/p&gt;
-
-&lt;p&gt;Furiosa反复问Max &lt;em&gt;Did you see it&lt;/em&gt;, Max重复回答 _She went under the wheels_。&lt;/p&gt;
-
-&lt;p&gt;Max曾经没有拯救的小女孩也是死于车轮之下。我想，Max的悲伤并不在于Angharad，而是再次亲眼看到自己无力拯救葬身于车轮下的人。&lt;/p&gt;
-
-&lt;p&gt;##期待2019年的Max4
-汤老湿的眼睛可以表达真挚的情感，汤老湿再见！&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>LL(1) Grammer</title>
-      <link>https://cheioKID.github.io/post/cs/ll1/</link>
-      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
-      
-        <description>&lt;p&gt;####LL(1)分析表的构造&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;####预测分析过程&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。&lt;/li&gt;
-&lt;li&gt;如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。&lt;/li&gt;
-&lt;li&gt;如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。&lt;/li&gt;
-&lt;li&gt;循环到符号栈和输入栈都为空，则预测分析完毕。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;####紧急错误恢复&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include&amp;lt;string.h&amp;gt;
-#include&amp;lt;stdio.h&amp;gt;
-int ll1[5][6]={{1,0,0,1,99,99},
-				{0,2,0,0,3,3},
-				{4,99,0,4,99,99},
-				{0,6,5,0,6,6},
-				{8,99,0,7,99,99}};
-
-int main() {
-	char stack[10] = {&#39;$&#39;,&#39;E&#39;};
-	char input[10];
-	char str[10];
-	char ch;//当前看到的字符
-	int i,j,m,n;
-	int l = 1;//栈的大小
-	int k = 0;//当前看到的字符的指针
-	int action;
-	int step = 1;
-	int length = 0;
-	
-	printf(&amp;quot;请输入，输入$结束:&amp;quot;);
-	do {
-		scanf(&amp;quot;%c&amp;quot;,&amp;amp;ch);
-		if(ch == &#39;\n&#39;)
-			continue;
-		input[length]=ch;
-		str[length]=ch;
-		length++;
-	} while(ch != &#39;$&#39;);
-
-	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
-	printf(&amp;quot;No\t栈\t\t\t输入\t动作\t\t\n&amp;quot;);
-	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
-	
-	do {
-		ch=str[k];
-		
-		printf(&amp;quot;%d\t&amp;quot;,step);
-		
-		for(i=0;i&amp;lt;=l;i++)
-			printf(&amp;quot;%c&amp;quot;,stack[i]);
-		printf(&amp;quot;\t\t\t&amp;quot;);
-
-		for(i=0;i&amp;lt;k;i++) {
-			input[i]=&#39; &#39;;
-			printf(&amp;quot;%c&amp;quot;,input[i]);
-		}
-		for(i=k;i&amp;lt;length;i++)
-			printf(&amp;quot;%c&amp;quot;,input[i]);
-		printf(&amp;quot;\t&amp;quot;);
-
-		switch(ch) {
-			case &#39;i&#39;:
-				j=0;break;
-			case &#39;+&#39;:
-				j=1;break;
-			case &#39;*&#39;:
-				j=2;break;
-			case &#39;(&#39;:
-				j=3;break;
-			case &#39;)&#39;:
-				j=4;break;
-			case &#39;$&#39;:
-				j=5;break;
-			defult:
-				j=-1;break;
-		}/* switch(ch)*/
-		
-		if(j != -1) { //看到非终结符
-			if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
-				if(stack[l] != 39) { //栈顶元素为E,T,F
-					switch(stack[l]) {
-						case&#39;E&#39;:
-							m=0; break;
-						case&#39;T&#39;:
-							m=2;break;
-						case &#39;F&#39;:
-							m=4;break;
-						default:
-							m=-1;break;
-					}
-				} else { //栈顶元素为E&#39;,T&#39;
-					switch(stack[l-1]) {
-						case&#39;E&#39;:
-							m=1; break;
-						case &#39;T&#39;:
-							m=3;break;
-						default:
-							m=-1;break;
-					}
-				}/* if(stack[l]) == &#39;&#39;&#39;*/
-			}/*if stack[l] != ch*/
-			
-			if(m != -1) { //栈顶元素为任一非终结符
-				if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
-					if(stack[l] == &#39;i&#39; || 
-							stack[l] == &#39;+&#39; || 
-							stack[l] == &#39;*&#39; || 
-							stack[l] == &#39;(&#39; || 
-							stack[l] == &#39;)&#39;) {
-						l=l+1;
-						printf(&amp;quot;%c被弹出&amp;quot;,ch);
-						step+=1;
-						//break;
-					}
-
-
-					action=ll1[m][j]; //根据非终结符和终结符得到产生式动作
-					if(action == 1) {
-						printf(&amp;quot;输出E→TE&#39;\n&amp;quot;);
-						n=3;
-						l=l+n-1;
-						stack[l]=&#39;T&#39;;
-						stack[l-1]=39;
-						stack[l-2]=&#39;E&#39;;
-						step=step+1;
-						
-					} else if(action == 2) {
-						printf(&amp;quot;输出E&#39;→+TE&#39;\n&amp;quot;);
-						n=4;
-						l=l+n-2;
-						stack[l]=&#39;+&#39;;
-						stack[l-1]=&#39;T&#39;;
-						stack[l-2]=39;
-						stack[l-3]=&#39;E&#39;;
-						step = step+1;
-
-					} else if(action == 3) {
-						printf(&amp;quot;输出E&#39;→𝜀\n&amp;quot;);
-						l=l-2;//无任何元素入栈
-						step=step+1;
-
-					} else if(action == 4) {
-						printf(&amp;quot;输出T→FT&#39;\n&amp;quot;);
-						n=3;
-						l=l+n-1;
-						stack[l]=&#39;F&#39;;
-						stack[l-1]=39;
-						stack[l-2]=&#39;T&#39;;
-						step = step+1;
-					} else if(action == 5) {
-						printf(&amp;quot;输出T&#39;→*FT&#39;\n&amp;quot;);
-						n=4;
-						l=l+n-2;
-						stack[l]=&#39;*&#39;;
-						stack[l-1]=&#39;F&#39;;
-						stack[l-2]=39;
-						stack[l-3]=&#39;T&#39;;
-						step = step+1;
-					} else if(action == 6) {
-						printf(&amp;quot;输出T&#39;→𝜀\n&amp;quot;);
-						l=l-2;
-						step = step+1;
-					} else if(action == 7) {
-						printf(&amp;quot;输出F→(E)\n&amp;quot;);
-						n=3;
-						l=l+n-1;
-						stack[l]=&#39;(&#39;;
-						stack[l-1]=&#39;E&#39;;
-						stack[l-2]=&#39;)&#39;;
-						step = step+1;
-					} else if(action == 8) {
-						printf(&amp;quot;输出F→i\n&amp;quot;);
-						n=1;
-						l=l+n-1;
-						stack[l]=&#39;i&#39;;
-						step=step+1;
-					} else if(action == 0){
-						printf(&amp;quot;出错：跳过%c\n&amp;quot;,ch);
-						k+=1;
-						step+=1;
-					} else if(action == 99) {
-						if(m==0 || m==2 || m==4) {
-							printf(&amp;quot;出错：%c正好在%c的同步记号集合中，
-									无需跳过任何记号;%c被弹出\n&amp;quot;,
-									ch,stack[l],stack[l]);
-							l=l-1;
-						}
-						else if(m==1 || m==3) {
-							printf(&amp;quot;出错：%c正好在%c%c的同步记号集合中
-									，无需跳过任何记号;%c%c被弹出\n&amp;quot;,
-									ch,stack[l-1],stack[l],stack[l-1],stack[l]);
-							l=l-2;
-						}
-						else
-							printf(&amp;quot;不是正确的非终结符\n&amp;quot;);
-					} else {
-						printf(&amp;quot;未定义的错误&amp;quot;);	
-					}//判断查表所得的动作
-
-				} else { // 栈顶元素和当前看到的字符匹配
-					if(ch == &#39;$&#39; &amp;amp;&amp;amp; stack[l] == &#39;$&#39;) {
-						printf(&amp;quot;分析成功，结束\n&amp;quot;);
-						exit(0);
-					} else {
-						printf(&amp;quot;匹配%c\n&amp;quot;,ch);
-						l=l-1; //栈的大小减一
-						k=k+1; //输入指针调整
-						step+=1;
-					}
-				}
-			} else {
-				printf(&amp;quot;出错，跳过\n&amp;quot;);
-				exit(0);
-			} 
-		} else { //没有看到正确的终结符
-			printf(&amp;quot;错误的终结符\n&amp;quot;);
-			exit(0);
-		}
-	} while(l&amp;gt;=0); //栈大小
-
-	return 0;
-}
-
-&lt;/code&gt;&lt;/pre&gt;
 </description>
       
     </item>

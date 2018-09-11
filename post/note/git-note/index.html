@@ -19,7 +19,7 @@
 
 
 <meta name="author" content="cheio" />
-  <meta name="description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂" />
+  <meta name="description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git" />
 
 
 
@@ -49,7 +49,7 @@
 
 
 <meta property="og:title" content="Git note" />
-<meta property="og:description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂" />
+<meta property="og:description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cheioKID.github.io/post/note/git-note/" />
 
@@ -70,19 +70,19 @@
 
 
 <meta itemprop="name" content="Git note">
-<meta itemprop="description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂">
+<meta itemprop="description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git">
 
 
 <meta itemprop="datePublished" content="2017-11-21T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-11-21T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1027">
+<meta itemprop="wordCount" content="994">
 
 
 
 <meta itemprop="keywords" content="Git,Software Engineer," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Git note"/>
-<meta name="twitter:description" content="#git笔记 版本控制系统Git，代码托管采用Github仓库 ###初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository ###暂"/>
+<meta name="twitter:description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -162,8 +162,8 @@
               <a href="/categories/git/"> Git </a>
             
           </div>
-        <span class="more-meta"> 1027 words </span>
-        <span class="more-meta"> 3 min read </span>
+        <span class="more-meta"> 994 words </span>
+        <span class="more-meta"> 2 min read </span>
       </div>
     </header>
 
@@ -173,19 +173,43 @@
   <h2 class="post-toc-title">Table of Contents</h2>
   
   <div class="post-toc-content always-active">
-    
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#git笔记">git笔记</a>
+<ul>
+<li>
+<ul>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#暂存区">暂存区</a></li>
+<li><a href="#版本">版本</a></li>
+<li><a href="#回退">回退</a></li>
+<li><a href="#分支">分支</a></li>
+<li><a href="#远端仓库">远端仓库</a>
+<ul>
+<li><a href="#初始提交到远端仓库">初始提交到远端仓库</a></li>
+</ul></li>
+<li><a href="#git-help">git &ndash;help</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <p>#git笔记</p>
+      
+
+<h1 id="git笔记">git笔记</h1>
 
 <ul>
-<li>版本控制系统Git，代码托管采用Github仓库
-###初始化</li>
-<li>在目录下通过<code>git init</code> 初始化空仓库Initialized empty Git repository
-###暂存区</li>
+<li><p>版本控制系统Git，代码托管采用Github仓库</p>
+
+<h3 id="初始化">初始化</h3></li>
+
+<li><p>在目录下通过<code>git init</code> 初始化空仓库Initialized empty Git repository</p>
+
+<h3 id="暂存区">暂存区</h3></li>
 
 <li><p>通过<code>git add</code>指令将修改添加到暂存区</p></li>
 
@@ -203,38 +227,55 @@ git status
 git commit -m 'Initial commit'
 </code></pre>
 
-<p>###版本
-- 通过<code>git log</code>查看版本控制记录，即<strong>commit历史记录</strong>
--  <code>git log --pretty=oneline breif info</code>
-###回退
-- 通过<code>git reset --hard HEAD^</code>回退到上一个版本，撤销最近一次commit <code>HEAD</code>代表当前版本，<code>HEAD^</code>代表当前版本的上一个版本，<code>HEAD^^</code>代表当前版本的上一个版本的上一个版本
-- 通过<code>git reset —hard &lt;commit-id&gt;</code>回退到指定id的版本
-- 通过<code>git checkout -- &lt;filename&gt;</code>撤销工作区的修改
-###分支
-- 通过<code>git checkout -b &lt;branch-name&gt;</code>创建并切换到该分支<strong>branch</strong>，<code>git branch</code>查看当前分支(带*)，分支之间的修改不互相影响，通过<code>git merge branch-name</code>将某分支合并到当前分支
-- 不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改
-- 通过<code>git stash</code>保存现场，创建新的分支，修复bug，然后合并到<strong>master</strong>分支，<code>git stash pop</code>回到现场，继续工作
-- 通常增加新的功能，采取创建新的<strong>feature</strong>分支，在合并之前可以通过<code>git branch -D &lt;name&gt;</code>删除分支
-###远端仓库
-- 通过<code>git push &lt;remote-name&gt; &lt;branch-name&gt;</code>推送分支到远程仓库
-- 通过<code>git pull</code>抓取最新的提交，和本地合并，解决冲突，然后<strong>push</strong>
-- 切换到某分支，通过<code>git tag &lt;name&gt;</code>，为分支最近一次的commit定义标签<strong>tag</strong>，<code>git tag</code>查看所有标签</p>
+<h3 id="版本">版本</h3>
+
+<ul>
+<li>通过<code>git log</code>查看版本控制记录，即<strong>commit历史记录</strong></li>
+
+<li><p><code>git log --pretty=oneline breif info</code></p>
+
+<h3 id="回退">回退</h3></li>
+
+<li><p>通过<code>git reset --hard HEAD^</code>回退到上一个版本，撤销最近一次commit <code>HEAD</code>代表当前版本，<code>HEAD^</code>代表当前版本的上一个版本，<code>HEAD^^</code>代表当前版本的上一个版本的上一个版本</p></li>
+
+<li><p>通过<code>git reset —hard &lt;commit-id&gt;</code>回退到指定id的版本</p></li>
+
+<li><p>通过<code>git checkout -- &lt;filename&gt;</code>撤销工作区的修改</p>
+
+<h3 id="分支">分支</h3></li>
+
+<li><p>通过<code>git checkout -b &lt;branch-name&gt;</code>创建并切换到该分支<strong>branch</strong>，<code>git branch</code>查看当前分支(带*)，分支之间的修改不互相影响，通过<code>git merge branch-name</code>将某分支合并到当前分支</p></li>
+
+<li><p>不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改</p></li>
+
+<li><p>通过<code>git stash</code>保存现场，创建新的分支，修复bug，然后合并到<strong>master</strong>分支，<code>git stash pop</code>回到现场，继续工作</p></li>
+
+<li><p>通常增加新的功能，采取创建新的<strong>feature</strong>分支，在合并之前可以通过<code>git branch -D &lt;name&gt;</code>删除分支</p>
+
+<h3 id="远端仓库">远端仓库</h3></li>
+
+<li><p>通过<code>git push &lt;remote-name&gt; &lt;branch-name&gt;</code>推送分支到远程仓库</p></li>
+
+<li><p>通过<code>git pull</code>抓取最新的提交，和本地合并，解决冲突，然后<strong>push</strong></p></li>
+
+<li><p>切换到某分支，通过<code>git tag &lt;name&gt;</code>，为分支最近一次的commit定义标签<strong>tag</strong>，<code>git tag</code>查看所有标签</p>
 
 <hr />
 
 <p>命令<code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签；
- 命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；
- 命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；
- 命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。</p>
+命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；
+命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；
+命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。</p></li>
+</ul>
 
-<p>####初始提交到远端仓库</p>
+<h4 id="初始提交到远端仓库">初始提交到远端仓库</h4>
 
 <pre><code class="language-bash">#初始提交到远端仓库
 git add .
 git pull origin master --allow-unrelated-histories
 </code></pre>
 
-<p>####git &ndash;help</p>
+<h3 id="git-help">git &ndash;help</h3>
 
 <pre><code>usage: git [--version][--help] [-C &lt;path&gt;][-c name=value]
            [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
