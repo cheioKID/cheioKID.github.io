@@ -35,6 +35,94 @@
     </item>
     
     <item>
+      <title>Java FTP timeout Solution</title>
+      <link>https://cheioKID.github.io/post/note/java-ftp/</link>
+      <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/java-ftp/</guid>
+      
+        <description>&lt;p&gt;因为API响应太久，FTP连接已经断开，会抛出异常&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received.  Server closed connection.
+2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388)
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622)
+	at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045)
+	at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895)
+	at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785)
+	at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409)
+	at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339)
+	at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016)
+	at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069)
+	at com.example.sms.test.main(test.java:126)
+org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received.  Server closed connection.
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388)
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622)
+	at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045)
+	at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895)
+	at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785)
+	at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409)
+	at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339)
+	at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016)
+	at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069)
+	at com.example.sms.FtpUtil.fetchOneWaitingFile(FtpUtil.java:166)
+	at com.example.sms.test.main(test.java:102)
+org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed without indication.
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:324)
+	at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648)
+	at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622)
+	at org.apache.commons.net.ftp.FTP.quit(FTP.java:904)
+	at org.apache.commons.net.ftp.FTPClient.logout(FTPClient.java:1148)
+	at com.example.sms.test.main(test.java:138)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;试了用try catch包裹起来catch不到&lt;code&gt;FTPConnectionClosedException&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;不管是&lt;code&gt;ftpClient.isConnected()&lt;/code&gt;还是&lt;code&gt;ftpClient.isAvailable()&lt;/code&gt;或者&lt;code&gt;ftpClient.isRemoteVerificationEnabled()&lt;/code&gt;的值都为&lt;code&gt;True&lt;/code&gt;，不能判断是否连接超时。&lt;/p&gt;
+
+&lt;p&gt;最后采用了一种拙劣的方法catch到了&lt;code&gt;FTPConnectionClosedException&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;try {
+    		    		ftpClient.listFiles();
+					} catch (Exception e) {
+						
+						Log.info(e.getMessage());
+						
+						if (!ftp.login(ftp_url,ftp_port,ftp_username,ftp_password)) {
+							Log.error(&amp;quot;FTP reconnect and relogin failed with &amp;quot; + ftp_url + &amp;quot;:&amp;quot; + ftp_port 
+				    				+ &amp;quot;,username: &amp;quot; + ftp_username + &amp;quot;,password: &amp;quot; + ftp_password);
+				    	} else {
+				    		Log.info(&amp;quot;successfully relogin for time out exception&amp;quot;);
+						}
+					}
+    		    	
+    		    	if(code &amp;gt; 0) {
+    		    		if(ftp.renameDealtFile(filename)) {
+    		    			Log.info(&amp;quot;rename &amp;quot; + filename + &amp;quot; successfully, please check done_&amp;quot; + filename + &amp;quot; files&amp;quot;);
+    		    		} else {
+    		    			Log.error(&amp;quot;rename &amp;quot; + filename + &amp;quot; failed, check FTP errors&amp;quot;);
+    		    		}
+    		    	} else {
+    		    		if(ftp.renameFailedFile(filename)) {
+    		    			Log.info(&amp;quot;rename &amp;quot; + filename + &amp;quot; successfully, please check failed_&amp;quot; + filename + &amp;quot; files&amp;quot;);
+    		    		} else {
+    		    			Log.error(&amp;quot;rename &amp;quot; + filename + &amp;quot; failed, check FTP errors&amp;quot;);
+    		    		}
+    		    	}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Compare Appetite</title>
       <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
@@ -2256,6 +2344,473 @@ $ vi themes/zafta/layouts/_default/single.html
     </item>
     
     <item>
+      <title>Mad Max: Fury Road</title>
+      <link>https://cheioKID.github.io/post/mad-max/</link>
+      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/mad-max/</guid>
+      
+        <description>&lt;p&gt;##Max 和Furiosa以及其他同伴之间的友情##&lt;/p&gt;
+
+&lt;p&gt;Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。&lt;/p&gt;
+
+&lt;p&gt;只剩三发子弹，Max两发未中，心情沉重地准备用最后一发子弹击毙射灯，Furiosa来到Max身后，准备接过Max手里的枪，Max回头，继续瞄准，咬牙，心情沉重地递给了Furiosa，紧张的回头，听到Furiosa沉静的声音说道 _Don&amp;rsquo;t breathe_，击毙了射灯。Max终于微微放松了，晃了晃脑袋。&lt;/p&gt;
+
+&lt;p&gt;引擎需要冷却，Max提着汽油箱往后走，转身告诉Furiosa先继续前进，Furiosa担心如果Max未回来怎么办，Max做出一副轻松的样子说到_Well, you keep moving_，注视了一秒，转身消失在雾霭中。&lt;/p&gt;
+
+&lt;p&gt;爆炸声响起，一个身影在靠近，Furiosa举起枪，皱起眉紧紧盯着前方，看到Max的熟悉的身影后，放下手臂，眼中的液体闪动了一下。&lt;/p&gt;
+
+&lt;p&gt;Max一直提着一个袋子，拿着一个方向盘，经过Furioa时微微抬头看了一眼，走向了Nux，将方向盘递给Nux，然后放下袋子，找出了一只靴子递给Nux。Nux装上方向盘，露出开心的笑容，真是一个单纯的孩子。&lt;/p&gt;
+
+&lt;p&gt;Furiosa邀请Max同行，Max注视着Furiosa，又移开目光，_I&amp;rsquo;ll make my own way_，Max说着点了点头。Furiosa低下头，Max静静的看着她，缓缓移开了目光&lt;/p&gt;
+
+&lt;p&gt;##Max有没有看到Angharad滚到车轮下##&lt;/p&gt;
+
+&lt;p&gt;Angharad落下车后，Max转头看到Boss的车驶向她，但Boss调转了方向，Angharad得以幸存。Max已经浸湿了双眼，曾经未能拯救的小女孩的回忆再次闪现。&lt;/p&gt;
+
+&lt;p&gt;Furiosa反复问Max &lt;em&gt;Did you see it&lt;/em&gt;, Max重复回答 _She went under the wheels_。&lt;/p&gt;
+
+&lt;p&gt;Max曾经没有拯救的小女孩也是死于车轮之下。我想，Max的悲伤并不在于Angharad，而是再次亲眼看到自己无力拯救葬身于车轮下的人。&lt;/p&gt;
+
+&lt;p&gt;##期待2019年的Max4
+汤老湿的眼睛可以表达真挚的情感，汤老湿再见！&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LL(1) Grammer</title>
+      <link>https://cheioKID.github.io/post/cs/ll1/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
+      
+        <description>&lt;p&gt;####LL(1)分析表的构造&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;####预测分析过程&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。&lt;/li&gt;
+&lt;li&gt;如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。&lt;/li&gt;
+&lt;li&gt;如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。&lt;/li&gt;
+&lt;li&gt;循环到符号栈和输入栈都为空，则预测分析完毕。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;####紧急错误恢复&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include&amp;lt;string.h&amp;gt;
+#include&amp;lt;stdio.h&amp;gt;
+int ll1[5][6]={{1,0,0,1,99,99},
+				{0,2,0,0,3,3},
+				{4,99,0,4,99,99},
+				{0,6,5,0,6,6},
+				{8,99,0,7,99,99}};
+
+int main() {
+	char stack[10] = {&#39;$&#39;,&#39;E&#39;};
+	char input[10];
+	char str[10];
+	char ch;//当前看到的字符
+	int i,j,m,n;
+	int l = 1;//栈的大小
+	int k = 0;//当前看到的字符的指针
+	int action;
+	int step = 1;
+	int length = 0;
+	
+	printf(&amp;quot;请输入，输入$结束:&amp;quot;);
+	do {
+		scanf(&amp;quot;%c&amp;quot;,&amp;amp;ch);
+		if(ch == &#39;\n&#39;)
+			continue;
+		input[length]=ch;
+		str[length]=ch;
+		length++;
+	} while(ch != &#39;$&#39;);
+
+	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
+	printf(&amp;quot;No\t栈\t\t\t输入\t动作\t\t\n&amp;quot;);
+	printf(&amp;quot;--------------------------------------------------\n&amp;quot;);
+	
+	do {
+		ch=str[k];
+		
+		printf(&amp;quot;%d\t&amp;quot;,step);
+		
+		for(i=0;i&amp;lt;=l;i++)
+			printf(&amp;quot;%c&amp;quot;,stack[i]);
+		printf(&amp;quot;\t\t\t&amp;quot;);
+
+		for(i=0;i&amp;lt;k;i++) {
+			input[i]=&#39; &#39;;
+			printf(&amp;quot;%c&amp;quot;,input[i]);
+		}
+		for(i=k;i&amp;lt;length;i++)
+			printf(&amp;quot;%c&amp;quot;,input[i]);
+		printf(&amp;quot;\t&amp;quot;);
+
+		switch(ch) {
+			case &#39;i&#39;:
+				j=0;break;
+			case &#39;+&#39;:
+				j=1;break;
+			case &#39;*&#39;:
+				j=2;break;
+			case &#39;(&#39;:
+				j=3;break;
+			case &#39;)&#39;:
+				j=4;break;
+			case &#39;$&#39;:
+				j=5;break;
+			defult:
+				j=-1;break;
+		}/* switch(ch)*/
+		
+		if(j != -1) { //看到非终结符
+			if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
+				if(stack[l] != 39) { //栈顶元素为E,T,F
+					switch(stack[l]) {
+						case&#39;E&#39;:
+							m=0; break;
+						case&#39;T&#39;:
+							m=2;break;
+						case &#39;F&#39;:
+							m=4;break;
+						default:
+							m=-1;break;
+					}
+				} else { //栈顶元素为E&#39;,T&#39;
+					switch(stack[l-1]) {
+						case&#39;E&#39;:
+							m=1; break;
+						case &#39;T&#39;:
+							m=3;break;
+						default:
+							m=-1;break;
+					}
+				}/* if(stack[l]) == &#39;&#39;&#39;*/
+			}/*if stack[l] != ch*/
+			
+			if(m != -1) { //栈顶元素为任一非终结符
+				if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
+					if(stack[l] == &#39;i&#39; || 
+							stack[l] == &#39;+&#39; || 
+							stack[l] == &#39;*&#39; || 
+							stack[l] == &#39;(&#39; || 
+							stack[l] == &#39;)&#39;) {
+						l=l+1;
+						printf(&amp;quot;%c被弹出&amp;quot;,ch);
+						step+=1;
+						//break;
+					}
+
+
+					action=ll1[m][j]; //根据非终结符和终结符得到产生式动作
+					if(action == 1) {
+						printf(&amp;quot;输出E→TE&#39;\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;T&#39;;
+						stack[l-1]=39;
+						stack[l-2]=&#39;E&#39;;
+						step=step+1;
+						
+					} else if(action == 2) {
+						printf(&amp;quot;输出E&#39;→+TE&#39;\n&amp;quot;);
+						n=4;
+						l=l+n-2;
+						stack[l]=&#39;+&#39;;
+						stack[l-1]=&#39;T&#39;;
+						stack[l-2]=39;
+						stack[l-3]=&#39;E&#39;;
+						step = step+1;
+
+					} else if(action == 3) {
+						printf(&amp;quot;输出E&#39;→𝜀\n&amp;quot;);
+						l=l-2;//无任何元素入栈
+						step=step+1;
+
+					} else if(action == 4) {
+						printf(&amp;quot;输出T→FT&#39;\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;F&#39;;
+						stack[l-1]=39;
+						stack[l-2]=&#39;T&#39;;
+						step = step+1;
+					} else if(action == 5) {
+						printf(&amp;quot;输出T&#39;→*FT&#39;\n&amp;quot;);
+						n=4;
+						l=l+n-2;
+						stack[l]=&#39;*&#39;;
+						stack[l-1]=&#39;F&#39;;
+						stack[l-2]=39;
+						stack[l-3]=&#39;T&#39;;
+						step = step+1;
+					} else if(action == 6) {
+						printf(&amp;quot;输出T&#39;→𝜀\n&amp;quot;);
+						l=l-2;
+						step = step+1;
+					} else if(action == 7) {
+						printf(&amp;quot;输出F→(E)\n&amp;quot;);
+						n=3;
+						l=l+n-1;
+						stack[l]=&#39;(&#39;;
+						stack[l-1]=&#39;E&#39;;
+						stack[l-2]=&#39;)&#39;;
+						step = step+1;
+					} else if(action == 8) {
+						printf(&amp;quot;输出F→i\n&amp;quot;);
+						n=1;
+						l=l+n-1;
+						stack[l]=&#39;i&#39;;
+						step=step+1;
+					} else if(action == 0){
+						printf(&amp;quot;出错：跳过%c\n&amp;quot;,ch);
+						k+=1;
+						step+=1;
+					} else if(action == 99) {
+						if(m==0 || m==2 || m==4) {
+							printf(&amp;quot;出错：%c正好在%c的同步记号集合中，
+									无需跳过任何记号;%c被弹出\n&amp;quot;,
+									ch,stack[l],stack[l]);
+							l=l-1;
+						}
+						else if(m==1 || m==3) {
+							printf(&amp;quot;出错：%c正好在%c%c的同步记号集合中
+									，无需跳过任何记号;%c%c被弹出\n&amp;quot;,
+									ch,stack[l-1],stack[l],stack[l-1],stack[l]);
+							l=l-2;
+						}
+						else
+							printf(&amp;quot;不是正确的非终结符\n&amp;quot;);
+					} else {
+						printf(&amp;quot;未定义的错误&amp;quot;);	
+					}//判断查表所得的动作
+
+				} else { // 栈顶元素和当前看到的字符匹配
+					if(ch == &#39;$&#39; &amp;amp;&amp;amp; stack[l] == &#39;$&#39;) {
+						printf(&amp;quot;分析成功，结束\n&amp;quot;);
+						exit(0);
+					} else {
+						printf(&amp;quot;匹配%c\n&amp;quot;,ch);
+						l=l-1; //栈的大小减一
+						k=k+1; //输入指针调整
+						step+=1;
+					}
+				}
+			} else {
+				printf(&amp;quot;出错，跳过\n&amp;quot;);
+				exit(0);
+			} 
+		} else { //没有看到正确的终结符
+			printf(&amp;quot;错误的终结符\n&amp;quot;);
+			exit(0);
+		}
+	} while(l&amp;gt;=0); //栈大小
+
+	return 0;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>LeetCode mySql</title>
+      <link>https://cheioKID.github.io/post/note/leetcode-sql/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/leetcode-sql/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;175&#34;&gt;175&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT FirstName, LAStName, City, State
+FROM person 
+LEFT JOIN address ON person.personID = address.personID;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;左外连接，除去address中person没有的元祖 ```&lt;/p&gt;
+
+&lt;h2 id=&#34;176&#34;&gt;176&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT max(Salary) AS SecondHighestSalary
+FROM Employee 
+WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```&lt;/p&gt;
+
+&lt;h2 id=&#34;177&#34;&gt;177&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;CREATE FUNCTION getNthHighestSalary(N INT)
+RETURNS INT
+BEGIN
+	RETURN(SELECT DISTINCT c.salary
+	FROM(SELECT a.salary AS salary, (SELECT 		COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row 
+	FROM employee AS a) AS c
+	WHEREc._row = n);
+END 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;和rank那题思路类似，如果表自身连接，有n条不重复的记录大于等于某个值，那么某个值就是第n高的记录，外层查询的范围是不相关子查询的结果，注意列的别名必须匹配外层查询的字段，而且子查询返回的表必须有别名才能在外层查询中查询，否则会报错&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;CREATE FUNCTION getNthHighestSalary(N INT)
+RETURNS INT
+BEGIN
+	SET n = n-1;
+	RETURN(SELECT DISTINCT Salary 
+	FROM employee ORDER BY salary DESC limit n,1);
+END
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;因为limit的第一个参数是某行相对第一行的偏移量，所以函数参数n要先减一，返回结果为salary从高到低排序，第n行记录，只取一行&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;178&#34;&gt;178&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT Score,(SELECT COUNT(DISTINCT score) 
+	FROM scores WHEREscore &amp;gt;= a.score) AS Rank
+FROM scores AS a
+ORDER BY score DESC
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;外层查询遍历表scores的记录，每一次获得一条记录的score值x，传递到相关子查询，相关子查询遍历得到n条不重复的记录的score值小于等于x，那么该score值x的rank就为n，因此得到score值对应的rank，然后按score值降序&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;180&#34;&gt;180&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT DISTINCT a.num AS ConsecutiveNums
+FROM logs AS a, logs AS b, logs AS c
+WHERE a.id + 1 = b.id AND b.id + 1 = c.id 
+AND a.num = b.num AND b.num = c.num
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;a表与b表连接，因为是连续重复的，所以id值的差都为1，重复三行只需要表连接两次。如果记录连续重复超过3行，结果会出现重复所以要加distinct&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;181&#34;&gt;181&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT a.name AS Employee
+FROM Employee AS a, Employee AS b
+WHERE a.ManagerId = b.Id AND a.Salary &amp;gt;b.salary;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;等值连接，表自身连接&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;182&#34;&gt;182&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT Email
+FROM Person
+GROUP BY Email
+HAVING COUNT(Email) &amp;gt;= 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;查找重复的邮箱，只要count(邮箱)&amp;gt;=2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;183&#34;&gt;183&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT name AS Customers
+FROM Customers
+WHERE Customers.ID NOT IN
+(SELECT CustomerId FROM Orders);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;CustomersId在Order中无记录就是没点餐&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;184&#34;&gt;184&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT Department.name AS Department, 
+Employee.name AS Employee, Salary
+FROM Department, Employee
+WHERE Employee.DepartmentId = Department.Id
+AND (DepartmentId, Salary) IN
+	(SELECTDepartmentId, MAX(Salary) FROM Employee GROUP BY DepartmentId);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;子查询获得以部门号分组的salary最大值和对应的部门号，外层查询满足WHERE中条件的结果应在子查询结果集中&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;185&#34;&gt;185&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT b.name AS Department, a.name ASEmployee, Salary
+FROM employee AS a, department AS b
+WHERE a.departmentId = b.id
+AND (SELECT COUNT(DISTINCT salary) FROM employee WHERE departmentid = a.departmentid AND salary &amp;gt; a.salary) &amp;lt; 3
+ORDER BY a.departmentID ASC, a.salary DESC
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;两表等值连接，相关子查询得到大于某个salary值的count不超过三，就可以得到前3高的salary，最后按departmentID升序(默认升序)，按salary降序&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;196&#34;&gt;196&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;DELETE b FROM person AS a, person AS b
+WHERE a.email = b.email AND a.id &amp;lt; b.id
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;person表中email值相同的元组自身连接，如果连接后的记录存在email相同但是id不同，则删除id值更大的那一条记录&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;197&#34;&gt;197&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT b.Id FROM weather AS a, weather AS b
+WHERE TO_DAYS(a.date) - TO_DAYS(b.date) =-1 
+AND a.temperature &amp;lt; b.temperature
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;weather表自身连接，TO_DAYS函数将date类型转换成一个int类型的数，得出日期之间的偏移量，如果a中某记录比b的日期早一天，且a中记录的temperature小于b中temperature，则b中记录在结果集中&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;262&#34;&gt;262&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-SQL&#34;&gt;SELECT request_at AS Day, 
+ROUND(SUM(CASE WHEN status LIKE&#39;cancelled_%&#39; THEN 1 ELSE 0 END)/COUNT(status),2) AS &#39;Cancellation Rate&#39;
+FROM trips, users
+WHERE client_id = users_id AND banned =&#39;no&#39; AND request_at BETWEEN &#39;2013-10-01&#39; AND &#39;2013-10-03&#39;
+GROUP BY request_at 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;先两表等值连接，满足条件的记录中分组计算取消比率，可以用sum函数（或者也可以用count(if())但是没试过），得出cancalled的记录数量，除以status的总数就是取消比率&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Creating a New Theme</title>
       <link>https://cheioKID.github.io/post/creating-a-new-theme/</link>
       <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
@@ -4058,6 +4613,284 @@ func main()
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(&amp;quot;Hello, World!&amp;quot;) 
 &lt;/code&gt;&lt;/pre&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/embedded-system/ubuntu-kernel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/embedded-system/ubuntu-kernel/</guid>
+      
+        <description>&lt;p&gt;Ubuntu 内核&lt;/p&gt;
+
+&lt;p&gt;修改源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak
+sudo vim /etc/apt/sources.list
+deb http://security.ubuntu.com/ubuntu trusty-security main
+sudo apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安装内核3.16&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install linux-image-extra-3.16.0-43-generic
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看内核是否安装&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;dpkg -l | grep 3.16.0-43-generic
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改grub&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo gedit /etc/default/grub
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将&lt;code&gt;GRUB_DEFAULT=0&lt;/code&gt;替换为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot;
+#一级菜单选项1下的第4个选项
+#默认选择
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注释这一行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#GRUB_HIDDEN_TIMEOUT=0
+#注释这一行
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更新grub&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo update-grub
+sudo reboot
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/embedded-system/cross-compile/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/embedded-system/cross-compile/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;安装交叉编译&#34;&gt;安装交叉编译&lt;/h2&gt;
+
+&lt;h4 id=&#34;克隆编译器&#34;&gt;克隆编译器&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/xupsh/CodeSourcery.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Sourcery CodeBench contains the complete GNUToolchain including all of the following components:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CodeSourcery Debug Sprite for ARM&lt;br /&gt;
+  GNU Binary Utilities (Binutils)
+  GNU C Compiler (GCC)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;GNU C Library (GLIBC)
+  GNU C++ Compiler (G++)&lt;br /&gt;
+  GNU C++ Runtime Library (Libstdc++)
+  GNU Debug Server (GDBServer)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;GNU Debugger (GDB)Visit:  &lt;a href=&#34;http://www.codesourcery.comto&#34;&gt;http://www.codesourcery.comto&lt;/a&gt; access the Sourcery CodeBench support website.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;####设置环境变量&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export CROSS_COMPILE=arm-xilinx-linux-gnueabi-
+export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;####可能出现的错误：
+./arm-none-linux-gnueabi-gcc: 没有那个文件或目录
+&amp;gt; LSB（Linux Standards Base）是一套核心标准，它保证了LINUX发行版同LINUX应用程序之间的良好结合&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install lsb-core
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;安装完成-执行&#34;&gt;安装完成，执行&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看到正确的输出&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;gcc version 4.7.2 (Sourcery CodeBench Lite 2012.09-104)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;可以进行交叉编译&#34;&gt;可以进行交叉编译&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -o b testcp.c
+# 但是会出现bash识别不了的错误
+# 采用静态库编译可以成功运行
+arm-xilinx-linux-gnueabi-gcc -static -o c testcp.c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;安装文件&#34;&gt;安装文件&lt;/h4&gt;
+
+&lt;p&gt;如果不采用git，也有安装文件&lt;/p&gt;
+
+&lt;p&gt;下载地址&lt;a href=&#34;https://pan.baidu.com/s/1nvMWAHN&#34;&gt;百度网盘&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;但是没有试过&lt;/p&gt;
+
+&lt;h2 id=&#34;交叉编译opencv&#34;&gt;交叉编译opencv&lt;/h2&gt;
+
+&lt;p&gt;####make-gui
+&lt;code&gt;Configure&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;generator为&lt;code&gt;Unix Makefiles&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;arm-linux&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-gcc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Target Root&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;####修改cmake的配置&lt;/p&gt;
+
+&lt;p&gt;cmake配置修改工作如下：&lt;/p&gt;
+
+&lt;p&gt;​    （1）加上BUILD_PNG和BUILD_JPEG&lt;/p&gt;
+
+&lt;p&gt;​    （2）去掉WITH_TIFF，WITH_OPENEXR和BUILD_EXAMPLES&lt;/p&gt;
+
+&lt;p&gt;​    （3）修改CMAKE_BUILD_TYPE为Release&lt;/p&gt;
+
+&lt;p&gt;​    （4）修改CMAKE_INSTALL_PREFIX为/home/cheio/opencv/opencv-arm&lt;/p&gt;
+
+&lt;p&gt;重新Configure, Generate，生成makefile文件。&lt;/p&gt;
+
+&lt;p&gt;如果编译静态库：取消勾选&lt;code&gt;BUILD_SHARED_LIBS&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;####修改编译配置&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;改为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING= -lpthread -lrt -ldl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;进行编译&lt;/p&gt;
+
+&lt;h4 id=&#34;could-not-read-symbols错误&#34;&gt;Could not read symbols错误&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;../../3rdparty/lib/libzlib.a: could not read symbols: Bad value
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;进入opencv目录下的3rdparty的对应目录CMakeFiles下的每个&lt;code&gt;.dir&lt;/code&gt;目录中，打开&lt;code&gt;flags.make&lt;/code&gt;，在C_FLAGS = 后添加&lt;code&gt;-O3 -fPIC&lt;/code&gt;用来支持在64位机上编译
+如../3rdparty/zlib/CMakeFiles/zlib.dir/flags.make
+修改&lt;code&gt;C_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;
+和
+修改&lt;code&gt;CXX_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;安装&#34;&gt;安装&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;拷到开发板/lib&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_*  /media/cheio/EXT/lib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;拷到arm编译器lib&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_* /home/cheio/CrossCompile/CodeSourcery/arm-xilinx-linux-gnueabi/lib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;arm编译test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -statc -o test test.cpp
+# 静态库编译
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls /dev | grep ttyUSB
+# 用minicom连接 115200
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cheio@cuvm:~/test$ arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+g++ -Wno-psabi -I /usr/include/ -L /usr/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+
+g++ -Wno-psabi -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_core
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_highgui
+collect2: error: ld returned 1 exit status
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a /home/cheio/opencv/opencv-arm/lib/libopencv_imgproc.a -lpthread -lrt -ldl -static -o test-read test-read.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a -lpthread -lrt -ldl -static test.cpp -o test
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /usr/local/opencv/install_opencv/include/opencv/ -L /usr/local/opencv/install_opencv/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -o test test.cpp
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;# Package Information for pkg-config
+prefix=/home/cheio/opencv/opencv-arm
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir_old=${prefix}/include/opencv
+includedir_new=${prefix}/include
+Name: OpenCV
+Description: Open Source Computer Vision Library
+Version: 2.4.10
+Libs: -L${libdir} -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann
+cflags: -I${includedir_old} -I${includedir_new}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+export PKG_CONFIG_PATH
+arm-xilinx-linux-gnueabi-g++ `pkg-config --cflags opencv-arm` `pkg-config –libs opencv-arm` -lpthread -lrt -static -o test-read test-read.cpp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-makefile&#34;&gt;CC = /home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++
+#AR = /usr/bin/arm-linux-gnueabihf-ar
+CFLAGS += -I./include
+LDFLAGS = -lstdc++  -lrt -lpthread
+LDFLAGS += -L./libs/opencv -lopencv_core -lopencv_highgui -lopencv_imgproc -lm
+LDFLAGS += -L./libs/3rd -lzlib
+ 
+TARGET =  test-read
+#TARGET = libXXX.a
+(TARGET) : test-read.o
+	$(CC) -o $(TARGET) $^ $(LDFLAGS) -static
+       #$(AR) r $(TARGET) $^
+ 
+test.o: test-read.cpp
+	$(CC) -c $(CFLAGS) $^
+ 
+clean :
+	rm -rf test-read.o $(TARGET)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+&lt;/code&gt;&lt;/pre&gt;
+</description>
       
     </item>
     

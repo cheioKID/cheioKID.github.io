@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysql on cheio</title>
+    <link>https://cheioKID.github.io/tags/mysql/</link>
+    <description>Recent content in Mysql on cheio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 29 Mar 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LeetCode mySql</title>
+      <link>https://cheioKID.github.io/post/note/leetcode-sql/</link>
+      <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/leetcode-sql/</guid>
+      <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的</description>
+    </item>
+    
+  </channel>
+</rss>
