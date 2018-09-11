@@ -1821,9 +1821,9 @@ __double underscores__
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git commit&lt;/code&gt;提交修改，&lt;code&gt;git commit -m “commit name&amp;quot;&lt;/code&gt; 为本次commit命名&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add . # add all
-git add   # add changed files
-# use git rm --cached &amp;lt;file&amp;gt; to unstage
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git add. # add changed files
+git rm --cached &amp;lt;file&amp;gt; # delete from git
+git checkout &amp;lt;file&amp;gt; # get back the file
 git status
 git commit -m &#39;Initial commit&#39;
 &lt;/code&gt;&lt;/pre&gt;
@@ -1833,15 +1833,17 @@ git commit -m &#39;Initial commit&#39;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;git log &amp;ndash;pretty=oneline breif info`&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;git log &amp;ndash;pretty=oneline breif info`&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;回退&#34;&gt;回退&lt;/h3&gt;&lt;/li&gt;
+&lt;h3 id=&#34;回退&#34;&gt;回退&lt;/h3&gt;
 
+&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git reset --hard HEAD^&lt;/code&gt;回退到上一个版本，撤销最近一次commit &lt;code&gt;HEAD&lt;/code&gt;代表当前版本，&lt;code&gt;HEAD^&lt;/code&gt;代表当前版本的上一个版本，&lt;code&gt;HEAD^^&lt;/code&gt;代表当前版本的上一个版本的上一个版本&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git reset —hard &amp;lt;commit-id&amp;gt;&lt;/code&gt;回退到指定id的版本&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;分支&#34;&gt;分支&lt;/h3&gt;

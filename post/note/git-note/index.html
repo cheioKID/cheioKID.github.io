@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2017-11-21T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-11-21T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="994">
+<meta itemprop="wordCount" content="995">
 
 
 
@@ -162,7 +162,7 @@
               <a href="/categories/git/"> Git </a>
             
           </div>
-        <span class="more-meta"> 994 words </span>
+        <span class="more-meta"> 995 words </span>
         <span class="more-meta"> 2 min read </span>
       </div>
     </header>
@@ -220,9 +220,9 @@
 <li><p>通过<code>git commit</code>提交修改，<code>git commit -m “commit name&quot;</code> 为本次commit命名</p></li>
 </ul>
 
-<pre><code class="language-bash">git add . # add all
-git add   # add changed files
-# use git rm --cached &lt;file&gt; to unstage
+<pre><code class="language-bash">git add. # add changed files
+git rm --cached &lt;file&gt; # delete from git
+git checkout &lt;file&gt; # get back the file
 git status
 git commit -m 'Initial commit'
 </code></pre>
@@ -232,15 +232,17 @@ git commit -m 'Initial commit'
 <ul>
 <li><p>通过<code>git log</code>查看版本控制记录，即<strong>commit历史记录</strong></p></li>
 
-<li><p>git log &ndash;pretty=oneline breif info`</p>
+<li><p>git log &ndash;pretty=oneline breif info`</p></li>
+</ul>
 
-<h3 id="回退">回退</h3></li>
+<h3 id="回退">回退</h3>
 
+<ul>
 <li><p>通过<code>git reset --hard HEAD^</code>回退到上一个版本，撤销最近一次commit <code>HEAD</code>代表当前版本，<code>HEAD^</code>代表当前版本的上一个版本，<code>HEAD^^</code>代表当前版本的上一个版本的上一个版本</p></li>
 
 <li><p>通过<code>git reset —hard &lt;commit-id&gt;</code>回退到指定id的版本</p></li>
 
-<li><p>通过<code>git checkout -- &lt;filename&gt;</code>撤销工作区的修改</p></li>
+<li><p>通过<code>git checkout &lt;filename&gt;</code>撤销工作区的修改</p></li>
 </ul>
 
 <h3 id="分支">分支</h3>
