@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Cross Compile for Arm - cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C&#43;&#43; Compiler (G&#43;&#43;) GNU C&#43;&#43; Runtime Library (Libstdc&#43;&#43;) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/cs/cross-compile/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Cross Compile for Arm" />
+<meta property="og:description" content="安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C&#43;&#43; Compiler (G&#43;&#43;) GNU C&#43;&#43; Runtime Library (Libstdc&#43;&#43;) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/cs/cross-compile/" />
+
+
+
+<meta property="article:published_time" content="2018-07-03T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-07-03T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Cross Compile for Arm">
+<meta itemprop="description" content="安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C&#43;&#43; Compiler (G&#43;&#43;) GNU C&#43;&#43; Runtime Library (Libstdc&#43;&#43;) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境">
+
+
+<meta itemprop="datePublished" content="2018-07-03T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-03T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1068">
+
+
+
+<meta itemprop="keywords" content="Embedded System,Arm," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cross Compile for Arm"/>
+<meta name="twitter:description" content="安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C&#43;&#43; Compiler (G&#43;&#43;) GNU C&#43;&#43; Runtime Library (Libstdc&#43;&#43;) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Cross Compile for Arm</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-03 </span>
+        <div class="post-category">
+            
+              <a href="/categories/cs/"> CS </a>
+            
+          </div>
+        <span class="more-meta"> 1068 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#安装交叉编译">安装交叉编译</a>
+<ul>
+<li>
+<ul>
+<li><a href="#克隆编译器">克隆编译器</a></li>
+<li><a href="#设置环境变量">设置环境变量</a></li>
+<li><a href="#可能出现的错误">可能出现的错误：</a></li>
+<li><a href="#安装完成-执行">安装完成，执行</a></li>
+<li><a href="#可以进行交叉编译">可以进行交叉编译</a></li>
+<li><a href="#安装文件">安装文件</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#交叉编译opencv">交叉编译opencv</a>
+<ul>
+<li>
+<ul>
+<li><a href="#make-gui">make-gui</a></li>
+<li><a href="#修改cmake的配置">修改cmake的配置</a></li>
+<li><a href="#修改编译配置">修改编译配置</a></li>
+<li><a href="#could-not-read-symbols错误">Could not read symbols错误</a></li>
+<li><a href="#安装">安装</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="安装交叉编译">安装交叉编译</h2>
+
+<h4 id="克隆编译器">克隆编译器</h4>
+
+<pre><code class="language-bash">git clone https://github.com/xupsh/CodeSourcery.git
+</code></pre>
+
+<blockquote>
+<p>Sourcery CodeBench contains the complete GNUToolchain including all of the following components:</p>
+
+<ul>
+<li>CodeSourcery Debug Sprite for ARM<br />
+  GNU Binary Utilities (Binutils)
+  GNU C Compiler (GCC)<br /></li>
+<li>GNU C Library (GLIBC)
+  GNU C++ Compiler (G++)<br />
+  GNU C++ Runtime Library (Libstdc++)
+  GNU Debug Server (GDBServer)<br /></li>
+<li>GNU Debugger (GDB)Visit:  <a href="http://www.codesourcery.comto">http://www.codesourcery.comto</a> access the Sourcery CodeBench support website.</li>
+</ul>
+</blockquote>
+
+<h4 id="设置环境变量">设置环境变量</h4>
+
+<pre><code class="language-bash">export CROSS_COMPILE=arm-xilinx-linux-gnueabi-
+export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH
+</code></pre>
+
+<h4 id="可能出现的错误">可能出现的错误：</h4>
+
+<p>./arm-none-linux-gnueabi-gcc: 没有那个文件或目录
+&gt; LSB（Linux Standards Base）是一套核心标准，它保证了LINUX发行版同LINUX应用程序之间的良好结合</p>
+
+<pre><code class="language-bash">sudo apt-get install lsb-core
+</code></pre>
+
+<h4 id="安装完成-执行">安装完成，执行</h4>
+
+<pre><code class="language-bash">arm-xilinx-linux-gnueabi-gcc -v
+</code></pre>
+
+<p>可以看到正确的输出</p>
+
+<pre><code class="language-plain">gcc version 4.7.2 (Sourcery CodeBench Lite 2012.09-104)
+</code></pre>
+
+<h4 id="可以进行交叉编译">可以进行交叉编译</h4>
+
+<pre><code class="language-bash">arm-xilinx-linux-gnueabi-gcc -o b testcp.c
+# 但是会出现bash识别不了的错误
+# 采用静态库编译可以成功运行
+arm-xilinx-linux-gnueabi-gcc -static -o c testcp.c
+</code></pre>
+
+<h4 id="安装文件">安装文件</h4>
+
+<p>如果不采用git，也有安装文件</p>
+
+<p>下载地址<a href="https://pan.baidu.com/s/1nvMWAHN">百度网盘</a></p>
+
+<p>但是没有试过</p>
+
+<h2 id="交叉编译opencv">交叉编译opencv</h2>
+
+<h4 id="make-gui">make-gui</h4>
+
+<p><code>Configure</code></p>
+
+<p>generator为<code>Unix Makefiles</code></p>
+
+<p><code>arm-linux</code></p>
+
+<p><code>/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-gcc</code></p>
+
+<p><code>/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++</code></p>
+
+<p>Target Root<code>/home/cheio/CrossCompile/CodeSourcery/bin</code></p>
+
+<h4 id="修改cmake的配置">修改cmake的配置</h4>
+
+<p>cmake配置修改工作如下：</p>
+
+<pre><code>（1）加上BUILD_PNG和BUILD_JPEG
+
+（2）去掉WITH_TIFF，WITH_OPENEXR和BUILD_EXAMPLES
+
+（3）修改CMAKE_BUILD_TYPE为Release
+
+（4）修改CMAKE_INSTALL_PREFIX为/home/cheio/opencv/opencv-arm
+</code></pre>
+
+<p>重新Configure, Generate，生成makefile文件。</p>
+
+<p>如果编译静态库：取消勾选<code>BUILD_SHARED_LIBS</code></p>
+
+<h4 id="修改编译配置">修改编译配置</h4>
+
+<pre><code class="language-cmake">//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING=
+</code></pre>
+
+<p>改为</p>
+
+<pre><code class="language-cmake">//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING= -lpthread -lrt -ldl
+</code></pre>
+
+<pre><code class="language-bash">make
+</code></pre>
+
+<p>进行编译</p>
+
+<h4 id="could-not-read-symbols错误">Could not read symbols错误</h4>
+
+<pre><code class="language-plain">../../3rdparty/lib/libzlib.a: could not read symbols: Bad value
+</code></pre>
+
+<p>进入opencv目录下的3rdparty的对应目录CMakeFiles下的每个<code>.dir</code>目录中，打开<code>flags.make</code>，在C_FLAGS = 后添加<code>-O3 -fPIC</code>用来支持在64位机上编译
+如../3rdparty/zlib/CMakeFiles/zlib.dir/flags.make
+修改<code>C_FLAGS =  -W -Wall</code>为 <code>C_FLAGS =  -O3 -fPIC  -W -Wall</code>
+和
+修改<code>CXX_FLAGS =  -W -Wall</code>为 <code>C_FLAGS =  -O3 -fPIC  -W -Wall</code></p>
+
+<h4 id="安装">安装</h4>
+
+<pre><code>make install
+</code></pre>
+
+<p>拷到开发板/lib</p>
+
+<pre><code class="language-bash">sudo cp -d libopencv_*  /media/cheio/EXT/lib
+</code></pre>
+
+<p>拷到arm编译器lib</p>
+
+<pre><code class="language-bash">sudo cp -d libopencv_* /home/cheio/CrossCompile/CodeSourcery/arm-xilinx-linux-gnueabi/lib
+</code></pre>
+
+<p>arm编译test</p>
+
+<pre><code class="language-bash">arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -statc -o test test.cpp
+# 静态库编译
+</code></pre>
+
+<pre><code class="language-bash">ls /dev | grep ttyUSB
+# 用minicom连接 115200
+</code></pre>
+
+<pre><code class="language-bash">cheio@cuvm:~/test$ arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+g++ -Wno-psabi -I /usr/include/ -L /usr/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+
+g++ -Wno-psabi -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_core
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_highgui
+collect2: error: ld returned 1 exit status
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a /home/cheio/opencv/opencv-arm/lib/libopencv_imgproc.a -lpthread -lrt -ldl -static -o test-read test-read.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a -lpthread -lrt -ldl -static test.cpp -o test
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /usr/local/opencv/install_opencv/include/opencv/ -L /usr/local/opencv/install_opencv/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -o test test.cpp
+
+
+</code></pre>
+
+<pre><code># Package Information for pkg-config
+prefix=/home/cheio/opencv/opencv-arm
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir_old=${prefix}/include/opencv
+includedir_new=${prefix}/include
+Name: OpenCV
+Description: Open Source Computer Vision Library
+Version: 2.4.10
+Libs: -L${libdir} -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann
+cflags: -I${includedir_old} -I${includedir_new}
+</code></pre>
+
+<pre><code class="language-bash">PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+export PKG_CONFIG_PATH
+arm-xilinx-linux-gnueabi-g++ `pkg-config --cflags opencv-arm` `pkg-config –libs opencv-arm` -lpthread -lrt -static -o test-read test-read.cpp
+</code></pre>
+
+<pre><code class="language-makefile">CC = /home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++
+#AR = /usr/bin/arm-linux-gnueabihf-ar
+CFLAGS += -I./include
+LDFLAGS = -lstdc++  -lrt -lpthread
+LDFLAGS += -L./libs/opencv -lopencv_core -lopencv_highgui -lopencv_imgproc -lm
+LDFLAGS += -L./libs/3rd -lzlib
+ 
+TARGET =  test-read
+#TARGET = libXXX.a
+(TARGET) : test-read.o
+	$(CC) -o $(TARGET) $^ $(LDFLAGS) -static
+       #$(AR) r $(TARGET) $^
+ 
+test.o: test-read.cpp
+	$(CC) -c $(CFLAGS) $^
+ 
+clean :
+	rm -rf test-read.o $(TARGET)
+</code></pre>
+
+<pre><code class="language-bash">export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+</code></pre>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-07-03</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/embedded-system/">Embedded System</a>
+          
+          <a href="/tags/arm/">Arm</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/note/java-ftp/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java FTP timeout Solution</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/cs/ubuntu-kernel/">
+            <span class="next-text nav-default">Install more than one Kernel for Ubuntu Linux</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

@@ -174,6 +174,62 @@
     
       <article class="post bg-white">
   <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cs/cross-compile/">Cross Compile for Arm</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-07-03 </span>
+      <div class="post-category">
+          
+            <a href="/categories/cs/"> CS </a>
+          
+        </div>
+      <span class="more-meta"> 1068 words </span>
+      <span class="more-meta"> 3 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境
+    </div>
+    <div class="read-more">
+      <a href="/post/cs/cross-compile/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cs/ubuntu-kernel/">Install more than one Kernel for Ubuntu Linux</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-07-02 </span>
+      <div class="post-category">
+          
+            <a href="/categories/cs/"> CS </a>
+          
+        </div>
+      <span class="more-meta"> 113 words </span>
+      <span class="more-meta"> 1 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替
+    </div>
+    <div class="read-more">
+      <a href="/post/cs/ubuntu-kernel/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/cs/ll1/">LL(1) Grammer</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-06-15 </span>
@@ -202,7 +258,7 @@
     
       <article class="post bg-white">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/mad-max/">Mad Max: Fury Road</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/movie/mad-max/">Mad Max: Fury Road</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-06-15 </span>
       <div class="post-category">
@@ -221,7 +277,7 @@
       Max和Furiosa以及其他同伴之间的友情 Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。 只剩三发
     </div>
     <div class="read-more">
-      <a href="/post/mad-max/" class="read-more-link">Read more</a>
+      <a href="/post/movie/mad-max/" class="read-more-link">Read more</a>
     </div>
     
   </div>
@@ -278,70 +334,6 @@
     </div>
     <div class="read-more">
       <a href="/post/algorithm/cycling-competition/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/note/deploy-hugo/">Deploy Hugo on github.io</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-25 </span>
-      <div class="post-category">
-          
-            <a href="/categories/note/"> note </a>
-          
-        </div>
-      <span class="more-meta"> 171 words </span>
-      <span class="more-meta"> 1 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Finally it works!
- Here&rsquo;s the steps generate new blogs hugo new site blogs cd blogs git init git remote add origin git@github.com:cheioKID/Blogs.git  change the baseURL to github.io baseurl = &quot;https://cheioKID.github.io/&quot;  apple the theme git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane cp -r themes/jane/exampleSite/content ./ cp themes/jane/exampleSite/config.toml ./  add markdown files with head like this
---- title: &quot;For example&quot; date: 2018-3-25 #lastmod: 2017-08-31T15:43:48+08:00 draft: false tags: [&quot;preview&quot;, &quot;English&quot;, &quot;tag-2&quot;] categories: [&quot;English&quot;, &quot;index&quot;] author: &quot;cheio&quot; ---  or
-    </div>
-    <div class="read-more">
-      <a href="/post/note/deploy-hugo/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jane-theme-preview/">Jane Theme Preview</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-06 </span>
-      <div class="post-category">
-          
-            <a href="/categories/shortcodes/"> shortcodes </a>
-          
-            <a href="/categories/index/"> index </a>
-          
-        </div>
-      <span class="more-meta"> 1380 words </span>
-      <span class="more-meta"> 7 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      <p><strong>Markdown</strong> is created by <a href="http://daringfireball.net/">Daring Fireball</a>, the original guideline is <a href="http://daringfireball.net/projects/markdown/syntax">here</a>. Its syntax, however, varies between different parsers or editors.</p>
-
-<p>Please note that HTML fragments in markdown source will be recognized but not parsed or rendered. Also, there may be small reformatting on the original markdown source code after saving.</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jane-theme-preview/" class="read-more-link">Read more</a>
     </div>
     
   </div>

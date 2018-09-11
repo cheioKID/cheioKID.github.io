@@ -13,10 +13,10 @@
     
     <item>
       <title>LeetCode mySql</title>
-      <link>https://cheioKID.github.io/post/note/leetcode-sql/</link>
+      <link>https://cheioKID.github.io/post/cs/leetcode-sql/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/post/note/leetcode-sql/</guid>
+      <guid>https://cheioKID.github.io/post/cs/leetcode-sql/</guid>
       <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的</description>
     </item>
     

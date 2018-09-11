@@ -55,7 +55,7 @@
 
 
 
-<meta property="og:updated_time" content="2018-03-04T16:01:23&#43;08:00"/>
+<meta property="og:updated_time" content="2018-03-25T00:00:00&#43;00:00"/>
 
 
 
@@ -143,6 +143,70 @@
   <section id="posts" class="posts">
     
     
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/note/deploy-hugo/">Deploy Hugo on github.io</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-03-25 </span>
+      <div class="post-category">
+          
+            <a href="/categories/note/"> note </a>
+          
+        </div>
+      <span class="more-meta"> 171 words </span>
+      <span class="more-meta"> 1 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Finally it works!
+ Here&rsquo;s the steps generate new blogs hugo new site blogs cd blogs git init git remote add origin git@github.com:cheioKID/Blogs.git  change the baseURL to github.io baseurl = &quot;https://cheioKID.github.io/&quot;  apple the theme git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane cp -r themes/jane/exampleSite/content ./ cp themes/jane/exampleSite/config.toml ./  add markdown files with head like this
+--- title: &quot;For example&quot; date: 2018-3-25 #lastmod: 2017-08-31T15:43:48+08:00 draft: false tags: [&quot;preview&quot;, &quot;English&quot;, &quot;tag-2&quot;] categories: [&quot;English&quot;, &quot;index&quot;] author: &quot;cheio&quot; ---  or
+    </div>
+    <div class="read-more">
+      <a href="/post/note/deploy-hugo/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/jane-theme-preview/">Jane Theme Preview</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-03-06 </span>
+      <div class="post-category">
+          
+            <a href="/categories/shortcodes/"> shortcodes </a>
+          
+            <a href="/categories/index/"> index </a>
+          
+        </div>
+      <span class="more-meta"> 1380 words </span>
+      <span class="more-meta"> 7 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      <p><strong>Markdown</strong> is created by <a href="http://daringfireball.net/">Daring Fireball</a>, the original guideline is <a href="http://daringfireball.net/projects/markdown/syntax">here</a>. Its syntax, however, varies between different parsers or editors.</p>
+
+<p>Please note that HTML fragments in markdown source will be recognized but not parsed or rendered. Also, there may be small reformatting on the original markdown source code after saving.</p>
+
+<p></p>
+    </div>
+    <div class="read-more">
+      <a href="/post/jane-theme-preview/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
     
       <article class="post bg-white">
   <header class="post-header">
@@ -282,7 +346,7 @@
     
       <article class="post bg-white">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/note/leetcode-sql/">LeetCode mySql</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/cs/leetcode-sql/">LeetCode mySql</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2017-03-29 </span>
       <div class="post-category">
@@ -301,73 +365,7 @@
       175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的
     </div>
     <div class="read-more">
-      <a href="/post/note/leetcode-sql/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/creating-a-new-theme/">Creating a New Theme</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2014-09-28 </span>
-      <div class="post-category">
-          
-            <a href="/categories/development/"> Development </a>
-          
-            <a href="/categories/golang/"> golang </a>
-          
-            <a href="/categories/index/"> index </a>
-          
-        </div>
-      <span class="more-meta"> 7232 words </span>
-      <span class="more-meta"> 34 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.
-We&rsquo;ll start with creating a new site with a very basic template.
-    </div>
-    <div class="read-more">
-      <a href="/post/creating-a-new-theme/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/goisforlovers/">(Hu)go Template Primer</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2014-04-02 </span>
-      <div class="post-category">
-          
-            <a href="/categories/development/"> Development </a>
-          
-            <a href="/categories/golang/"> golang </a>
-          
-            <a href="/categories/index/"> index </a>
-          
-        </div>
-      <span class="more-meta"> 1488 words </span>
-      <span class="more-meta"> 7 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.
-    </div>
-    <div class="read-more">
-      <a href="/post/goisforlovers/" class="read-more-link">Read more</a>
+      <a href="/post/cs/leetcode-sql/" class="read-more-link">Read more</a>
     </div>
     
   </div>

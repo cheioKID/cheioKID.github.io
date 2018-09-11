@@ -6,10 +6,28 @@
     <description>Recent content in Cs on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 15 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/categories/cs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cross Compile for Arm</title>
+      <link>https://cheioKID.github.io/post/cs/cross-compile/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/cross-compile/</guid>
+      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境</description>
+    </item>
+    
+    <item>
+      <title>Install more than one Kernel for Ubuntu Linux</title>
+      <link>https://cheioKID.github.io/post/cs/ubuntu-kernel/</link>
+      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/ubuntu-kernel/</guid>
+      <description>Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替</description>
+    </item>
     
     <item>
       <title>LL(1) Grammer</title>

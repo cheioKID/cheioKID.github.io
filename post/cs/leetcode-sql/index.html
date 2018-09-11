@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>LeetCode mySql - cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.37.1" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/cs/leetcode-sql/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="LeetCode mySql" />
+<meta property="og:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/cs/leetcode-sql/" />
+
+
+
+<meta property="article:published_time" content="2017-03-29T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-03-29T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="LeetCode mySql">
+<meta itemprop="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的">
+
+
+<meta itemprop="datePublished" content="2017-03-29T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-03-29T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1219">
+
+
+
+<meta itemprop="keywords" content="mySql,Database Principles," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LeetCode mySql"/>
+<meta name="twitter:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">LeetCode mySql</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-03-29 </span>
+        <div class="post-category">
+            
+              <a href="/categories/sql/"> SQL </a>
+            
+          </div>
+        <span class="more-meta"> 1219 words </span>
+        <span class="more-meta"> 3 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#175">175</a></li>
+<li><a href="#176">176</a></li>
+<li><a href="#177">177</a></li>
+<li><a href="#178">178</a></li>
+<li><a href="#180">180</a></li>
+<li><a href="#181">181</a></li>
+<li><a href="#182">182</a></li>
+<li><a href="#183">183</a></li>
+<li><a href="#184">184</a></li>
+<li><a href="#185">185</a></li>
+<li><a href="#196">196</a></li>
+<li><a href="#197">197</a></li>
+<li><a href="#262">262</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="175">175</h2>
+
+<pre><code class="language-SQL">SELECT FirstName, LAStName, City, State
+FROM person 
+LEFT JOIN address ON person.personID = address.personID;
+</code></pre>
+
+<blockquote>
+<p>左外连接，除去address中person没有的元祖 ```</p>
+
+<h2 id="176">176</h2>
+
+<pre><code class="language-SQL">SELECT max(Salary) AS SecondHighestSalary
+FROM Employee 
+WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);
+</code></pre>
+
+<p>子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```</p>
+
+<h2 id="177">177</h2>
+
+<pre><code class="language-SQL">CREATE FUNCTION getNthHighestSalary(N INT)
+RETURNS INT
+BEGIN
+	RETURN(SELECT DISTINCT c.salary
+	FROM(SELECT a.salary AS salary, (SELECT 		COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row 
+	FROM employee AS a) AS c
+	WHEREc._row = n);
+END 
+</code></pre>
+
+<p>和rank那题思路类似，如果表自身连接，有n条不重复的记录大于等于某个值，那么某个值就是第n高的记录，外层查询的范围是不相关子查询的结果，注意列的别名必须匹配外层查询的字段，而且子查询返回的表必须有别名才能在外层查询中查询，否则会报错</p>
+
+<pre><code class="language-SQL">CREATE FUNCTION getNthHighestSalary(N INT)
+RETURNS INT
+BEGIN
+	SET n = n-1;
+	RETURN(SELECT DISTINCT Salary 
+	FROM employee ORDER BY salary DESC limit n,1);
+END
+</code></pre>
+
+<p>因为limit的第一个参数是某行相对第一行的偏移量，所以函数参数n要先减一，返回结果为salary从高到低排序，第n行记录，只取一行</p>
+</blockquote>
+
+<h2 id="178">178</h2>
+
+<pre><code class="language-SQL">SELECT Score,(SELECT COUNT(DISTINCT score) 
+	FROM scores WHEREscore &gt;= a.score) AS Rank
+FROM scores AS a
+ORDER BY score DESC
+</code></pre>
+
+<blockquote>
+<p>外层查询遍历表scores的记录，每一次获得一条记录的score值x，传递到相关子查询，相关子查询遍历得到n条不重复的记录的score值小于等于x，那么该score值x的rank就为n，因此得到score值对应的rank，然后按score值降序</p>
+</blockquote>
+
+<h2 id="180">180</h2>
+
+<pre><code class="language-SQL">SELECT DISTINCT a.num AS ConsecutiveNums
+FROM logs AS a, logs AS b, logs AS c
+WHERE a.id + 1 = b.id AND b.id + 1 = c.id 
+AND a.num = b.num AND b.num = c.num
+</code></pre>
+
+<blockquote>
+<p>a表与b表连接，因为是连续重复的，所以id值的差都为1，重复三行只需要表连接两次。如果记录连续重复超过3行，结果会出现重复所以要加distinct</p>
+</blockquote>
+
+<h2 id="181">181</h2>
+
+<pre><code class="language-SQL">SELECT a.name AS Employee
+FROM Employee AS a, Employee AS b
+WHERE a.ManagerId = b.Id AND a.Salary &gt;b.salary;
+</code></pre>
+
+<blockquote>
+<p>等值连接，表自身连接</p>
+</blockquote>
+
+<h2 id="182">182</h2>
+
+<pre><code class="language-SQL">SELECT Email
+FROM Person
+GROUP BY Email
+HAVING COUNT(Email) &gt;= 2
+</code></pre>
+
+<blockquote>
+<p>查找重复的邮箱，只要count(邮箱)&gt;=2</p>
+</blockquote>
+
+<h2 id="183">183</h2>
+
+<pre><code class="language-SQL">SELECT name AS Customers
+FROM Customers
+WHERE Customers.ID NOT IN
+(SELECT CustomerId FROM Orders);
+</code></pre>
+
+<blockquote>
+<p>CustomersId在Order中无记录就是没点餐</p>
+</blockquote>
+
+<h2 id="184">184</h2>
+
+<pre><code class="language-SQL">SELECT Department.name AS Department, 
+Employee.name AS Employee, Salary
+FROM Department, Employee
+WHERE Employee.DepartmentId = Department.Id
+AND (DepartmentId, Salary) IN
+	(SELECTDepartmentId, MAX(Salary) FROM Employee GROUP BY DepartmentId);
+</code></pre>
+
+<blockquote>
+<p>子查询获得以部门号分组的salary最大值和对应的部门号，外层查询满足WHERE中条件的结果应在子查询结果集中</p>
+</blockquote>
+
+<h2 id="185">185</h2>
+
+<pre><code class="language-SQL">SELECT b.name AS Department, a.name ASEmployee, Salary
+FROM employee AS a, department AS b
+WHERE a.departmentId = b.id
+AND (SELECT COUNT(DISTINCT salary) FROM employee WHERE departmentid = a.departmentid AND salary &gt; a.salary) &lt; 3
+ORDER BY a.departmentID ASC, a.salary DESC
+</code></pre>
+
+<blockquote>
+<p>两表等值连接，相关子查询得到大于某个salary值的count不超过三，就可以得到前3高的salary，最后按departmentID升序(默认升序)，按salary降序</p>
+</blockquote>
+
+<h2 id="196">196</h2>
+
+<pre><code class="language-SQL">DELETE b FROM person AS a, person AS b
+WHERE a.email = b.email AND a.id &lt; b.id
+</code></pre>
+
+<blockquote>
+<p>person表中email值相同的元组自身连接，如果连接后的记录存在email相同但是id不同，则删除id值更大的那一条记录</p>
+</blockquote>
+
+<h2 id="197">197</h2>
+
+<pre><code class="language-SQL">SELECT b.Id FROM weather AS a, weather AS b
+WHERE TO_DAYS(a.date) - TO_DAYS(b.date) =-1 
+AND a.temperature &lt; b.temperature
+</code></pre>
+
+<blockquote>
+<p>weather表自身连接，TO_DAYS函数将date类型转换成一个int类型的数，得出日期之间的偏移量，如果a中某记录比b的日期早一天，且a中记录的temperature小于b中temperature，则b中记录在结果集中</p>
+</blockquote>
+
+<h2 id="262">262</h2>
+
+<pre><code class="language-SQL">SELECT request_at AS Day, 
+ROUND(SUM(CASE WHEN status LIKE'cancelled_%' THEN 1 ELSE 0 END)/COUNT(status),2) AS 'Cancellation Rate'
+FROM trips, users
+WHERE client_id = users_id AND banned ='no' AND request_at BETWEEN '2013-10-01' AND '2013-10-03'
+GROUP BY request_at 
+</code></pre>
+
+<blockquote>
+<p>先两表等值连接，满足条件的记录中分组计算取消比率，可以用sum函数（或者也可以用count(if())但是没试过），得出cancalled的记录数量，除以status的总数就是取消比率</p>
+</blockquote>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2017-03-29</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/mysql/">mySql</a>
+          
+          <a href="/tags/database-principles/">Database Principles</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/this-is-a-very-long-title/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">This is a very long title This is a very long title This is a very long title This is a very long title This is a very long title</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/creating-a-new-theme/">
+            <span class="next-text nav-default">Creating a New Theme</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

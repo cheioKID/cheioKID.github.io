@@ -17,6 +17,20 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/cs/cross-compile/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/cs/ubuntu-kernel/</loc>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/cs/ll1/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -24,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://cheioKID.github.io/post/mad-max/</loc>
+    <loc>https://cheioKID.github.io/post/movie/mad-max/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -87,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://cheioKID.github.io/post/note/leetcode-sql/</loc>
+    <loc>https://cheioKID.github.io/post/cs/leetcode-sql/</loc>
     <lastmod>2017-03-29T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -129,18 +143,6 @@
   </url>
   
   <url>
-    <loc>https://cheioKID.github.io/post/embedded-system/ubuntu-kernel/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://cheioKID.github.io/post/embedded-system/cross-compile/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://cheioKID.github.io/tags/algorithm/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -150,6 +152,13 @@
   <url>
     <loc>https://cheioKID.github.io/categories/algorithm/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/arm/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -177,7 +186,7 @@
   
   <url>
     <loc>https://cheioKID.github.io/categories/cs/</loc>
-    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -206,6 +215,13 @@
   <url>
     <loc>https://cheioKID.github.io/tags/divide-and-conquer/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/embedded-system/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -311,6 +327,13 @@
   <url>
     <loc>https://cheioKID.github.io/tags/jekyll/</loc>
     <lastmod>2014-03-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/linux/</loc>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -458,6 +481,13 @@
   <url>
     <loc>https://cheioKID.github.io/tags/tom-hardy/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/ubuntu/</loc>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

@@ -110,6 +110,287 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
     </item>
     
     <item>
+      <title>Cross Compile for Arm</title>
+      <link>https://cheioKID.github.io/post/cs/cross-compile/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/cross-compile/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;安装交叉编译&#34;&gt;安装交叉编译&lt;/h2&gt;
+
+&lt;h4 id=&#34;克隆编译器&#34;&gt;克隆编译器&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/xupsh/CodeSourcery.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Sourcery CodeBench contains the complete GNUToolchain including all of the following components:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CodeSourcery Debug Sprite for ARM&lt;br /&gt;
+  GNU Binary Utilities (Binutils)
+  GNU C Compiler (GCC)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;GNU C Library (GLIBC)
+  GNU C++ Compiler (G++)&lt;br /&gt;
+  GNU C++ Runtime Library (Libstdc++)
+  GNU Debug Server (GDBServer)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;GNU Debugger (GDB)Visit:  &lt;a href=&#34;http://www.codesourcery.comto&#34;&gt;http://www.codesourcery.comto&lt;/a&gt; access the Sourcery CodeBench support website.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;设置环境变量&#34;&gt;设置环境变量&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export CROSS_COMPILE=arm-xilinx-linux-gnueabi-
+export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;可能出现的错误&#34;&gt;可能出现的错误：&lt;/h4&gt;
+
+&lt;p&gt;./arm-none-linux-gnueabi-gcc: 没有那个文件或目录
+&amp;gt; LSB（Linux Standards Base）是一套核心标准，它保证了LINUX发行版同LINUX应用程序之间的良好结合&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install lsb-core
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;安装完成-执行&#34;&gt;安装完成，执行&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -v
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看到正确的输出&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;gcc version 4.7.2 (Sourcery CodeBench Lite 2012.09-104)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;可以进行交叉编译&#34;&gt;可以进行交叉编译&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -o b testcp.c
+# 但是会出现bash识别不了的错误
+# 采用静态库编译可以成功运行
+arm-xilinx-linux-gnueabi-gcc -static -o c testcp.c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;安装文件&#34;&gt;安装文件&lt;/h4&gt;
+
+&lt;p&gt;如果不采用git，也有安装文件&lt;/p&gt;
+
+&lt;p&gt;下载地址&lt;a href=&#34;https://pan.baidu.com/s/1nvMWAHN&#34;&gt;百度网盘&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;但是没有试过&lt;/p&gt;
+
+&lt;h2 id=&#34;交叉编译opencv&#34;&gt;交叉编译opencv&lt;/h2&gt;
+
+&lt;h4 id=&#34;make-gui&#34;&gt;make-gui&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;Configure&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;generator为&lt;code&gt;Unix Makefiles&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;arm-linux&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-gcc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Target Root&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;修改cmake的配置&#34;&gt;修改cmake的配置&lt;/h4&gt;
+
+&lt;p&gt;cmake配置修改工作如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;（1）加上BUILD_PNG和BUILD_JPEG
+
+（2）去掉WITH_TIFF，WITH_OPENEXR和BUILD_EXAMPLES
+
+（3）修改CMAKE_BUILD_TYPE为Release
+
+（4）修改CMAKE_INSTALL_PREFIX为/home/cheio/opencv/opencv-arm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;重新Configure, Generate，生成makefile文件。&lt;/p&gt;
+
+&lt;p&gt;如果编译静态库：取消勾选&lt;code&gt;BUILD_SHARED_LIBS&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;修改编译配置&#34;&gt;修改编译配置&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;改为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
+CMAKE_EXE_LINKER_FLAGS:STRING= -lpthread -lrt -ldl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;进行编译&lt;/p&gt;
+
+&lt;h4 id=&#34;could-not-read-symbols错误&#34;&gt;Could not read symbols错误&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;../../3rdparty/lib/libzlib.a: could not read symbols: Bad value
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;进入opencv目录下的3rdparty的对应目录CMakeFiles下的每个&lt;code&gt;.dir&lt;/code&gt;目录中，打开&lt;code&gt;flags.make&lt;/code&gt;，在C_FLAGS = 后添加&lt;code&gt;-O3 -fPIC&lt;/code&gt;用来支持在64位机上编译
+如../3rdparty/zlib/CMakeFiles/zlib.dir/flags.make
+修改&lt;code&gt;C_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;
+和
+修改&lt;code&gt;CXX_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;安装&#34;&gt;安装&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;拷到开发板/lib&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_*  /media/cheio/EXT/lib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;拷到arm编译器lib&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_* /home/cheio/CrossCompile/CodeSourcery/arm-xilinx-linux-gnueabi/lib
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;arm编译test&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -statc -o test test.cpp
+# 静态库编译
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls /dev | grep ttyUSB
+# 用minicom连接 115200
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cheio@cuvm:~/test$ arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+g++ -Wno-psabi -I /usr/include/ -L /usr/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+
+g++ -Wno-psabi -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
+
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_core
+/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_highgui
+collect2: error: ld returned 1 exit status
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a /home/cheio/opencv/opencv-arm/lib/libopencv_imgproc.a -lpthread -lrt -ldl -static -o test-read test-read.cpp
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a -lpthread -lrt -ldl -static test.cpp -o test
+
+
+arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /usr/local/opencv/install_opencv/include/opencv/ -L /usr/local/opencv/install_opencv/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -o test test.cpp
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;# Package Information for pkg-config
+prefix=/home/cheio/opencv/opencv-arm
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir_old=${prefix}/include/opencv
+includedir_new=${prefix}/include
+Name: OpenCV
+Description: Open Source Computer Vision Library
+Version: 2.4.10
+Libs: -L${libdir} -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann
+cflags: -I${includedir_old} -I${includedir_new}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+export PKG_CONFIG_PATH
+arm-xilinx-linux-gnueabi-g++ `pkg-config --cflags opencv-arm` `pkg-config –libs opencv-arm` -lpthread -lrt -static -o test-read test-read.cpp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-makefile&#34;&gt;CC = /home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++
+#AR = /usr/bin/arm-linux-gnueabihf-ar
+CFLAGS += -I./include
+LDFLAGS = -lstdc++  -lrt -lpthread
+LDFLAGS += -L./libs/opencv -lopencv_core -lopencv_highgui -lopencv_imgproc -lm
+LDFLAGS += -L./libs/3rd -lzlib
+ 
+TARGET =  test-read
+#TARGET = libXXX.a
+(TARGET) : test-read.o
+	$(CC) -o $(TARGET) $^ $(LDFLAGS) -static
+       #$(AR) r $(TARGET) $^
+ 
+test.o: test-read.cpp
+	$(CC) -c $(CFLAGS) $^
+ 
+clean :
+	rm -rf test-read.o $(TARGET)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Install more than one Kernel for Ubuntu Linux</title>
+      <link>https://cheioKID.github.io/post/cs/ubuntu-kernel/</link>
+      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/cs/ubuntu-kernel/</guid>
+      
+        <description>&lt;p&gt;Ubuntu 内核&lt;/p&gt;
+
+&lt;p&gt;修改源&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak
+sudo vim /etc/apt/sources.list
+deb http://security.ubuntu.com/ubuntu trusty-security main
+sudo apt-get update
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;安装内核3.16&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install linux-image-extra-3.16.0-43-generic
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;查看内核是否安装&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;dpkg -l | grep 3.16.0-43-generic
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改grub&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo gedit /etc/default/grub
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;将&lt;code&gt;GRUB_DEFAULT=0&lt;/code&gt;替换为&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot;
+#一级菜单选项1下的第4个选项
+#默认选择
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;注释这一行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#GRUB_HIDDEN_TIMEOUT=0
+#注释这一行
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更新grub&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo update-grub
+sudo reboot
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>LL(1) Grammer</title>
       <link>https://cheioKID.github.io/post/cs/ll1/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
@@ -368,10 +649,10 @@ int main() {
     
     <item>
       <title>Mad Max: Fury Road</title>
-      <link>https://cheioKID.github.io/post/mad-max/</link>
+      <link>https://cheioKID.github.io/post/movie/mad-max/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/post/mad-max/</guid>
+      <guid>https://cheioKID.github.io/post/movie/mad-max/</guid>
       
         <description>
 
@@ -2731,10 +3012,10 @@ $ vi themes/zafta/layouts/_default/single.html
     
     <item>
       <title>LeetCode mySql</title>
-      <link>https://cheioKID.github.io/post/note/leetcode-sql/</link>
+      <link>https://cheioKID.github.io/post/cs/leetcode-sql/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/post/note/leetcode-sql/</guid>
+      <guid>https://cheioKID.github.io/post/cs/leetcode-sql/</guid>
       
         <description>
 
@@ -4709,284 +4990,6 @@ func main()
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(&amp;quot;Hello, World!&amp;quot;) 
 &lt;/code&gt;&lt;/pre&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/embedded-system/ubuntu-kernel/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/embedded-system/ubuntu-kernel/</guid>
-      
-        <description>&lt;p&gt;Ubuntu 内核&lt;/p&gt;
-
-&lt;p&gt;修改源&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak
-sudo vim /etc/apt/sources.list
-deb http://security.ubuntu.com/ubuntu trusty-security main
-sudo apt-get update
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;安装内核3.16&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install linux-image-extra-3.16.0-43-generic
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;查看内核是否安装&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;dpkg -l | grep 3.16.0-43-generic
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;修改grub&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo gedit /etc/default/grub
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;将&lt;code&gt;GRUB_DEFAULT=0&lt;/code&gt;替换为&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot;
-#一级菜单选项1下的第4个选项
-#默认选择
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;注释这一行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#GRUB_HIDDEN_TIMEOUT=0
-#注释这一行
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;更新grub&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo update-grub
-sudo reboot
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/embedded-system/cross-compile/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/embedded-system/cross-compile/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;安装交叉编译&#34;&gt;安装交叉编译&lt;/h2&gt;
-
-&lt;h4 id=&#34;克隆编译器&#34;&gt;克隆编译器&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone https://github.com/xupsh/CodeSourcery.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Sourcery CodeBench contains the complete GNUToolchain including all of the following components:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;CodeSourcery Debug Sprite for ARM&lt;br /&gt;
-  GNU Binary Utilities (Binutils)
-  GNU C Compiler (GCC)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;GNU C Library (GLIBC)
-  GNU C++ Compiler (G++)&lt;br /&gt;
-  GNU C++ Runtime Library (Libstdc++)
-  GNU Debug Server (GDBServer)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;GNU Debugger (GDB)Visit:  &lt;a href=&#34;http://www.codesourcery.comto&#34;&gt;http://www.codesourcery.comto&lt;/a&gt; access the Sourcery CodeBench support website.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;####设置环境变量&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export CROSS_COMPILE=arm-xilinx-linux-gnueabi-
-export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;####可能出现的错误：
-./arm-none-linux-gnueabi-gcc: 没有那个文件或目录
-&amp;gt; LSB（Linux Standards Base）是一套核心标准，它保证了LINUX发行版同LINUX应用程序之间的良好结合&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install lsb-core
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;安装完成-执行&#34;&gt;安装完成，执行&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -v
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;可以看到正确的输出&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;gcc version 4.7.2 (Sourcery CodeBench Lite 2012.09-104)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;可以进行交叉编译&#34;&gt;可以进行交叉编译&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-gcc -o b testcp.c
-# 但是会出现bash识别不了的错误
-# 采用静态库编译可以成功运行
-arm-xilinx-linux-gnueabi-gcc -static -o c testcp.c
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;安装文件&#34;&gt;安装文件&lt;/h4&gt;
-
-&lt;p&gt;如果不采用git，也有安装文件&lt;/p&gt;
-
-&lt;p&gt;下载地址&lt;a href=&#34;https://pan.baidu.com/s/1nvMWAHN&#34;&gt;百度网盘&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;但是没有试过&lt;/p&gt;
-
-&lt;h2 id=&#34;交叉编译opencv&#34;&gt;交叉编译opencv&lt;/h2&gt;
-
-&lt;p&gt;####make-gui
-&lt;code&gt;Configure&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;generator为&lt;code&gt;Unix Makefiles&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;arm-linux&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-gcc&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Target Root&lt;code&gt;/home/cheio/CrossCompile/CodeSourcery/bin&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;####修改cmake的配置&lt;/p&gt;
-
-&lt;p&gt;cmake配置修改工作如下：&lt;/p&gt;
-
-&lt;p&gt;​    （1）加上BUILD_PNG和BUILD_JPEG&lt;/p&gt;
-
-&lt;p&gt;​    （2）去掉WITH_TIFF，WITH_OPENEXR和BUILD_EXAMPLES&lt;/p&gt;
-
-&lt;p&gt;​    （3）修改CMAKE_BUILD_TYPE为Release&lt;/p&gt;
-
-&lt;p&gt;​    （4）修改CMAKE_INSTALL_PREFIX为/home/cheio/opencv/opencv-arm&lt;/p&gt;
-
-&lt;p&gt;重新Configure, Generate，生成makefile文件。&lt;/p&gt;
-
-&lt;p&gt;如果编译静态库：取消勾选&lt;code&gt;BUILD_SHARED_LIBS&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;####修改编译配置&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
-CMAKE_EXE_LINKER_FLAGS:STRING=
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;改为&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cmake&#34;&gt;//Flags used by the linker.
-CMAKE_EXE_LINKER_FLAGS:STRING= -lpthread -lrt -ldl
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;make
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;进行编译&lt;/p&gt;
-
-&lt;h4 id=&#34;could-not-read-symbols错误&#34;&gt;Could not read symbols错误&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-plain&#34;&gt;../../3rdparty/lib/libzlib.a: could not read symbols: Bad value
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;进入opencv目录下的3rdparty的对应目录CMakeFiles下的每个&lt;code&gt;.dir&lt;/code&gt;目录中，打开&lt;code&gt;flags.make&lt;/code&gt;，在C_FLAGS = 后添加&lt;code&gt;-O3 -fPIC&lt;/code&gt;用来支持在64位机上编译
-如../3rdparty/zlib/CMakeFiles/zlib.dir/flags.make
-修改&lt;code&gt;C_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;
-和
-修改&lt;code&gt;CXX_FLAGS =  -W -Wall&lt;/code&gt;为 &lt;code&gt;C_FLAGS =  -O3 -fPIC  -W -Wall&lt;/code&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;安装&#34;&gt;安装&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;make install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;拷到开发板/lib&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_*  /media/cheio/EXT/lib
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;拷到arm编译器lib&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp -d libopencv_* /home/cheio/CrossCompile/CodeSourcery/arm-xilinx-linux-gnueabi/lib
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;arm编译test&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -statc -o test test.cpp
-# 静态库编译
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ls /dev | grep ttyUSB
-# 用minicom连接 115200
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cheio@cuvm:~/test$ arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
-
-
-g++ -Wno-psabi -I /usr/include/ -L /usr/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
-
-
-g++ -Wno-psabi -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -o test-read test-read.cpp
-
-/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_core
-/home/cheio/CrossCompile/CodeSourcery/bin/../lib/gcc/arm-xilinx-linux-gnueabi/4.7.2/../../../../arm-xilinx-linux-gnueabi/bin/ld: cannot find -lopencv_highgui
-collect2: error: ld returned 1 exit status
-
-arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -ldl -static -o test test.cpp
-
-
-arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a /home/cheio/opencv/opencv-arm/lib/libopencv_imgproc.a -lpthread -lrt -ldl -static -o test-read test-read.cpp
-
-
-arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /home/cheio/opencv/opencv-arm/include/ -L /home/cheio/opencv/opencv-arm/lib/libopencv_core.a /home/cheio/opencv/opencv-arm/lib/libopencv_highgui.a -lpthread -lrt -ldl -static test.cpp -o test
-
-
-arm-xilinx-linux-gnueabi-g++ -Wno-psabi -I /usr/local/opencv/install_opencv/include/opencv/ -L /usr/local/opencv/install_opencv/lib/ -lopencv_core -lopencv_highgui -lpthread -lrt -o test test.cpp
-
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;# Package Information for pkg-config
-prefix=/home/cheio/opencv/opencv-arm
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir_old=${prefix}/include/opencv
-includedir_new=${prefix}/include
-Name: OpenCV
-Description: Open Source Computer Vision Library
-Version: 2.4.10
-Libs: -L${libdir} -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann
-cflags: -I${includedir_old} -I${includedir_new}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
-export PKG_CONFIG_PATH
-arm-xilinx-linux-gnueabi-g++ `pkg-config --cflags opencv-arm` `pkg-config –libs opencv-arm` -lpthread -lrt -static -o test-read test-read.cpp
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-makefile&#34;&gt;CC = /home/cheio/CrossCompile/CodeSourcery/bin/arm-xilinx-linux-gnueabi-g++
-#AR = /usr/bin/arm-linux-gnueabihf-ar
-CFLAGS += -I./include
-LDFLAGS = -lstdc++  -lrt -lpthread
-LDFLAGS += -L./libs/opencv -lopencv_core -lopencv_highgui -lopencv_imgproc -lm
-LDFLAGS += -L./libs/3rd -lzlib
- 
-TARGET =  test-read
-#TARGET = libXXX.a
-(TARGET) : test-read.o
-	$(CC) -o $(TARGET) $^ $(LDFLAGS) -static
-       #$(AR) r $(TARGET) $^
- 
-test.o: test-read.cpp
-	$(CC) -c $(CFLAGS) $^
- 
-clean :
-	rm -rf test-read.o $(TARGET)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/home/cheio/opencv/opencv-arm/pkgconfig
-&lt;/code&gt;&lt;/pre&gt;
-</description>
       
     </item>
     
