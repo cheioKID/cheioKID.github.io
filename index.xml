@@ -116,7 +116,9 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
       
       <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
       
-        <description>&lt;p&gt;####LL(1)分析表的构造&lt;/p&gt;
+        <description>
+
+&lt;h4 id=&#34;ll-1-分析表的构造&#34;&gt;LL(1)分析表的构造&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。&lt;/p&gt;&lt;/li&gt;
@@ -126,7 +128,7 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 &lt;li&gt;&lt;p&gt;采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;####预测分析过程&lt;/p&gt;
+&lt;h4 id=&#34;预测分析过程&#34;&gt;预测分析过程&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。&lt;/li&gt;
@@ -135,7 +137,7 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 &lt;li&gt;循环到符号栈和输入栈都为空，则预测分析完毕。&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;####紧急错误恢复&lt;/p&gt;
+&lt;h4 id=&#34;紧急错误恢复&#34;&gt;紧急错误恢复&lt;/h4&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。&lt;/p&gt;&lt;/li&gt;
@@ -371,7 +373,9 @@ int main() {
       
       <guid>https://cheioKID.github.io/post/mad-max/</guid>
       
-        <description>&lt;p&gt;##Max和Furiosa以及其他同伴之间的友情&lt;/p&gt;
+        <description>
+
+&lt;h2 id=&#34;max和furiosa以及其他同伴之间的友情&#34;&gt;Max和Furiosa以及其他同伴之间的友情&lt;/h2&gt;
 
 &lt;p&gt;Angharad躲过了碰撞，Max回头，看到幸存的Angharad，微笑，竖起了大拇指。&lt;/p&gt;
 
@@ -385,7 +389,7 @@ int main() {
 
 &lt;p&gt;Furiosa邀请Max同行，Max注视着Furiosa，又移开目光，&lt;em&gt;I&amp;rsquo;ll make my own way&lt;/em&gt; ，Max说着点了点头。Furiosa低下头，Max静静的看着她，缓缓移开了目光&lt;/p&gt;
 
-&lt;p&gt;##Max有没有看到Angharad滚到车轮下&lt;/p&gt;
+&lt;h2 id=&#34;max有没有看到angharad滚到车轮下&#34;&gt;Max有没有看到Angharad滚到车轮下&lt;/h2&gt;
 
 &lt;p&gt;Angharad落下车后，Max转头看到Boss的车驶向她，但Boss调转了方向，Angharad得以幸存。Max已经浸湿了双眼，曾经未能拯救的小女孩的回忆再次闪现。&lt;/p&gt;
 
@@ -393,8 +397,9 @@ int main() {
 
 &lt;p&gt;Max曾经没有拯救的小女孩也是死于车轮之下。我想，Max的悲伤并不在于Angharad，而是再次亲眼看到自己无力拯救葬身于车轮下的人。&lt;/p&gt;
 
-&lt;p&gt;##期待2019年的Max4
-汤老湿的眼睛可以表达真挚的情感，汤老湿再见！
+&lt;h2 id=&#34;期待2019年的max4&#34;&gt;期待2019年的Max4&lt;/h2&gt;
+
+&lt;p&gt;汤老湿的眼睛可以表达真挚的情感，汤老湿再见！
 18年汤老湿的毒液要上映了，期待&lt;/p&gt;
 </description>
       
@@ -1545,9 +1550,9 @@ git commit -m &#39;Initial commit&#39;
 &lt;h3 id=&#34;版本&#34;&gt;版本&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git log&lt;/code&gt;查看版本控制记录，即&lt;strong&gt;commit历史记录&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;code&gt;git log --pretty=oneline breif info&lt;/code&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;git log &amp;ndash;pretty=oneline breif info`&lt;/p&gt;
 
 &lt;h3 id=&#34;回退&#34;&gt;回退&lt;/h3&gt;&lt;/li&gt;
 
@@ -1555,33 +1560,40 @@ git commit -m &#39;Initial commit&#39;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git reset —hard &amp;lt;commit-id&amp;gt;&lt;/code&gt;回退到指定id的版本&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -- &amp;lt;filename&amp;gt;&lt;/code&gt;撤销工作区的修改&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;分支&#34;&gt;分支&lt;/h3&gt;&lt;/li&gt;
+&lt;h3 id=&#34;分支&#34;&gt;分支&lt;/h3&gt;
 
+&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git checkout -b &amp;lt;branch-name&amp;gt;&lt;/code&gt;创建并切换到该分支&lt;strong&gt;branch&lt;/strong&gt;，&lt;code&gt;git branch&lt;/code&gt;查看当前分支(带*)，分支之间的修改不互相影响，通过&lt;code&gt;git merge branch-name&lt;/code&gt;将某分支合并到当前分支&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;不同分支可以分别提交，但是无法直接合并，需要手动解决冲突每个组员可以在不同的分支上开发提交修改&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git stash&lt;/code&gt;保存现场，创建新的分支，修复bug，然后合并到&lt;strong&gt;master&lt;/strong&gt;分支，&lt;code&gt;git stash pop&lt;/code&gt;回到现场，继续工作&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;通常增加新的功能，采取创建新的&lt;strong&gt;feature&lt;/strong&gt;分支，在合并之前可以通过&lt;code&gt;git branch -D &amp;lt;name&amp;gt;&lt;/code&gt;删除分支&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;通常增加新的功能，采取创建新的&lt;strong&gt;feature&lt;/strong&gt;分支，在合并之前可以通过&lt;code&gt;git branch -D &amp;lt;name&amp;gt;&lt;/code&gt;删除分支&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;远端仓库&#34;&gt;远端仓库&lt;/h3&gt;&lt;/li&gt;
+&lt;h3 id=&#34;远端仓库&#34;&gt;远端仓库&lt;/h3&gt;
 
+&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git push &amp;lt;remote-name&amp;gt; &amp;lt;branch-name&amp;gt;&lt;/code&gt;推送分支到远程仓库&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git pull&lt;/code&gt;抓取最新的提交，和本地合并，解决冲突，然后&lt;strong&gt;push&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;切换到某分支，通过&lt;code&gt;git tag &amp;lt;name&amp;gt;&lt;/code&gt;，为分支最近一次的commit定义标签&lt;strong&gt;tag&lt;/strong&gt;，&lt;code&gt;git tag&lt;/code&gt;查看所有标签&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;切换到某分支，通过&lt;code&gt;git tag &amp;lt;name&amp;gt;&lt;/code&gt;，为分支最近一次的commit定义标签&lt;strong&gt;tag&lt;/strong&gt;，&lt;code&gt;git tag&lt;/code&gt;查看所有标签&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;命令&lt;code&gt;git push origin &amp;lt;tagname&amp;gt;&lt;/code&gt;可以推送一个本地标签；
-命令&lt;code&gt;git push origin --tags&lt;/code&gt;可以推送全部未推送过的本地标签；
-命令&lt;code&gt;git tag -d &amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个本地标签；
-命令&lt;code&gt;git push origin :refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个远程标签。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;命令&lt;code&gt;git push origin &amp;lt;tagname&amp;gt;&lt;/code&gt;可以推送一个本地标签；&lt;/p&gt;
+
+&lt;p&gt;命令&lt;code&gt;git push origin --tags&lt;/code&gt;可以推送全部未推送过的本地标签；&lt;/p&gt;
+
+&lt;p&gt;命令&lt;code&gt;git tag -d &amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个本地标签；&lt;/p&gt;
+
+&lt;p&gt;命令&lt;code&gt;git push origin :refs/tags/&amp;lt;tagname&amp;gt;&lt;/code&gt;可以删除一个远程标签。&lt;/p&gt;
 
 &lt;h4 id=&#34;初始提交到远端仓库&#34;&gt;初始提交到远端仓库&lt;/h4&gt;
 

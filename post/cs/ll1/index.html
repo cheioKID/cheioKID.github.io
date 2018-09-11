@@ -19,7 +19,7 @@
 
 
 <meta name="author" content="cheio" />
-  <meta name="description" content="####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果" />
+  <meta name="description" content="LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任" />
 
 
 
@@ -49,7 +49,7 @@
 
 
 <meta property="og:title" content="LL(1) Grammer" />
-<meta property="og:description" content="####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果" />
+<meta property="og:description" content="LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cheioKID.github.io/post/cs/ll1/" />
 
@@ -70,19 +70,19 @@
 
 
 <meta itemprop="name" content="LL(1) Grammer">
-<meta itemprop="description" content="####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果">
+<meta itemprop="description" content="LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任">
 
 
 <meta itemprop="datePublished" content="2018-06-15T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-06-15T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2128">
+<meta itemprop="wordCount" content="2120">
 
 
 
 <meta itemprop="keywords" content="Compiling principle,Grammar," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LL(1) Grammer"/>
-<meta name="twitter:description" content="####LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果"/>
+<meta name="twitter:description" content="LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -162,7 +162,7 @@
               <a href="/categories/cs/"> CS </a>
             
           </div>
-        <span class="more-meta"> 2128 words </span>
+        <span class="more-meta"> 2120 words </span>
         <span class="more-meta"> 5 min read </span>
       </div>
     </header>
@@ -173,13 +173,30 @@
   <h2 class="post-toc-title">Table of Contents</h2>
   
   <div class="post-toc-content always-active">
-    
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#ll-1-分析表的构造">LL(1)分析表的构造</a></li>
+<li><a href="#预测分析过程">预测分析过程</a></li>
+<li><a href="#紧急错误恢复">紧急错误恢复</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      <p>####LL(1)分析表的构造</p>
+      
+
+<h4 id="ll-1-分析表的构造">LL(1)分析表的构造</h4>
 
 <ol>
 <li><p>LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。</p></li>
@@ -189,7 +206,7 @@
 <li><p>采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。</p></li>
 </ol>
 
-<p>####预测分析过程</p>
+<h4 id="预测分析过程">预测分析过程</h4>
 
 <ol>
 <li>预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。</li>
@@ -198,7 +215,7 @@
 <li>循环到符号栈和输入栈都为空，则预测分析完毕。</li>
 </ol>
 
-<p>####紧急错误恢复</p>
+<h4 id="紧急错误恢复">紧急错误恢复</h4>
 
 <ol>
 <li><p>紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。</p></li>
