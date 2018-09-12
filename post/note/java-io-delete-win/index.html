@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="495">
+<meta itemprop="wordCount" content="748">
 
 
 
@@ -162,8 +162,8 @@
               <a href="/categories/java/"> Java </a>
             
           </div>
-        <span class="more-meta"> 495 words </span>
-        <span class="more-meta"> 1 min read </span>
+        <span class="more-meta"> 748 words </span>
+        <span class="more-meta"> 2 min read </span>
       </div>
     </header>
 
@@ -250,6 +250,28 @@
 <p><em>每次在Mac上写好的程序都要在Windows上面Debug，Windows真难对付</em></p>
 
 <p><em>花了好多时间搜索中英文结果，最后还是看源码解决了。作为菜鸟感觉源码好精致==，以后有时间多看看优秀的人写的代码。忘记是去年还是今年学过Scala的语法，有机会去学习一下Spark的写法。</em></p>
+
+<p>还是2018年9月12日</p>
+
+<p>最后发现只有最后一个文件被移动了，之前的都移动失败了</p>
+
+<p>百度了一下，有一种说法是<code>文件流未关闭</code>的问题，试了无效</p>
+
+<p>另一种说法是进行<code>垃圾回收</code>，虽然我也知道垃圾很多，但是没想到垃圾回收能解决这个问题。而且是在Mac上没问题，只出现在Windows上的问题。</p>
+
+<pre><code class="language-java">try {
+	System.gc();
+	FileUtils.moveFile(file, target);
+	isRenamed = true;
+
+} catch (Exception e) { 
+    Log.error(e.toString());
+    e.printStackTrace();
+    return false;
+}
+</code></pre>
+
+<p><em>其实开发的时候也考虑过好多对象没有被释放，我一直以为垃圾回收是及时的。头一回碰到这种情况。到底什么时候要进行垃圾回收呢，我还没有思考过这个问题，有时间去看书吧。不过接下来要开始写Swing程序了，随缘吧。</em></p>
 
     </div>
 
