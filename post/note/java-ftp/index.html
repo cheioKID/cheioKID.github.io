@@ -228,20 +228,19 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 
 <p>最后采用了一种拙劣的方法catch到了<code>FTPConnectionClosedException</code></p>
 
-<pre><code class="language-java">    		    	try {
-    		    		//used for check connection
-    		    		ftpClient.listFiles();
-					} catch (Exception e) {
-						
-						Log.info(e.getMessage());
-						
-						if (!ftp.login(ftp_url,ftp_port,ftp_username,ftp_password)) {
-							Log.error(&quot;FTP reconnect and relogin failed with &quot; + ftp_url + &quot;:&quot; + ftp_port 
-				    				+ &quot;,username: &quot; + ftp_username + &quot;,password: &quot; + ftp_password);
-				    	} else {
-				    		Log.info(&quot;successfully relogin for time out exception&quot;);
-						}
-					}
+<pre><code class="language-java">try {
+    //used for check connection
+    ftpClient.listFiles();
+} catch (Exception e) {
+
+    Log.info(e.getMessage());
+
+    if (!ftp.login(ftp_url,ftp_port,ftp_username,ftp_password)) {
+    	Log.error(&quot;FTP reconnect and relogin failed with &quot; + ftp_url + &quot;:&quot; + ftp_port + &quot;,username: &quot; + ftp_username + &quot;,password: &quot; + ftp_password);
+    } else {
+    	Log.info(&quot;successfully relogin for time out exception&quot;);
+    }
+}
 </code></pre>
 
     </div>
@@ -279,6 +278,11 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/note/java-io-delete-win/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Java moveFile IOException Solution</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         
           <a class="next" href="/post/cs/cross-compile/">
             <span class="next-text nav-default">Cross Compile for Arm</span>

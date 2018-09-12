@@ -35,6 +35,88 @@
     </item>
     
     <item>
+      <title>Java moveFile IOException Solution</title>
+      <link>https://cheioKID.github.io/post/note/java-io-delete-win/</link>
+      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/java-io-delete-win/</guid>
+      
+        <description>&lt;p&gt;在Mac上无误的程序&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;try {
+    FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveFile
+    isRenamed = true;
+} catch (Exception e) { 
+    Log.error(e.toString());
+    e.printStackTrace();
+    return false;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;到win上抛出异常，不能重命名文件&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;java.io.IOException: Failed to delete original file &#39;C:\***\******\************.txt&#39; after copy to &#39;C:\***\******\************.txt.114110&#39;
+        at org.apache.commons.io.FileUtils.moveFile(FileUtils.java:3011)
+        at com.example.sms.LocalUtil.renameFile(LocalUtil.java:125)
+        at com.example.sms.SendSMS.main(SendSMS.java:152)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是发现如果没有从FTP上下载，重命名是没有问题的&lt;/p&gt;
+
+&lt;p&gt;看了一下&lt;code&gt;FileUtil.moveFile()&lt;/code&gt;的源码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public static void moveFile(final File srcFile, final File destFile) throws IOException {
+    if (srcFile == null) {
+        throw new NullPointerException(&amp;quot;Source must not be null&amp;quot;);
+    }
+    if (destFile == null) {
+        throw new NullPointerException(&amp;quot;Destination must not be null&amp;quot;);
+    }
+    if (!srcFile.exists()) {
+        throw new FileNotFoundException(&amp;quot;Source &#39;&amp;quot; + srcFile + &amp;quot;&#39; does not exist&amp;quot;);
+    }
+    if (srcFile.isDirectory()) {
+        throw new IOException(&amp;quot;Source &#39;&amp;quot; + srcFile + &amp;quot;&#39; is a directory&amp;quot;);
+    }
+    if (destFile.exists()) {
+        throw new FileExistsException(&amp;quot;Destination &#39;&amp;quot; + destFile + &amp;quot;&#39; already exists&amp;quot;);
+    }
+    if (destFile.isDirectory()) {
+        throw new IOException(&amp;quot;Destination &#39;&amp;quot; + destFile + &amp;quot;&#39; is a directory&amp;quot;);
+    }
+    final boolean rename = srcFile.renameTo(destFile);
+    if (!rename) {
+        copyFile(srcFile, destFile);
+        if (!srcFile.delete()) {
+            FileUtils.deleteQuietly(destFile);
+            throw new IOException(&amp;quot;Failed to delete original file &#39;&amp;quot; + srcFile + &amp;quot;&#39; after copy to &#39;&amp;quot; + destFile + &amp;quot;&#39;&amp;quot;);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;试了一下把&lt;code&gt;移动&lt;/code&gt;改为&lt;code&gt;复制&lt;/code&gt;和&lt;code&gt;沉默删除&lt;/code&gt;两个过程的组合，就可以成功的移动了，真是搞不懂&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;try {
+    FileUtils.copyFile(file, target);
+    FileUtils.deleteQuietly(file);
+    //FileUtils.moveFile(file, target);
+    isRenamed = true;
+} catch (Exception e) { 
+    Log.error(e.toString());
+    e.printStackTrace();
+    return false;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;每次在Mac上写好的程序都要在Windows上面Debug，Windows真难对付&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;花了好多时间搜索中英文结果，最后还是看源码解决了。作为菜鸟感觉源码好精致==，以后有时间多看看优秀的人写的代码。忘记是去年还是今年学过Scala的语法，有机会去学习一下Spark的写法。&lt;/em&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Java FTP timeout Solution</title>
       <link>https://cheioKID.github.io/post/note/java-ftp/</link>
       <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
@@ -90,20 +172,19 @@ org.apache.commons.net.ftp.FTPConnectionClosedException: Connection closed witho
 
 &lt;p&gt;最后采用了一种拙劣的方法catch到了&lt;code&gt;FTPConnectionClosedException&lt;/code&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    		    	try {
-    		    		//used for check connection
-    		    		ftpClient.listFiles();
-					} catch (Exception e) {
-						
-						Log.info(e.getMessage());
-						
-						if (!ftp.login(ftp_url,ftp_port,ftp_username,ftp_password)) {
-							Log.error(&amp;quot;FTP reconnect and relogin failed with &amp;quot; + ftp_url + &amp;quot;:&amp;quot; + ftp_port 
-				    				+ &amp;quot;,username: &amp;quot; + ftp_username + &amp;quot;,password: &amp;quot; + ftp_password);
-				    	} else {
-				    		Log.info(&amp;quot;successfully relogin for time out exception&amp;quot;);
-						}
-					}
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;try {
+    //used for check connection
+    ftpClient.listFiles();
+} catch (Exception e) {
+
+    Log.info(e.getMessage());
+
+    if (!ftp.login(ftp_url,ftp_port,ftp_username,ftp_password)) {
+    	Log.error(&amp;quot;FTP reconnect and relogin failed with &amp;quot; + ftp_url + &amp;quot;:&amp;quot; + ftp_port + &amp;quot;,username: &amp;quot; + ftp_username + &amp;quot;,password: &amp;quot; + ftp_password);
+    } else {
+    	Log.info(&amp;quot;successfully relogin for time out exception&amp;quot;);
+    }
+}
 &lt;/code&gt;&lt;/pre&gt;
 </description>
       
@@ -1804,14 +1885,18 @@ __double underscores__
 &lt;h1 id=&#34;git笔记&#34;&gt;git笔记&lt;/h1&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;版本控制系统Git，代码托管采用Github仓库&lt;/p&gt;
+&lt;li&gt;版本控制系统Git，代码托管采用Github仓库&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;初始化&#34;&gt;初始化&lt;/h3&gt;&lt;/li&gt;
+&lt;h3 id=&#34;初始化&#34;&gt;初始化&lt;/h3&gt;
 
-&lt;li&gt;&lt;p&gt;在目录下通过&lt;code&gt;git init&lt;/code&gt; 初始化空仓库Initialized empty Git repository&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在目录下通过&lt;code&gt;git init&lt;/code&gt; 初始化空仓库Initialized empty Git repository&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h3 id=&#34;暂存区&#34;&gt;暂存区&lt;/h3&gt;&lt;/li&gt;
+&lt;h3 id=&#34;暂存区&#34;&gt;暂存区&lt;/h3&gt;
 
+&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git add&lt;/code&gt;指令将修改添加到暂存区&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;通过&lt;code&gt;git status&lt;/code&gt;查看状态&lt;strong&gt;是否commit&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
@@ -4906,92 +4991,6 @@ Liquid::Template.register_tag(&#39;image&#39;, Jekyll::ImageTag)
 
 &lt;p&gt;&lt;a href=&#34;http://heyitsalex.net/&#34;&gt;Hey, it&amp;rsquo;s Alex&lt;/a&gt; was migrated in less than a &lt;em&gt;father-with-kids day&lt;/em&gt; from Jekyll to Hugo. You can see all the changes (and screw-ups) by looking at this &lt;a href=&#34;https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610&#34;&gt;diff&lt;/a&gt;.&lt;/p&gt;
 </description>
-      
-    </item>
-    
-    <item>
-      <title>Syntax Highlighting</title>
-      <link>https://cheioKID.github.io/post/syntax-highlighting/</link>
-      <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/syntax-highlighting/</guid>
-      
-        <description>&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function helloWorld () {
-  alert(&amp;quot;Hello, World!&amp;quot;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class HelloWorld {
-  public static void main(String[] args) {
-    System.out.println(&amp;quot;Hello, World!&amp;quot;);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-kotlin&#34;&gt;package hello
-
-fun main(args: Array&amp;lt;String&amp;gt;) {
-  println(&amp;quot;Hello World!&amp;quot;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;stdio.h&amp;gt;
-
-/* Hello */
-int main(void){
-  printf(&amp;quot;Hello, World!&amp;quot;);
-  return 0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;// &#39;Hello World!&#39; program 
- 
-#include &amp;lt;iostream&amp;gt;
- 
-int main(){
-  std::cout &amp;lt;&amp;lt; &amp;quot;Hello World!&amp;quot; &amp;lt;&amp;lt; std::endl;
-  return 0;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cs&#34;&gt;using System;
-class HelloWorld{
-  public static void Main(){ 
-    System.Console.WriteLine(&amp;quot;Hello, World!&amp;quot;);
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  Hello, World!
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
-import fmt &amp;quot;fmt&amp;quot;
-
-func main() 
-{
-   fmt.Printf(&amp;quot;Hello, World!\n&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-scala&#34;&gt;object HelloWorld with Application {
-  Console.println(&amp;quot;Hello, World!&amp;quot;);
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
-  echo &#39;Hello, World!&#39;;
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;print(&amp;quot;Hello, World!&amp;quot;) 
-&lt;/code&gt;&lt;/pre&gt;</description>
       
     </item>
     
