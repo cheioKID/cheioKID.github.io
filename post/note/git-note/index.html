@@ -27,7 +27,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.37.1" />
+<meta name="generator" content="Hugo 0.49.2" />
 
 
 <link rel="canonical" href="https://cheioKID.github.io/post/note/git-note/" />
@@ -51,23 +51,8 @@
 <meta property="og:title" content="Git note" />
 <meta property="og:description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://cheioKID.github.io/post/note/git-note/" />
-
-
-
-<meta property="article:published_time" content="2017-11-21T00:00:00&#43;00:00"/>
-
+<meta property="og:url" content="https://cheioKID.github.io/post/note/git-note/" /><meta property="article:published_time" content="2017-11-21T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2017-11-21T00:00:00&#43;00:00"/>
-
-
-
-
-
-
-
-
-
-
 
 <meta itemprop="name" content="Git note">
 <meta itemprop="description" content="git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git">
@@ -75,7 +60,7 @@
 
 <meta itemprop="datePublished" content="2017-11-21T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-11-21T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="995">
+<meta itemprop="wordCount" content="1017">
 
 
 
@@ -162,8 +147,8 @@
               <a href="/categories/git/"> Git </a>
             
           </div>
-        <span class="more-meta"> 995 words </span>
-        <span class="more-meta"> 2 min read </span>
+        <span class="more-meta"> 1017 words </span>
+        <span class="more-meta"> 3 min read </span>
       </div>
     </header>
 
@@ -268,7 +253,16 @@ git commit -m 'Initial commit'
 
 <li><p>通过<code>git pull</code>抓取最新的提交，和本地合并，解决冲突，然后<strong>push</strong></p></li>
 
-<li><p>切换到某分支，通过<code>git tag &lt;name&gt;</code>，为分支最近一次的commit定义标签<strong>tag</strong>，<code>git tag</code>查看所有标签</p></li>
+<li><p>放弃本地修改，采用远程仓库</p></li>
+</ul>
+
+<pre><code class="language-bash">git fetch --all
+git reset --hard origin/master
+git fetch
+</code></pre>
+
+<ul>
+<li>切换到某分支，通过<code>git tag &lt;name&gt;</code>，为分支最近一次的commit定义标签<strong>tag</strong>，<code>git tag</code>查看所有标签</li>
 </ul>
 
 <hr />
@@ -379,7 +373,9 @@ git pull origin master --allow-unrelated-histories
 
   <span class="copyright-year">
     &copy; 
-    2018
+    
+      2018 - 
+    2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

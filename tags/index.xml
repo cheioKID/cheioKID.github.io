@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Aps</title>
+      <link>https://cheioKID.github.io/tags/aps/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/aps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Arm</title>
       <link>https://cheioKID.github.io/tags/arm/</link>
       <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
@@ -39,11 +48,29 @@
     </item>
     
     <item>
+      <title>Cmake</title>
+      <link>https://cheioKID.github.io/tags/cmake/</link>
+      <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/cmake/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Compiling Principle</title>
       <link>https://cheioKID.github.io/tags/compiling-principle/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/compiling-principle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Confidences</title>
+      <link>https://cheioKID.github.io/tags/confidences/</link>
+      <pubDate>Wed, 26 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/confidences/</guid>
       <description></description>
     </item>
     
@@ -161,33 +188,6 @@
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Jekyll</title>
-      <link>https://cheioKID.github.io/tags/jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/jekyll/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://cheioKID.github.io/tags/linux/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Movie</title>
-      <link>https://cheioKID.github.io/tags/movie/</link>
-      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/movie/</guid>
       <description></description>
     </item>
     

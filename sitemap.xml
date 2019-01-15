@@ -10,6 +10,34 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/memory/aps/</loc>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/memory/questionnaire/</loc>
+    <lastmod>2018-12-26T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</loc>
+    <lastmod>2018-11-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/note/non-asc-character/</loc>
+    <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/note/java-io-delete-win/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -150,6 +178,24 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/data-mining/dbscan/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/music/symphony-no.9/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/algorithm/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -159,6 +205,13 @@
   <url>
     <loc>https://cheioKID.github.io/categories/algorithm/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/aps/</loc>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -185,8 +238,22 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/tags/cmake/</loc>
+    <lastmod>2018-11-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/compiling-principle/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/confidences/</loc>
+    <lastmod>2018-12-26T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -346,6 +413,20 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/tags/memory/</loc>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/categories/memory/</loc>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/movie/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -368,21 +449,35 @@
   
   <url>
     <loc>https://cheioKID.github.io/tags/note/</loc>
-    <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-14T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cheioKID.github.io/categories/note/</loc>
-    <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-14T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/opencv/</loc>
+    <lastmod>2018-11-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/categories/opencv/</loc>
+    <lastmod>2018-11-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cheioKID.github.io/post/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-15T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

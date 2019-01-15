@@ -6,10 +6,19 @@
     <description>Recent content in Note on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/tags/note/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>匹配非ASC字符</title>
+      <link>https://cheioKID.github.io/post/note/non-asc-character/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/non-asc-character/</guid>
+      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换 [^\x00-\x7f]</description>
+    </item>
     
     <item>
       <title>Deploy Hugo on github.io</title>

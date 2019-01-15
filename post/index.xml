@@ -6,10 +6,46 @@
     <description>Recent content in Posts on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>APS trip</title>
+      <link>https://cheioKID.github.io/post/memory/aps/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/memory/aps/</guid>
+      <description>我是上礼拜四（1月10日）面谈的，再不记下来我就忘的差不多了。 接到电话以后还剩三周，我还是没怎么复习，主要是拖延症晚期，最后一礼拜开始整天写</description>
+    </item>
+    
+    <item>
+      <title>Confessions questions</title>
+      <link>https://cheioKID.github.io/post/memory/questionnaire/</link>
+      <pubDate>Wed, 26 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/memory/questionnaire/</guid>
+      <description>2018 V.A Confessions questions Confidences questions Proust&amp;rsquo;s answers 1890 My answers 2018 Your favorite virtue The principal aspect of my personality The need to be loved; more precisely, the need to be caressed and spoiled much more than the need to be admired Respect, understanding Your favorite qualities in a man. The quality that I desire in a man. Feminine charm Respect, understanding, care Your favorite qualities in a woman.</description>
+    </item>
+    
+    <item>
+      <title>Install OpenCV and Compile cpp file for MAC</title>
+      <link>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</link>
+      <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</guid>
+      <description>Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C++程序 安</description>
+    </item>
+    
+    <item>
+      <title>匹配非ASC字符</title>
+      <link>https://cheioKID.github.io/post/note/non-asc-character/</link>
+      <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/non-asc-character/</guid>
+      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换 [^\x00-\x7f]</description>
+    </item>
     
     <item>
       <title>Java moveFile IOException Solution</title>
@@ -176,55 +212,6 @@
       <guid>https://cheioKID.github.io/post/creating-a-new-theme/</guid>
       <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://cheioKID.github.io/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
-      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo</title>
-      <link>https://cheioKID.github.io/post/hugoisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/hugoisforlovers/</guid>
-      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
-    </item>
-    
-    <item>
-      <title>Migrate to Hugo from Jekyll</title>
-      <link>https://cheioKID.github.io/post/migrate-from-jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/migrate-from-jekyll/</guid>
-      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
-▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
-    </item>
-    
-    <item>
-      <title>Syntax Highlighting</title>
-      <link>https://cheioKID.github.io/post/syntax-highlighting/</link>
-      <pubDate>Tue, 30 Aug 2011 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/syntax-highlighting/</guid>
-      <description>&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;function helloWorld () {
-  alert(&amp;quot;Hello, World!&amp;quot;)
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

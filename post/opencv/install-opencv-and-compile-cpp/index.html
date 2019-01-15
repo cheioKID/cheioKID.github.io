@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Install OpenCV and Compile cpp file for MAC - cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49.2" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Install OpenCV and Compile cpp file for MAC" />
+<meta property="og:description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/" /><meta property="article:published_time" content="2018-11-28T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-11-28T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Install OpenCV and Compile cpp file for MAC">
+<meta itemprop="description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安">
+
+
+<meta itemprop="datePublished" content="2018-11-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-11-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="268">
+
+
+
+<meta itemprop="keywords" content="OpenCV,cmake," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Install OpenCV and Compile cpp file for MAC"/>
+<meta name="twitter:description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Install OpenCV and Compile cpp file for MAC</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-11-28 </span>
+        <div class="post-category">
+            
+              <a href="/categories/opencv/"> OpenCV </a>
+            
+          </div>
+        <span class="more-meta"> 268 words </span>
+        <span class="more-meta"> 1 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#install-opencv-and-compile-cpp-file-for-mac">Install OpenCV and Compile cpp file for Mac</a>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#编译c-程序">编译C++程序</a></li>
+<li><a href="#运行python程序">运行Python程序</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h1 id="install-opencv-and-compile-cpp-file-for-mac">Install OpenCV and Compile cpp file for Mac</h1>
+
+<p>####安装OpenCV2</p>
+
+<pre><code class="language-bash">brew install opencv@2
+echo 'export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
+export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot;
+export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot;
+export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot;
+# 不知道这些环境变量是不是必要的，但还是按照提示执行了
+</code></pre>
+
+<h4 id="编译c-程序">编译C++程序</h4>
+
+<p>安装cmake</p>
+
+<pre><code class="language-bash">brew install cmake
+</code></pre>
+
+<p>demo程序</p>
+
+<pre><code class="language-c++">#include &quot;opencv/cv.h&quot;
+#include &quot;opencv/highgui.h&quot;
+
+using namespace cv;
+
+int main(int, char**)
+{
+    VideoCapture cap(0);
+    if(!cap.isOpened()) return -1;
+
+    Mat frame, edges;
+    namedWindow(&quot;edges&quot;,1);
+    for(;;)
+    {
+        cap &gt;&gt; frame;
+        cvtColor(frame, edges, CV_BGR2GRAY);
+        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
+        Canny(edges, edges, 0, 30, 3);
+        imshow(&quot;edges&quot;, edges);
+        if(waitKey(30) &gt;= 0) break;
+    }
+    return 0;
+}
+</code></pre>
+
+<p>CMakeLists.txt</p>
+
+<pre><code class="language-cmake">cmake_minimum_required(VERSION 2.8)
+project( demo )
+find_package( OpenCV REQUIRED )
+add_executable( demo demo.cpp )
+target_link_libraries( demo ${OpenCV_LIBS} )
+</code></pre>
+
+<p>编译demo.cpp</p>
+
+<pre><code class="language-bash">cmake .
+make
+./demo
+</code></pre>
+
+<p>OpenCV程序中\^C终止，\^Z会挂起，停止响应。Ubuntu中是\^Z终止。</p>
+
+<h4 id="运行python程序">运行Python程序</h4>
+
+<p>下载<code>numpy-1.15.4</code></p>
+
+<pre><code class="language-bash">cd numpy-1.15.4
+sudo python setup.py build
+sudo python setup.py install
+</code></pre>
+
+<pre><code class="language-python">import sys
+#sys.path.append('/Library/Python/2.7/site-packages/')
+#import numpy
+sys.path.append('/usr/local/Cellar/opencv@2/2.4.13.7/lib/python2.7/site-packages')
+import cv2
+</code></pre>
+
+<p>可以设置<code>PYTHONPATH</code>环境变量</p>
+
+<pre><code class="language-bash">export PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/Cellar/opencv@2/2.4.13.7/lib/python2.7/site-packages:$PYTHONPATH
+</code></pre>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2018-11-28</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/opencv/">OpenCV</a>
+          
+          <a href="/tags/cmake/">cmake</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/memory/questionnaire/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Confessions questions</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/note/non-asc-character/">
+            <span class="next-text nav-default">匹配非ASC字符</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aps on cheio</title>
+    <link>https://cheioKID.github.io/tags/aps/</link>
+    <description>Recent content in Aps on cheio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/aps/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>APS trip</title>
+      <link>https://cheioKID.github.io/post/memory/aps/</link>
+      <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/memory/aps/</guid>
+      <description>我是上礼拜四（1月10日）面谈的，再不记下来我就忘的差不多了。 接到电话以后还剩三周，我还是没怎么复习，主要是拖延症晚期，最后一礼拜开始整天写</description>
+    </item>
+    
+  </channel>
+</rss>
