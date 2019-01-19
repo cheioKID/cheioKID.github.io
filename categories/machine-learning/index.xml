@@ -20,5 +20,14 @@
       <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
     </item>
     
+    <item>
+      <title>Know LSTM</title>
+      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
+      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
+      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+    </item>
+    
   </channel>
 </rss>

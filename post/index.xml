@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Know LSTM</title>
+      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
+      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
+      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+    </item>
+    
+    <item>
       <title>Install OpenCV and Compile cpp file for MAC</title>
       <link>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</link>
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
@@ -204,20 +213,6 @@ We&amp;rsquo;ll start with creating a new site with a very basic template.</desc
       <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
       <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
 This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo</title>
-      <link>https://cheioKID.github.io/post/hugoisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/hugoisforlovers/</guid>
-      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
     </item>
     
   </channel>

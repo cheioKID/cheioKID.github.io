@@ -17,6 +17,13 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</loc>
+    <lastmod>2019-01-19T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</loc>
     <lastmod>2018-11-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>

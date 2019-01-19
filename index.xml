@@ -166,6 +166,135 @@ Epoch: 8 Valid Perplexity: 127.851
     </item>
     
     <item>
+      <title>Know LSTM</title>
+      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
+      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
+      
+        <description>&lt;p&gt;&lt;a href=&#34;https://tensorflow.google.cn/tutorials/sequences/text_generation&#34;&gt;生成句子CNN&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://tensorflow.google.cn/tutorials/sequences/recurrent#lstm&#34;&gt;预测单词LSTM&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;背景知识&#34;&gt;背景知识&lt;/h2&gt;
+
+&lt;h3 id=&#34;rnn&#34;&gt;RNN&lt;/h3&gt;
+
+&lt;p&gt;循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。&lt;/p&gt;
+
+&lt;p&gt;可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）&lt;/p&gt;
+
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png&#34; alt=&#34;An unrolled recurrent neural network.&#34;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）&lt;/p&gt;
+
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png&#34; alt=&#34;p1&#34;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.）&lt;/p&gt;
+
+&lt;p&gt;随着预测信息和相关信息间的&lt;strong&gt;间隔增大&lt;/strong&gt;，RNN逐渐失去对较远数据的关联能力（context from further back），因而无法预测长序列。（vanishing gradient problem）&lt;/p&gt;
+
+&lt;p&gt;理论上RNN是可以处理这种long-term dependencies的，但这确实很难（&lt;a href=&#34;http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf&#34;&gt;Hochreiter (1991)&lt;/a&gt; and &lt;a href=&#34;http://www-dsi.ing.unifi.it/~paolo/ps/tnn-94-gradient.pdf&#34;&gt;Bengio, et al. (1994)&lt;/a&gt;）。而LSTM没有这种问题。&lt;/p&gt;
+
+&lt;h3 id=&#34;lstm&#34;&gt;LSTM&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&#34;&gt;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;LSTM旨在避免long-term dependency 问题，记住长时间的信息是它的默认行为，所以它当然可以进行长序列的学习预测（ &lt;a href=&#34;http://www.bioinf.jku.at/publications/older/2604.pdf&#34;&gt;Hochreiter &amp;amp; Schmidhuber (1997)&lt;/a&gt;）。&lt;/p&gt;
+
+&lt;p&gt;所有的神经网络都有链式的重复模块，普通的RNN隐藏层中只含有单一的tanh层。而LSTM有四个相互作用的层，其隐藏层使用了遗忘门、传入门、输出门几个相互作用的层。&lt;/p&gt;
+
+&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/3/3b/The_LSTM_cell.png&#34; alt=&#34;lstm&#34;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;lstm的基本结构&#34;&gt;LSTM的基本结构&lt;/h4&gt;
+
+&lt;p&gt;Cell state 像传送带一样使信息保持不变的向前流动，在此期间有较少的线性交互。LSTM并不直接的更改 cell state 信息，而是由 gate 来控制，gate 实际上就是由 sigmoid 和点乘操作组成的门。Sigmoid通过输出介于[0,1]之间实数表示信息通过的量。LSTM有三个这样的 gate 。&lt;/p&gt;
+
+&lt;h5 id=&#34;详细的步骤&#34;&gt;详细的步骤&lt;/h5&gt;
+
+&lt;p&gt;如果想要 cell state 遗忘某些信息，LSTM 中的“遗忘门”（forget gate layer）可以达到这种效果。它的输入是上一步隐藏层 $h_{t-1}$ 和当前输入值 $x_t$ ，为 cell state 中的每个值都输出一个[0,1]之间的值，表示忘记的程度。&lt;/p&gt;
+
+&lt;p&gt;如果想要将一些新的信息存入 cell state 中，首先，采用“传入门”（input gate layer）来决定被更新的信息，接着，tanh layer 创建一个新的候选值 $\tilde{C}_t$ ，最后组合这两个值来更新 state。&lt;/p&gt;
+
+&lt;p&gt;最后，先根据 Sigmoid 决定 cell state 的输出部分，然后和tanh的值相乘，得到输出结果。&lt;/p&gt;
+
+&lt;h4 id=&#34;其它不同的派生&#34;&gt;其它不同的派生&lt;/h4&gt;
+
+&lt;p&gt;Peephole connections，gate layers 可以直接获得 cell state。&lt;/p&gt;
+
+&lt;p&gt;Coupled forget and input gates，不同于单独处理忘记的信息和传入的信息，忘记和传入的信息同时处理。在传入一些信息的时候才会忘记这些信息，在忘记一些旧的信息的时候才会传入新的信息。&lt;/p&gt;
+
+&lt;p&gt;Gated Recurrent Unit，将忘记和传入门结合为一个单独的“更新门”，融合了 cell state 和 hidden state。&lt;/p&gt;
+
+&lt;h2 id=&#34;样例代码&#34;&gt;样例代码&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://tensorflow.google.cn/tutorials/sequences/recurrent&#34;&gt;tutorial&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;该模型的核心由一个 LSTM 单元组成，该单元一次处理一个字词，并计算句子中下一个字词的可能值的概率。该网络的内存状态初始化为零矢量，并在读取每个字词后进行更新。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;可能的数据形式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt; t=0  t=1    t=2  t=3     t=4
+[The, brown, fox, is,     quick]
+[The, red,   fox, jumped, high]
+
+words_in_dataset[0] = [The, The]
+words_in_dataset[1] = [brown, red]
+words_in_dataset[2] = [fox, fox]
+words_in_dataset[3] = [is, jumped]
+words_in_dataset[4] = [quick, high]
+batch_size = 2, time_steps = 5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;伪代码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;words_in_dataset = tf.placeholder(tf.float32, [time_steps, batch_size, num_features])
+lstm = tf.contrib.rnn.BasicLSTMCell(lstm_size)
+# Initial state of the LSTM memory.
+state = lstm.zero_state(batch_size, dtype=tf.float32)
+probabilities = []
+loss = 0.0
+for current_batch_of_words in words_in_dataset:
+    # The value of state is updated after processing each batch of words.
+    output, state = lstm(current_batch_of_words, state)
+
+    # The LSTM output can be used to make next word predictions
+    logits = tf.matmul(output, softmax_w) + softmax_b
+    probabilities.append(tf.nn.softmax(logits))
+    loss += loss_function(probabilities, target_words)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;LSTM：一组链式的Cell，指定lstm_size&lt;/p&gt;
+
+&lt;p&gt;每个batch对应state向量中的一个值&lt;/p&gt;
+
+&lt;p&gt;对每个batch：output, state = lstm(current_batch, state) ，state参数是从前一次迭代中得到&lt;/p&gt;
+
+&lt;p&gt;从output获得概率&lt;/p&gt;
+
+&lt;p&gt;截断的反向传播算法：处理每批后回馈长度为 &lt;code&gt;num_steps&lt;/code&gt; 的输入&lt;/p&gt;
+
+&lt;p&gt;stack LSTM：&lt;code&gt;tf.contrib.rnn.MultiRNNCell&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;结果：（困惑度）&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Epoch: 8 Train Perplexity: 50.858
+Epoch: 8 Valid Perplexity: 127.851
+
+===========================================
+| config | epochs | train | valid  | test
+===========================================
+| small  | 13     | 37.99 | 121.39 | 115.91
+| medium | 39     | 48.45 |  86.16 |  82.07
+| large  | 55     | 37.87 |  82.62 |  78.29
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Install OpenCV and Compile cpp file for MAC</title>
       <link>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</link>
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
@@ -4609,354 +4738,6 @@ $ vi themes/zafta/layouts/_default/single.html
 &lt;h3 id=&#34;don-t-repeat-yourself&#34;&gt;Don&amp;rsquo;t Repeat Yourself&lt;/h3&gt;
 
 &lt;p&gt;DRY is a good design goal and Hugo does a great job supporting it. Part of the art of a good template is knowing when to add a new template and when to update an existing one. While you&amp;rsquo;re figuring that out, accept that you&amp;rsquo;ll be doing some refactoring. Hugo makes that easy and fast, so it&amp;rsquo;s okay to delay splitting up a template.&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://cheioKID.github.io/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
-      
-        <description>
-
-&lt;p&gt;Hugo uses the excellent &lt;a href=&#34;http://golang.org/&amp;gt;&#34;&gt;go&lt;/a&gt; &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;html/template&lt;/a&gt; library for
-its template engine. It is an extremely lightweight engine that provides a very
-small amount of logic. In our experience that it is just the right amount of
-logic to be able to create a good static website. If you have used other
-template systems from different languages or frameworks you will find a lot of
-similarities in go templates.&lt;/p&gt;
-
-&lt;p&gt;This document is a brief primer on using go templates. The &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;go docs&lt;/a&gt;
-provide more details.&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction-to-go-templates&#34;&gt;Introduction to Go Templates&lt;/h2&gt;
-
-&lt;p&gt;Go templates provide an extremely simple template language. It adheres to the
-belief that only the most basic of logic belongs in the template or view layer.
-One consequence of this simplicity is that go templates parse very quickly.&lt;/p&gt;
-
-&lt;p&gt;A unique characteristic of go templates is they are content aware. Variables and
-content will be sanitized depending on the context of where they are used. More
-details can be found in the &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;go docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;basic-syntax&#34;&gt;Basic Syntax&lt;/h2&gt;
-
-&lt;p&gt;Go lang templates are html files with the addition of variables and
-functions.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Go variables and functions are accessible within {{ }}&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Accessing a predefined variable &amp;ldquo;foo&amp;rdquo;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ foo }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Parameters are separated using spaces&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Calling the add function with input of 1, 2:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ add 1 2 }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Methods and fields are accessed via dot notation&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Accessing the Page Parameter &amp;ldquo;bar&amp;rdquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ .Params.bar }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Parentheses can be used to group items together&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if or (isset .Params &amp;quot;alt&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;) }} Caption {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;variables&#34;&gt;Variables&lt;/h2&gt;
-
-&lt;p&gt;Each go template has a struct (object) made available to it. In hugo each
-template is passed either a page or a node struct depending on which type of
-page you are rendering. More details are available on the
-&lt;a href=&#34;https://cheioKID.github.io/layout/variables&#34;&gt;variables&lt;/a&gt; page.&lt;/p&gt;
-
-&lt;p&gt;A variable is accessed by referencing the variable name.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Variables can also be defined and referenced.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ $address := &amp;quot;123 Main St.&amp;quot;}}
-{{ $address }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;functions&#34;&gt;Functions&lt;/h2&gt;
-
-&lt;p&gt;Go template ship with a few functions which provide basic functionality. The go
-template system also provides a mechanism for applications to extend the
-available functions with their own. &lt;a href=&#34;https://cheioKID.github.io/layout/functions&#34;&gt;Hugo template
-functions&lt;/a&gt; provide some additional functionality we believe
-are useful for building websites. Functions are called by using their name
-followed by the required parameters separated by spaces. Template
-functions cannot be added without recompiling hugo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ add 1 2 }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;includes&#34;&gt;Includes&lt;/h2&gt;
-
-&lt;p&gt;When including another template you will pass to it the data it will be
-able to access. To pass along the current context please remember to
-include a trailing dot. The templates location will always be starting at
-the /layout/ directory within Hugo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ template &amp;quot;chrome/header.html&amp;quot; . }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;logic&#34;&gt;Logic&lt;/h2&gt;
-
-&lt;p&gt;Go templates provide the most basic iteration and conditional logic.&lt;/p&gt;
-
-&lt;h3 id=&#34;iteration&#34;&gt;Iteration&lt;/h3&gt;
-
-&lt;p&gt;Just like in go, the go templates make heavy use of range to iterate over
-a map, array or slice. The following are different examples of how to use
-range.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1: Using Context&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ range array }}
-    {{ . }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: Declaring value variable name&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{range $element := array}}
-    {{ $element }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: Declaring key and value variable name&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{range $index, $element := array}}
-    {{ $index }}
-    {{ $element }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;conditionals&#34;&gt;Conditionals&lt;/h3&gt;
-
-&lt;p&gt;If, else, with, or, &amp;amp; and provide the framework for handling conditional
-logic in Go Templates. Like range, each statement is closed with &lt;code&gt;end&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Go Templates treat the following values as false:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;false&lt;/li&gt;
-&lt;li&gt;0&lt;/li&gt;
-&lt;li&gt;any array, slice, map, or string of length zero&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1: If&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;title&amp;quot; }}&amp;lt;h4&amp;gt;{{ index .Params &amp;quot;title&amp;quot; }}&amp;lt;/h4&amp;gt;{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: If -&amp;gt; Else&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;alt&amp;quot; }}
-    {{ index .Params &amp;quot;alt&amp;quot; }}
-{{else}}
-    {{ index .Params &amp;quot;caption&amp;quot; }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 3: And &amp;amp; Or&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if and (or (isset .Params &amp;quot;title&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;)) (isset .Params &amp;quot;attr&amp;quot;)}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 4: With&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;An alternative way of writing &amp;ldquo;if&amp;rdquo; and then referencing the same value
-is to use &amp;ldquo;with&amp;rdquo; instead. With rebinds the context &lt;code&gt;.&lt;/code&gt; within its scope,
-and skips the block if the variable is absent.&lt;/p&gt;
-
-&lt;p&gt;The first example above could be simplified as:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ with .Params.title }}&amp;lt;h4&amp;gt;{{ . }}&amp;lt;/h4&amp;gt;{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 5: If -&amp;gt; Else If&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;alt&amp;quot; }}
-    {{ index .Params &amp;quot;alt&amp;quot; }}
-{{ else if isset .Params &amp;quot;caption&amp;quot; }}
-    {{ index .Params &amp;quot;caption&amp;quot; }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;pipes&#34;&gt;Pipes&lt;/h2&gt;
-
-&lt;p&gt;One of the most powerful components of go templates is the ability to
-stack actions one after another. This is done by using pipes. Borrowed
-from unix pipes, the concept is simple, each pipeline&amp;rsquo;s output becomes the
-input of the following pipe.&lt;/p&gt;
-
-&lt;p&gt;Because of the very simple syntax of go templates, the pipe is essential
-to being able to chain together function calls. One limitation of the
-pipes is that they only can work with a single value and that value
-becomes the last parameter of the next pipeline.&lt;/p&gt;
-
-&lt;p&gt;A few simple examples should help convey how to use the pipe.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if eq 1 1 }} Same {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;is the same as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ eq 1 1 | if }} Same {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It does look odd to place the if at the end, but it does provide a good
-illustration of how to use the pipes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ index .Params &amp;quot;disqus_url&amp;quot; | html }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Access the page parameter called &amp;ldquo;disqus_url&amp;rdquo; and escape the HTML.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 3 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if or (or (isset .Params &amp;quot;title&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;)) (isset .Params &amp;quot;attr&amp;quot;)}}
-Stuff Here
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Could be rewritten as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{  isset .Params &amp;quot;caption&amp;quot; | or isset .Params &amp;quot;title&amp;quot; | or isset .Params &amp;quot;attr&amp;quot; | if }}
-Stuff Here
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;context-aka-the-dot&#34;&gt;Context (aka. the dot)&lt;/h2&gt;
-
-&lt;p&gt;The most easily overlooked concept to understand about go templates is that {{ . }}
-always refers to the current context. In the top level of your template this
-will be the data set made available to it. Inside of a iteration it will have
-the value of the current item. When inside of a loop the context has changed. .
-will no longer refer to the data available to the entire page. If you need to
-access this from within the loop you will likely want to set it to a variable
-instead of depending on the context.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  {{ $title := .Site.Title }}
-  {{ range .Params.tags }}
-    &amp;lt;li&amp;gt; &amp;lt;a href=&amp;quot;{{ $baseurl }}/tags/{{ . | urlize }}&amp;quot;&amp;gt;{{ . }}&amp;lt;/a&amp;gt; - {{ $title }} &amp;lt;/li&amp;gt;
-  {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice how once we have entered the loop the value of {{ . }} has changed. We
-have defined a variable outside of the loop so we have access to it from within
-the loop.&lt;/p&gt;
-
-&lt;h1 id=&#34;hugo-parameters&#34;&gt;Hugo Parameters&lt;/h1&gt;
-
-&lt;p&gt;Hugo provides the option of passing values to the template language
-through the site configuration (for sitewide values), or through the meta
-data of each specific piece of content. You can define any values of any
-type (supported by your front matter/config format) and use them however
-you want to inside of your templates.&lt;/p&gt;
-
-&lt;h2 id=&#34;using-content-page-parameters&#34;&gt;Using Content (page) Parameters&lt;/h2&gt;
-
-&lt;p&gt;In each piece of content you can provide variables to be used by the
-templates. This happens in the &lt;a href=&#34;https://cheioKID.github.io/content/front-matter&#34;&gt;front matter&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;An example of this is used in this documentation site. Most of the pages
-benefit from having the table of contents provided. Sometimes the TOC just
-doesn&amp;rsquo;t make a lot of sense. We&amp;rsquo;ve defined a variable in our front matter
-of some pages to turn off the TOC from being displayed.&lt;/p&gt;
-
-&lt;p&gt;Here is the example front matter:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-title: &amp;quot;Permalinks&amp;quot;
-date: &amp;quot;2013-11-18&amp;quot;
-aliases:
-  - &amp;quot;/doc/permalinks/&amp;quot;
-groups: [&amp;quot;extras&amp;quot;]
-groups_weight: 30
-notoc: true
----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is the corresponding code inside of the template:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  {{ if not .Params.notoc }}
-    &amp;lt;div id=&amp;quot;toc&amp;quot; class=&amp;quot;well col-md-4 col-sm-6&amp;quot;&amp;gt;
-    {{ .TableOfContents }}
-    &amp;lt;/div&amp;gt;
-  {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;using-site-config-parameters&#34;&gt;Using Site (config) Parameters&lt;/h2&gt;
-
-&lt;p&gt;In your top-level configuration file (eg, &lt;code&gt;config.yaml&lt;/code&gt;) you can define site
-parameters, which are values which will be available to you in chrome.&lt;/p&gt;
-
-&lt;p&gt;For instance, you might declare:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;params:
-  CopyrightHTML: &amp;quot;Copyright &amp;amp;#xA9; 2013 John Doe. All Rights Reserved.&amp;quot;
-  TwitterUser: &amp;quot;spf13&amp;quot;
-  SidebarRecentLimit: 5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Within a footer layout, you might then declare a &lt;code&gt;&amp;lt;footer&amp;gt;&lt;/code&gt; which is only
-provided if the &lt;code&gt;CopyrightHTML&lt;/code&gt; parameter is provided, and if it is given,
-you would declare it to be HTML-safe, so that the HTML entity is not escaped
-again.  This would let you easily update just your top-level config file each
-January 1st, instead of hunting through your templates.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{if .Site.Params.CopyrightHTML}}&amp;lt;footer&amp;gt;
-&amp;lt;div class=&amp;quot;text-center&amp;quot;&amp;gt;{{.Site.Params.CopyrightHTML | safeHtml}}&amp;lt;/div&amp;gt;
-&amp;lt;/footer&amp;gt;{{end}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;An alternative way of writing the &amp;ldquo;if&amp;rdquo; and then referencing the same value
-is to use &amp;ldquo;with&amp;rdquo; instead. With rebinds the context &lt;code&gt;.&lt;/code&gt; within its scope,
-and skips the block if the variable is absent:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{with .Site.Params.TwitterUser}}&amp;lt;span class=&amp;quot;twitter&amp;quot;&amp;gt;
-&amp;lt;a href=&amp;quot;https://twitter.com/{{.}}&amp;quot; rel=&amp;quot;author&amp;quot;&amp;gt;
-&amp;lt;img src=&amp;quot;/images/twitter.png&amp;quot; width=&amp;quot;48&amp;quot; height=&amp;quot;48&amp;quot; title=&amp;quot;Twitter: {{.}}&amp;quot;
- alt=&amp;quot;Twitter&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
-&amp;lt;/span&amp;gt;{{end}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Finally, if you want to pull &amp;ldquo;magic constants&amp;rdquo; out of your layouts, you can do
-so, such as in this example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;nav class=&amp;quot;recent&amp;quot;&amp;gt;
-  &amp;lt;h1&amp;gt;Recent Posts&amp;lt;/h1&amp;gt;
-  &amp;lt;ul&amp;gt;{{range first .Site.Params.SidebarRecentLimit .Site.Recent}}
-    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;{{.RelPermalink}}&amp;quot;&amp;gt;{{.Title}}&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  {{end}}&amp;lt;/ul&amp;gt;
-&amp;lt;/nav&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
 </description>
       
     </item>
