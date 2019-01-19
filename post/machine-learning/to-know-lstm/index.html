@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Know LSTM - cheio</title>
+  <title>Know LSTM - Have a nice day, cheio</title>
   <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
 
 <meta name="renderer" content="webkit" />
@@ -85,7 +85,7 @@
 <body>
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
-    <a href="/" class="logo">cheio</a>
+    <a href="/" class="logo">Have a nice day, cheio</a>
   </div>
   <div class="mobile-navbar-icon">
     <span></span>
@@ -111,7 +111,7 @@
 
   <header id="header" class="header container">
     <div class="logo-wrapper">
-  <a href="/" class="logo">cheio</a>
+  <a href="/" class="logo">Have a nice day, cheio</a>
 </div>
 
 <nav class="site-navbar">
@@ -158,34 +158,13 @@
   <h2 class="post-toc-title">Table of Contents</h2>
   
   <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#背景知识">背景知识</a>
-<ul>
-<li><a href="#rnn">RNN</a></li>
-<li><a href="#lstm">LSTM</a>
-<ul>
-<li><a href="#lstm的基本结构">LSTM的基本结构</a>
-<ul>
-<li><a href="#详细的步骤">详细的步骤</a></li>
-</ul></li>
-<li><a href="#其它不同的派生">其它不同的派生</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#样例代码">样例代码</a></li>
-</ul></li>
-</ul>
-</nav>
+    
   </div>
 </div>
 
     
     <div class="post-content">
-      
-
-<p><a href="https://tensorflow.google.cn/tutorials/sequences/text_generation">生成句子CNN</a></p>
+      <p><a href="https://tensorflow.google.cn/tutorials/sequences/text_generation">生成句子CNN</a></p>
 
 <p><a href="https://tensorflow.google.cn/tutorials/sequences/recurrent#lstm">预测单词LSTM</a></p>
 
@@ -197,11 +176,11 @@
 
 <p>可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）</p>
 
-<p><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png" alt="An unrolled recurrent neural network." /></p>
+<p><figure><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png" alt="An unrolled recurrent neural network."></figure></p>
 
 <p>RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）</p>
 
-<p><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png" alt="p1" /></p>
+<p><figure><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png" alt="p1"></figure></p>
 
 <p>如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.）</p>
 
@@ -217,7 +196,7 @@
 
 <p>所有的神经网络都有链式的重复模块，普通的RNN隐藏层中只含有单一的tanh层。而LSTM有四个相互作用的层，其隐藏层使用了遗忘门、传入门、输出门几个相互作用的层。</p>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/The_LSTM_cell.png" alt="lstm" /></p>
+<p><figure><img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/The_LSTM_cell.png" alt="lstm"></figure></p>
 
 <h4 id="lstm的基本结构">LSTM的基本结构</h4>
 
@@ -341,9 +320,14 @@ Epoch: 8 Valid Perplexity: 127.851
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/machine-learning/to-know-lstm/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Know LSTM</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         
-          <a class="next" href="/post/machine-learning/to-know-lstm/">
-            <span class="next-text nav-default">Know LSTM</span>
+          <a class="next" href="/post/opencv/install-opencv-and-compile-cpp/">
+            <span class="next-text nav-default">Install OpenCV and Compile cpp file for MAC</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
