@@ -6,10 +6,19 @@
     <description>Recent content in Posts on cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 15 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Know LSTM</title>
+      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
+      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
+      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+    </item>
     
     <item>
       <title>APS trip</title>
@@ -202,16 +211,6 @@
       
       <guid>https://cheioKID.github.io/post/cs/leetcode-sql/</guid>
       <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的</description>
-    </item>
-    
-    <item>
-      <title>Creating a New Theme</title>
-      <link>https://cheioKID.github.io/post/creating-a-new-theme/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/creating-a-new-theme/</guid>
-      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
-We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
     </item>
     
   </channel>

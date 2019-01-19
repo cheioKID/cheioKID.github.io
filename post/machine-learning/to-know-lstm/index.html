@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Know LSTM - cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49.2" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/machine-learning/to-know-lstm/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Know LSTM" />
+<meta property="og:description" content="生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/machine-learning/to-know-lstm/" /><meta property="article:published_time" content="2019-01-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-19T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Know LSTM">
+<meta itemprop="description" content="生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含">
+
+
+<meta itemprop="datePublished" content="2019-01-19T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-19T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1511">
+
+
+
+<meta itemprop="keywords" content="Machine Learning,LSTM,note," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Know LSTM"/>
+<meta name="twitter:description" content="生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Know LSTM</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-19 </span>
+        <div class="post-category">
+            
+              <a href="/categories/machine-learning/"> Machine Learning </a>
+            
+          </div>
+        <span class="more-meta"> 1511 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#背景知识">背景知识</a>
+<ul>
+<li><a href="#rnn">RNN</a></li>
+<li><a href="#lstm">LSTM</a>
+<ul>
+<li><a href="#lstm的基本结构">LSTM的基本结构</a></li>
+<li><a href="#其它不同的派生">其它不同的派生</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#样例代码">样例代码</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<p><a href="https://tensorflow.google.cn/tutorials/sequences/text_generation">生成句子CNN</a></p>
+
+<p><a href="https://tensorflow.google.cn/tutorials/sequences/recurrent#lstm">预测单词LSTM</a></p>
+
+<h2 id="背景知识">背景知识</h2>
+
+<h3 id="rnn">RNN</h3>
+
+<p>循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。</p>
+
+<p>可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）</p>
+
+<p><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png" alt="An unrolled recurrent neural network." /></p>
+
+<p>RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）</p>
+
+<p><img src="https://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png" alt="p1" /></p>
+
+<p>如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.）</p>
+
+<p>随着预测信息和相关信息间的<strong>间隔增大</strong>，RNN逐渐失去对较远数据的关联能力（context from further back），因而无法预测长序列。（vanishing gradient problem）</p>
+
+<p>理论上RNN是可以处理这种long-term dependencies的，但这确实很难（<a href="http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf">Hochreiter (1991)</a> and <a href="http://www-dsi.ing.unifi.it/~paolo/ps/tnn-94-gradient.pdf">Bengio, et al. (1994)</a>）。而LSTM没有这种问题。</p>
+
+<h3 id="lstm">LSTM</h3>
+
+<p><a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></p>
+
+<p>LSTM旨在避免long-term dependency 问题，记住长时间的信息是它的默认行为，所以它当然可以进行长序列的学习预测（ <a href="http://www.bioinf.jku.at/publications/older/2604.pdf">Hochreiter &amp; Schmidhuber (1997)</a>）。</p>
+
+<p>所有的神经网络都有链式的重复模块，普通的RNN隐藏层中只含有单一的tanh层。而LSTM有四个相互作用的层，其隐藏层使用了遗忘门、传入门、输出门几个相互作用的层。</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/The_LSTM_cell.png" alt="lstm" /></p>
+
+<h4 id="lstm的基本结构">LSTM的基本结构</h4>
+
+<p>Cell state 像传送带一样使信息保持不变的向前流动，在此期间有较少的线性交互。LSTM并不直接的更改 cell state 信息，而是由 gate 来控制，gate 实际上就是由 sigmoid 和点乘操作组成的门。Sigmoid通过输出介于[0,1]之间实数表示信息通过的量。LSTM有三个这样的 gate 。</p>
+
+<p>#####详细的步骤</p>
+
+<p>如果想要 cell state 遗忘某些信息，LSTM 中的“遗忘门”（forget gate layer）可以达到这种效果。它的输入是上一步隐藏层 $h_{t-1}$ 和当前输入值 $x_t$ ，为 cell state 中的每个值都输出一个[0,1]之间的值，表示忘记的程度。</p>
+
+<p>如果想要将一些新的信息存入 cell state 中，首先，采用“传入门”（input gate layer）来决定被更新的信息，接着，tanh layer 创建一个新的候选值 $\tilde{C}_t$ ，最后组合这两个值来更新 state。</p>
+
+<p>最后，先根据 Sigmoid 决定 cell state 的输出部分，然后和tanh的值相乘，得到输出结果。</p>
+
+<h4 id="其它不同的派生">其它不同的派生</h4>
+
+<p>Peephole connections，gate layers 可以直接获得 cell state。</p>
+
+<p>Coupled forget and input gates，不同于单独处理忘记的信息和传入的信息，忘记和传入的信息同时处理。在传入一些信息的时候才会忘记这些信息，在忘记一些旧的信息的时候才会传入新的信息。</p>
+
+<p>Gated Recurrent Unit，将忘记和传入门结合为一个单独的“更新门”，融合了 cell state 和 hidden state。</p>
+
+<h2 id="样例代码">样例代码</h2>
+
+<p><a href="https://tensorflow.google.cn/tutorials/sequences/recurrent">tutorial</a></p>
+
+<blockquote>
+<p>该模型的核心由一个 LSTM 单元组成，该单元一次处理一个字词，并计算句子中下一个字词的可能值的概率。该网络的内存状态初始化为零矢量，并在读取每个字词后进行更新。</p>
+</blockquote>
+
+<p>可能的数据形式</p>
+
+<pre><code class="language-python"> t=0  t=1    t=2  t=3     t=4
+[The, brown, fox, is,     quick]
+[The, red,   fox, jumped, high]
+
+words_in_dataset[0] = [The, The]
+words_in_dataset[1] = [brown, red]
+words_in_dataset[2] = [fox, fox]
+words_in_dataset[3] = [is, jumped]
+words_in_dataset[4] = [quick, high]
+batch_size = 2, time_steps = 5
+</code></pre>
+
+<p>伪代码</p>
+
+<pre><code class="language-python">words_in_dataset = tf.placeholder(tf.float32, [time_steps, batch_size, num_features])
+lstm = tf.contrib.rnn.BasicLSTMCell(lstm_size)
+# Initial state of the LSTM memory.
+state = lstm.zero_state(batch_size, dtype=tf.float32)
+probabilities = []
+loss = 0.0
+for current_batch_of_words in words_in_dataset:
+    # The value of state is updated after processing each batch of words.
+    output, state = lstm(current_batch_of_words, state)
+
+    # The LSTM output can be used to make next word predictions
+    logits = tf.matmul(output, softmax_w) + softmax_b
+    probabilities.append(tf.nn.softmax(logits))
+    loss += loss_function(probabilities, target_words)
+</code></pre>
+
+<p>LSTM：一组链式的Cell，指定lstm_size</p>
+
+<p>每个batch对应state向量中的一个值</p>
+
+<p>对每个batch：output, state = lstm(current_batch, state) ，state参数是从前一次迭代中得到</p>
+
+<p>从output获得概率</p>
+
+<p>截断的反向传播算法：处理每批后回馈长度为 <code>num_steps</code> 的输入</p>
+
+<p>stack LSTM：<code>tf.contrib.rnn.MultiRNNCell</code></p>
+
+<p>结果：（困惑度）</p>
+
+<pre><code>Epoch: 8 Train Perplexity: 50.858
+Epoch: 8 Valid Perplexity: 127.851
+
+===========================================
+| config | epochs | train | valid  | test
+===========================================
+| small  | 13     | 37.99 | 121.39 | 115.91
+| medium | 39     | 48.45 |  86.16 |  82.07
+| large  | 55     | 37.87 |  82.62 |  78.29
+</code></pre>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-01-19</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/machine-learning/">Machine Learning</a>
+          
+          <a href="/tags/lstm/">LSTM</a>
+          
+          <a href="/tags/note/">note</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/memory/aps/">
+            <span class="next-text nav-default">APS trip</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+</body>
+</html>
