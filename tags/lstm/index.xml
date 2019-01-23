@@ -17,16 +17,14 @@
       <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
-      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
-    </item>
-    
-    <item>
-      <title>Know LSTM</title>
-      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
-      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
-      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+      <description>生成句子CNN
+预测单词LSTM
+背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。
+可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）
+
+RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）
+
+如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.</description>
     </item>
     
   </channel>

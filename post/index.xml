@@ -6,18 +6,33 @@
     <description>Recent content in Posts on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 19 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Know LSTM</title>
-      <link>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</link>
-      <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
+      <title>Know Face Recognition Sample</title>
+      <link>https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/</link>
+      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
-      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+      <guid>https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/</guid>
+      <description>Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels.</description>
+    </item>
+    
+    <item>
+      <title>Detect Network Connection (Dull Way)</title>
+      <link>https://cheioKID.github.io/post/note/detect-network-connection/</link>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/detect-network-connection/</guid>
+      <description>今天搞错了，盲目的查了好久怎么写，又测试了老半天，结果不是让我写的
+我写的时候就一直奇怪为什么要让我写这么难的东西，根本不好实现，弄的我午饭都没好好吃
+因为要删掉了，所以记下来纪念我空耗的两小时
+Constant.java
+public static boolean isConnectedToNetwork(){ try { int timeout = 2000; InetAddress[] addresses = InetAddress.getAllByName(&amp;quot;www.baidu.com&amp;quot;); for (InetAddress address : addresses) { if (address.isReachable(timeout)) { return true; } } } catch (UnknownHostException e) { return false; } catch (IOException e) { e.printStackTrace(); } return true; }  CaseTreeView.java
+exec2.scheduleWithFixedDelay(new Runnable(){ public void run() { if (null != reqParameter.getStrategy() &amp;amp;&amp;amp; !((LongSimplexLinkServerStrategyImpl) reqParameter.getStrategy()).isClientConnected()) { isNetworkAvailable = false; System.out.println(&amp;quot;......................连接已断开&amp;quot;); } if (!</description>
     </item>
     
     <item>
@@ -26,7 +41,14 @@
       <pubDate>Sat, 19 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/machine-learning/to-know-lstm/</guid>
-      <description>生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含</description>
+      <description>生成句子CNN
+预测单词LSTM
+背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。
+可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）
+
+RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）
+
+如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.</description>
     </item>
     
     <item>
@@ -35,7 +57,33 @@
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</guid>
-      <description>Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C++程序 安</description>
+      <description>Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C++程序 安装cmake
+brew install cmake  demo程序
+#include &amp;quot;opencv/cv.h&amp;quot; #include &amp;quot;opencv/highgui.h&amp;quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&amp;quot;edges&amp;quot;,1); for(;;) { cap &amp;gt;&amp;gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&amp;quot;edges&amp;quot;, edges); if(waitKey(30) &amp;gt;= 0) break; } return 0; }  CMakeLists.</description>
+    </item>
+    
+    <item>
+      <title>Symphony-No.9</title>
+      <link>https://cheioKID.github.io/post/music/symphony-no.9/</link>
+      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/music/symphony-no.9/</guid>
+      <description>Edition 1 Froh, froh, wie seine Sonnen, seine Sonnen fliegen,
+froh wie, seine, Sonnen, fliegen,
+durch des Himmels prächt&amp;rsquo;gen Plan,
+laufet, Brüder, eure Bahn,
+laufet, Brüder, eure Bahn,
+Freudig, wie ein Held zum Siegen,
+wie ein Held zum Siegen,
+laufet, Brüder, eure Bahn,
+wie ein Held zum Siegen.
+(合唱)
+Freude, schöner Götterfunken
+Tochter aus Elysium,
+Wir betreten feuertrunken,
+Himmlische, dein Heiligtum!
+Deine Zauber binden wieder
+Was die Mode streng geteilt;</description>
     </item>
     
     <item>
@@ -44,7 +92,8 @@
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/non-asc-character/</guid>
-      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换 [^\x00-\x7f]</description>
+      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换
+[^\x00-\x7f]  </description>
     </item>
     
     <item>
@@ -53,7 +102,11 @@
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/java-io-delete-win/</guid>
-      <description>在Mac上无误的程序 try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveF</description>
+      <description>在Mac上无误的程序
+try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveFile isRenamed = true; } catch (Exception e) { Log.error(e.toString()); e.printStackTrace(); return false; }  到win上抛出异常，不能重命名文件
+java.io.IOException: Failed to delete original file &#39;C:\***\******\************.txt&#39; after copy to &#39;C:\***\******\************.txt.114110&#39; at org.apache.commons.io.FileUtils.moveFile(FileUtils.java:3011) at com.example.sms.LocalUtil.renameFile(LocalUtil.java:125) at com.example.sms.SendSMS.main(SendSMS.java:152)  但是发现如果没有从FTP上下载，重命名是没有问题的
+看了一下FileUtil.moveFile()的源码
+public static void moveFile(final File srcFile, final File destFile) throws IOException { if (srcFile == null) { throw new NullPointerException(&amp;quot;Source must not be null&amp;quot;); } if (destFile == null) { throw new NullPointerException(&amp;quot;Destination must not be null&amp;quot;); } if (!</description>
     </item>
     
     <item>
@@ -62,7 +115,8 @@
       <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/java-ftp/</guid>
-      <description>因为API响应太久，FTP连接已经断开，会抛出异常 org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126)</description>
+      <description>因为API响应太久，FTP连接已经断开，会抛出异常
+org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126) org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.</description>
     </item>
     
     <item>
@@ -71,7 +125,12 @@
       <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/cross-compile/</guid>
-      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境</description>
+      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git   Sourcery CodeBench contains the complete GNUToolchain including all of the following components:
+ CodeSourcery Debug Sprite for ARM
+GNU Binary Utilities (Binutils) GNU C Compiler (GCC)
+ GNU C Library (GLIBC) GNU C++ Compiler (G++)
+GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer)
+ GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website.   设置环境变量 export CROSS_COMPILE=arm-xilinx-linux-gnueabi- export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH  可能出现的错误： .</description>
     </item>
     
     <item>
@@ -80,7 +139,15 @@
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ubuntu-kernel/</guid>
-      <description>Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替</description>
+      <description>Ubuntu 内核
+修改源
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update  安装内核3.16
+sudo apt-get install linux-image-extra-3.16.0-43-generic  查看内核是否安装
+dpkg -l | grep 3.16.0-43-generic  修改grub
+sudo gedit /etc/default/grub  将GRUB_DEFAULT=0替换为
+GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot; #一级菜单选项1下的第4个选项 #默认选择  注释这一行
+#GRUB_HIDDEN_TIMEOUT=0 #注释这一行  更新grub
+sudo update-grub sudo reboot  </description>
     </item>
     
     <item>
@@ -89,7 +156,13 @@
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
-      <description>LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任</description>
+      <description>LL(1)分析表的构造  LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。
+ 根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。
+ 采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。
+  预测分析过程  预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。 如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。 如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。 循环到符号栈和输入栈都为空，则预测分析完毕。  紧急错误恢复  紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。
+ 如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。
+ 非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析
+  #include&amp;lt;string.h&amp;gt; #include&amp;lt;stdio.h&amp;gt; int ll1[5][6]={{1,0,0,1,99,99}, {0,2,0,0,3,3}, {4,99,0,4,99,99}, {0,6,5,0,6,6}, {8,99,0,7,99,99}}; int main() { char stack[10] = {&#39;$&#39;,&#39;E&#39;}; char input[10]; char str[10]; char ch;//当前看到的字符 int i,j,m,n; int l = 1;//栈的大小 int k = 0;//当前看到的字符的指针 int action; int step = 1; int length = 0; printf(&amp;quot;请输入，输入$结束:&amp;quot;); do { scanf(&amp;quot;%c&amp;quot;,&amp;amp;ch); if(ch == &#39;\n&#39;) continue; input[length]=ch; str[length]=ch; length++; } while(ch !</description>
     </item>
     
     <item>
@@ -98,7 +171,11 @@
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/algorithm/compare-appetite/</guid>
-      <description>Compare Appetite 比饭量 描述 3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A</description>
+      <description>Compare Appetite 比饭量  描述  3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A吃的多。 事实上，饭量和正确断言的个数是反序的关系。 请编程按饭量的大小输出3个人的顺序。
+ 输入  无输入
+ 输出  按照饭量大小输出3人顺序，比如： ABC
+ 样例输入  无  样例输出
+无  #include &amp;lt;iostream&amp;gt; using namespace std; int main() { int a,b,c,A,B,C; char arr[] = &amp;quot;ABC&amp;quot;; for (a=0; a&amp;lt;=2; a++) { for (b=0; b&amp;lt;=2; b++) { for (c=0; c&amp;lt;=2; c++) { A=((b&amp;gt;a)+(c==a)); B=((a&amp;gt;b)+(a&amp;gt;c)); C=((c&amp;gt;b)+(b&amp;gt;a)); if(a==0 &amp;amp;&amp;amp; A!=2) break; if(a==1 &amp;amp;&amp;amp; A!=1) break; if(a==2 &amp;amp;&amp;amp; A!</description>
     </item>
     
     <item>
@@ -107,7 +184,10 @@
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/algorithm/cycling-competition/</guid>
-      <description>Cycling competition 循环比赛 描述 设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛</description>
+      <description>Cycling competition 循环比赛  描述  设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛共进行N-1天，要求每天没有选手轮空。
+ 输入  M
+ 输出  表格形式的比赛安排表
+ 样例输入   3   样例输出   1 2 3 4 5 6 7 8 2 1 4 3 6 5 8 7 3 4 1 2 7 8 5 6 4 3 2 1 8 7 6 5 5 6 7 8 1 2 3 4 6 5 8 7 2 1 4 3 7 8 5 6 3 4 1 2 8 7 6 5 4 3 2 1  ​</description>
     </item>
     
     <item>
@@ -119,19 +199,6 @@
       <description>Finally it works!
  Here&amp;rsquo;s the steps generate new blogs hugo new site blogs cd blogs git init git remote add origin git@github.com:cheioKID/Blogs.git  change the baseURL to github.io baseurl = &amp;quot;https://cheioKID.github.io/&amp;quot;  apple the theme git submodule add -b master https://github.com/xianmin/hugo-theme-jane.git themes/jane cp -r themes/jane/exampleSite/content ./ cp themes/jane/exampleSite/config.toml ./  add markdown files with head like this
 --- title: &amp;quot;For example&amp;quot; date: 2018-3-25 #lastmod: 2017-08-31T15:43:48+08:00 draft: false tags: [&amp;quot;preview&amp;quot;, &amp;quot;English&amp;quot;, &amp;quot;tag-2&amp;quot;] categories: [&amp;quot;English&amp;quot;, &amp;quot;index&amp;quot;] author: &amp;quot;cheio&amp;quot; ---  or</description>
-    </item>
-    
-    <item>
-      <title>Jane Theme Preview</title>
-      <link>https://cheioKID.github.io/post/jane-theme-preview/</link>
-      <pubDate>Tue, 06 Mar 2018 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/jane-theme-preview/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt; is created by &lt;a href=&#34;http://daringfireball.net/&#34;&gt;Daring Fireball&lt;/a&gt;, the original guideline is &lt;a href=&#34;http://daringfireball.net/projects/markdown/syntax&#34;&gt;here&lt;/a&gt;. Its syntax, however, varies between different parsers or editors.&lt;/p&gt;
-
-&lt;p&gt;Please note that HTML fragments in markdown source will be recognized but not parsed or rendered. Also, there may be small reformatting on the original markdown source code after saving.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -161,29 +228,12 @@
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/git-note/</guid>
-      <description>git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git</description>
-    </item>
-    
-    <item>
-      <title>English Creating a New Theme</title>
-      <link>https://cheioKID.github.io/post/english-preview/</link>
-      <pubDate>Thu, 31 Aug 2017 15:43:48 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/english-preview/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>This is a very long title This is a very long title This is a very long title This is a very long title This is a very long title</title>
-      <link>https://cheioKID.github.io/post/this-is-a-very-long-title/</link>
-      <pubDate>Wed, 30 Aug 2017 15:43:48 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/this-is-a-very-long-title/</guid>
-      <description>This is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long titleThis is a very long title</description>
+      <description>git笔记  版本控制系统Git，代码托管采用Github仓库  初始化  在目录下通过git init 初始化空仓库Initialized empty Git repository  暂存区  通过git add指令将修改添加到暂存区
+ 通过git status查看状态是否commit
+ 通过git rm &amp;lt;filename&amp;gt;删除版本库中的文件，实现和工作区的同步
+ 通过git commit提交修改，git commit -m “commit name&amp;quot; 为本次commit命名
+  git add. # add changed files git rm --cached &amp;lt;file&amp;gt; # delete from git git checkout &amp;lt;file&amp;gt; # get back the file git status git commit -m &#39;Initial commit&#39;  版本  通过git log查看版本控制记录，即commit历史记录
+ git log &amp;ndash;pretty=oneline breif info`</description>
     </item>
     
     <item>
@@ -192,7 +242,9 @@
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/leetcode-sql/</guid>
-      <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID; 左外连接，除去address中person没有的元祖 ``` 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee); 子查询得到最大值，外层查询的</description>
+      <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
+176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
+177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.</description>
     </item>
     
     <item>
@@ -213,6 +265,37 @@ We&amp;rsquo;ll start with creating a new site with a very basic template.</desc
       <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
       <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
 This document is a brief primer on using go templates.</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>https://cheioKID.github.io/post/migrate-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/migrate-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/data-mining/dbscan/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/data-mining/dbscan/</guid>
+      <description>##A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise
+ Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</guid>
+      <description>####换音与变音 元音只在第二人称及第三人称单数时发生变化。 并非所有带e和a的动词在变位时都会发生元音变化：
+元音无变化 ich gehe - du gehst, ich lache - du lachst …  #####换音动词e-i | e | i | | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | | emptehlen | er empfiehlt | | essen | er sst | | geben | er gibt | | fernsehen | er sieht fern | | helfen | er hilft | | lesen | er liest | | mitnehmen | er nimmt mit | | nehmen | er nimmt | | sehen | er sieht | | sprechen | er spricht | | vergessen | er vergisst | | werden | er wird | |||</description>
     </item>
     
   </channel>

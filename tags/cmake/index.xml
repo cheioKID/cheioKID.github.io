@@ -17,7 +17,9 @@
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/</guid>
-      <description>Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C++程序 安</description>
+      <description>Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C++程序 安装cmake
+brew install cmake  demo程序
+#include &amp;quot;opencv/cv.h&amp;quot; #include &amp;quot;opencv/highgui.h&amp;quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&amp;quot;edges&amp;quot;,1); for(;;) { cap &amp;gt;&amp;gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&amp;quot;edges&amp;quot;, edges); if(waitKey(30) &amp;gt;= 0) break; } return 0; }  CMakeLists.</description>
     </item>
     
   </channel>

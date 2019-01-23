@@ -17,7 +17,15 @@
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ubuntu-kernel/</guid>
-      <description>Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替</description>
+      <description>Ubuntu 内核
+修改源
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update  安装内核3.16
+sudo apt-get install linux-image-extra-3.16.0-43-generic  查看内核是否安装
+dpkg -l | grep 3.16.0-43-generic  修改grub
+sudo gedit /etc/default/grub  将GRUB_DEFAULT=0替换为
+GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot; #一级菜单选项1下的第4个选项 #默认选择  注释这一行
+#GRUB_HIDDEN_TIMEOUT=0 #注释这一行  更新grub
+sudo update-grub sudo reboot  </description>
     </item>
     
   </channel>

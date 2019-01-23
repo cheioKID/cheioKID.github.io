@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Know Face Recognition Sample - Have a nice day, cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49.2" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Know Face Recognition Sample" />
+<meta property="og:description" content="Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/" /><meta property="article:published_time" content="2019-01-22T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-22T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="Know Face Recognition Sample">
+<meta itemprop="description" content="Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels.">
+
+
+<meta itemprop="datePublished" content="2019-01-22T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-22T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="844">
+
+
+
+<meta itemprop="keywords" content="Machine Learning,SVM,PCA," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Know Face Recognition Sample"/>
+<meta name="twitter:description" content="Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Have a nice day, cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Have a nice day, cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Know Face Recognition Sample</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-22 </span>
+        <div class="post-category">
+            
+              <a href="/categories/machine-learning/"> Machine Learning </a>
+            
+          </div>
+        <span class="more-meta"> 844 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#interpretation">Interpretation</a></li>
+<li><a href="#confusion">Confusion</a></li>
+<li><a href="#source-code">Source Code</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="interpretation">Interpretation</h2>
+
+<blockquote>
+<p>dataset.images : numpy array of shape (13233, 62, 47)
+        Each row is a face image corresponding to one of the 5749 people in
+        the dataset. Changing the <code>slice_</code> or resize parameters will change
+        the shape of the output.</p>
+</blockquote>
+
+<pre><code class="language-python">n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image 
+</code></pre>
+
+<blockquote>
+<p>dataset.data : numpy array of shape (13233, 2914)
+    Each row corresponds to a ravelled face image of original size 62 x 47
+    pixels. Changing the <code>slice_</code> or resize parameters will change the
+    shape of the output.</p>
+</blockquote>
+
+<pre><code class="language-python">X = lfw_people.data
+n_features = X.shape[1] # 62 * 48 pixels means 2914 features
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42) # separate
+
+pca = PCA(n_components=n_components, svd_solver='randomized', whiten=True).fit(X_train) # PCA needs to specify n_components
+
+eigenfaces = pca.components_.reshape((n_components, h, w)) # the components
+
+X_train_pca = pca.transform(X_train)
+X_test_pca = pca.transform(X_test) # transform to apply PCA to dataset
+
+param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+              'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid, cv=5) #search for proper parameter
+clf = clf.fit(X_train_pca, y_train) # fit with the dataset
+
+y_pred = clf.predict(X_test_pca) # predict pca(test)
+
+classification_report...
+confusion_matrix...
+plt show...
+
+</code></pre>
+
+<h2 id="confusion">Confusion</h2>
+
+<blockquote>
+<p>for machine learning we use the 2 data directly (as relative pixel positions info is ignored by this model)</p>
+</blockquote>
+
+<p>Don&rsquo;t know what does it mean, maybe one way differs from convolutional way</p>
+
+<h2 id="source-code">Source Code</h2>
+
+<p><a href="https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py">Faces recognition example using eigenfaces and SVMs</a></p>
+
+<pre><code class="language-python">&quot;&quot;&quot;
+===================================================
+Faces recognition example using eigenfaces and SVMs
+===================================================
+
+The dataset used in this example is a preprocessed excerpt of the
+&quot;Labeled Faces in the Wild&quot;, aka LFW_:
+
+  http://vis-www.cs.umass.edu/lfw/lfw-funneled.tgz (233MB)
+
+.. _LFW: http://vis-www.cs.umass.edu/lfw/
+
+Expected results for the top 5 most represented people in the dataset:
+
+================== ============ ======= ========== =======
+                   precision    recall  f1-score   support
+================== ============ ======= ========== =======
+     Ariel Sharon       0.67      0.92      0.77        13
+     Colin Powell       0.75      0.78      0.76        60
+  Donald Rumsfeld       0.78      0.67      0.72        27
+    George W Bush       0.86      0.86      0.86       146
+Gerhard Schroeder       0.76      0.76      0.76        25
+      Hugo Chavez       0.67      0.67      0.67        15
+       Tony Blair       0.81      0.69      0.75        36
+
+      avg / total       0.80      0.80      0.80       322
+================== ============ ======= ========== =======
+
+&quot;&quot;&quot;
+from __future__ import print_function
+
+from time import time
+import logging
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import fetch_lfw_people
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.decomposition import PCA
+from sklearn.svm import SVC
+
+
+print(__doc__)
+
+# Display progress logs on stdout
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
+
+# #############################################################################
+# Download the data, if not already on disk and load it as numpy arrays
+
+lfw_people = fetch_lfw_people(data_home='/Users/cheio/IdeaProjects/test-lstm/',min_faces_per_person=70, resize=0.4)
+
+# introspect the images arrays to find the shapes (for plotting)
+n_samples, h, w = lfw_people.images.shape
+
+# for machine learning we use the 2 data directly (as relative pixel
+# positions info is ignored by this model)
+X = lfw_people.data
+n_features = X.shape[1]
+
+# the label to predict is the id of the person
+y = lfw_people.target
+target_names = lfw_people.target_names
+n_classes = target_names.shape[0]
+
+print(&quot;Total dataset size:&quot;)
+print(&quot;n_samples: %d&quot; % n_samples)
+print(&quot;n_features: %d&quot; % n_features)
+print(&quot;n_classes: %d&quot; % n_classes)
+
+
+# #############################################################################
+# Split into a training set and a test set using a stratified k fold
+
+# split into a training and testing set
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42)
+
+
+# #############################################################################
+# Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
+# dataset): unsupervised feature extraction / dimensionality reduction
+n_components = 150
+
+print(&quot;Extracting the top %d eigenfaces from %d faces&quot;
+      % (n_components, X_train.shape[0]))
+t0 = time()
+pca = PCA(n_components=n_components, svd_solver='randomized',
+          whiten=True).fit(X_train)
+print(&quot;done in %0.3fs&quot; % (time() - t0))
+
+eigenfaces = pca.components_.reshape((n_components, h, w))
+
+print(&quot;Projecting the input data on the eigenfaces orthonormal basis&quot;)
+t0 = time()
+X_train_pca = pca.transform(X_train)
+X_test_pca = pca.transform(X_test)
+print(&quot;done in %0.3fs&quot; % (time() - t0))
+
+
+# #############################################################################
+# Train a SVM classification model
+
+print(&quot;Fitting the classifier to the training set&quot;)
+t0 = time()
+param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+              'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'),
+                   param_grid, cv=5)
+clf = clf.fit(X_train_pca, y_train)
+print(&quot;done in %0.3fs&quot; % (time() - t0))
+print(&quot;Best estimator found by grid search:&quot;)
+print(clf.best_estimator_)
+
+
+# #############################################################################
+# Quantitative evaluation of the model quality on the test set
+
+print(&quot;Predicting people's names on the test set&quot;)
+t0 = time()
+y_pred = clf.predict(X_test_pca)
+print(&quot;done in %0.3fs&quot; % (time() - t0))
+
+print(classification_report(y_test, y_pred, target_names=target_names))
+print(confusion_matrix(y_test, y_pred, labels=range(n_classes)))
+
+
+# #############################################################################
+# Qualitative evaluation of the predictions using matplotlib
+
+def plot_gallery(images, titles, h, w, n_row=3, n_col=4):
+    &quot;&quot;&quot;Helper function to plot a gallery of portraits&quot;&quot;&quot;
+    plt.figure(figsize=(1.8 * n_col, 2.4 * n_row))
+    plt.subplots_adjust(bottom=0, left=.01, right=.99, top=.90, hspace=.35)
+    for i in range(n_row * n_col):
+        plt.subplot(n_row, n_col, i + 1)
+        plt.imshow(images[i].reshape((h, w)), cmap=plt.cm.gray)
+        plt.title(titles[i], size=12)
+        plt.xticks(())
+        plt.yticks(())
+
+
+# plot the result of the prediction on a portion of the test set
+
+def title(y_pred, y_test, target_names, i):
+    pred_name = target_names[y_pred[i]].rsplit(' ', 1)[-1]
+    true_name = target_names[y_test[i]].rsplit(' ', 1)[-1]
+    return 'predicted: %s\ntrue:      %s' % (pred_name, true_name)
+
+prediction_titles = [title(y_pred, y_test, target_names, i)
+                     for i in range(y_pred.shape[0])]
+
+plot_gallery(X_test, prediction_titles, h, w)
+
+# plot the gallery of the most significative eigenfaces
+
+eigenface_titles = [&quot;eigenface %d&quot; % i for i in range(eigenfaces.shape[0])]
+plot_gallery(eigenfaces, eigenface_titles, h, w)
+
+plt.show()
+
+</code></pre>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-01-22</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/machine-learning/">Machine Learning</a>
+          
+          <a href="/tags/svm/">SVM</a>
+          
+          <a href="/tags/pca/">PCA</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/note/detect-network-connection/">
+            <span class="next-text nav-default">Detect Network Connection (Dull Way)</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+
+</body>
+</html>

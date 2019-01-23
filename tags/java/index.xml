@@ -17,7 +17,11 @@
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/java-io-delete-win/</guid>
-      <description>在Mac上无误的程序 try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveF</description>
+      <description>在Mac上无误的程序
+try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveFile isRenamed = true; } catch (Exception e) { Log.error(e.toString()); e.printStackTrace(); return false; }  到win上抛出异常，不能重命名文件
+java.io.IOException: Failed to delete original file &#39;C:\***\******\************.txt&#39; after copy to &#39;C:\***\******\************.txt.114110&#39; at org.apache.commons.io.FileUtils.moveFile(FileUtils.java:3011) at com.example.sms.LocalUtil.renameFile(LocalUtil.java:125) at com.example.sms.SendSMS.main(SendSMS.java:152)  但是发现如果没有从FTP上下载，重命名是没有问题的
+看了一下FileUtil.moveFile()的源码
+public static void moveFile(final File srcFile, final File destFile) throws IOException { if (srcFile == null) { throw new NullPointerException(&amp;quot;Source must not be null&amp;quot;); } if (destFile == null) { throw new NullPointerException(&amp;quot;Destination must not be null&amp;quot;); } if (!</description>
     </item>
     
     <item>
@@ -26,7 +30,8 @@
       <pubDate>Tue, 11 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/java-ftp/</guid>
-      <description>因为API响应太久，FTP连接已经断开，会抛出异常 org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126)</description>
+      <description>因为API响应太久，FTP连接已经断开，会抛出异常
+org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126) org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.</description>
     </item>
     
   </channel>

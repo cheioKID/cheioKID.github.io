@@ -19,7 +19,9 @@
 
 
 <meta name="author" content="cheio" />
-  <meta name="description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安" />
+  <meta name="description" content="Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&amp;quot;/usr/local/opt/opencv@2/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc export LDFLAGS=&amp;quot;-L/usr/local/opt/opencv@2/lib&amp;quot; export CPPFLAGS=&amp;quot;-I/usr/local/opt/opencv@2/include&amp;quot; export PKG_CONFIG_PATH=&amp;quot;/usr/local/opt/opencv@2/lib/pkgconfig&amp;quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C&#43;&#43;程序 安装cmake
+brew install cmake  demo程序
+#include &amp;quot;opencv/cv.h&amp;quot; #include &amp;quot;opencv/highgui.h&amp;quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&amp;quot;edges&amp;quot;,1); for(;;) { cap &amp;gt;&amp;gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&amp;quot;edges&amp;quot;, edges); if(waitKey(30) &amp;gt;= 0) break; } return 0; }  CMakeLists." />
 
 
 
@@ -49,25 +51,31 @@
 
 
 <meta property="og:title" content="Install OpenCV and Compile cpp file for MAC" />
-<meta property="og:description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安" />
+<meta property="og:description" content="Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C&#43;&#43;程序 安装cmake
+brew install cmake  demo程序
+#include &quot;opencv/cv.h&quot; #include &quot;opencv/highgui.h&quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&quot;edges&quot;,1); for(;;) { cap &gt;&gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&quot;edges&quot;, edges); if(waitKey(30) &gt;= 0) break; } return 0; }  CMakeLists." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cheioKID.github.io/post/opencv/install-opencv-and-compile-cpp/" /><meta property="article:published_time" content="2018-11-28T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2018-11-28T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Install OpenCV and Compile cpp file for MAC">
-<meta itemprop="description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安">
+<meta itemprop="description" content="Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C&#43;&#43;程序 安装cmake
+brew install cmake  demo程序
+#include &quot;opencv/cv.h&quot; #include &quot;opencv/highgui.h&quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&quot;edges&quot;,1); for(;;) { cap &gt;&gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&quot;edges&quot;, edges); if(waitKey(30) &gt;= 0) break; } return 0; }  CMakeLists.">
 
 
 <meta itemprop="datePublished" content="2018-11-28T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-11-28T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="268">
+<meta itemprop="wordCount" content="126">
 
 
 
 <meta itemprop="keywords" content="OpenCV,cmake," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Install OpenCV and Compile cpp file for MAC"/>
-<meta name="twitter:description" content="Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C&#43;&#43;程序 安"/>
+<meta name="twitter:description" content="Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo &#39;export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;&#39; &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C&#43;&#43;程序 安装cmake
+brew install cmake  demo程序
+#include &quot;opencv/cv.h&quot; #include &quot;opencv/highgui.h&quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&quot;edges&quot;,1); for(;;) { cap &gt;&gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&quot;edges&quot;, edges); if(waitKey(30) &gt;= 0) break; } return 0; }  CMakeLists."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -147,7 +155,7 @@
               <a href="/categories/opencv/"> OpenCV </a>
             
           </div>
-        <span class="more-meta"> 268 words </span>
+        <span class="more-meta"> 126 words </span>
         <span class="more-meta"> 1 min read </span>
       </div>
     </header>
@@ -166,6 +174,7 @@
 <ul>
 <li>
 <ul>
+<li><a href="#安装opencv2">安装OpenCV2</a></li>
 <li><a href="#编译c-程序">编译C++程序</a></li>
 <li><a href="#运行python程序">运行Python程序</a></li>
 </ul></li>
@@ -182,7 +191,7 @@
 
 <h1 id="install-opencv-and-compile-cpp-file-for-mac">Install OpenCV and Compile cpp file for Mac</h1>
 
-<p>####安装OpenCV2</p>
+<h4 id="安装opencv2">安装OpenCV2</h4>
 
 <pre><code class="language-bash">brew install opencv@2
 echo 'export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
@@ -306,8 +315,8 @@ import cv2
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/note/non-asc-character/">
-            <span class="next-text nav-default">匹配非ASC字符</span>
+          <a class="next" href="/post/music/symphony-no.9/">
+            <span class="next-text nav-default">Symphony-No.9</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

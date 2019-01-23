@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pca on Have a nice day, cheio</title>
+    <link>https://cheioKID.github.io/tags/pca/</link>
+    <description>Recent content in Pca on Have a nice day, cheio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/pca/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Know Face Recognition Sample</title>
+      <link>https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/</link>
+      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/</guid>
+      <description>Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels.</description>
+    </item>
+    
+  </channel>
+</rss>

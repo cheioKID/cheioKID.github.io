@@ -17,7 +17,11 @@
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/algorithm/compare-appetite/</guid>
-      <description>Compare Appetite 比饭量 描述 3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A</description>
+      <description>Compare Appetite 比饭量  描述  3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A吃的多。 事实上，饭量和正确断言的个数是反序的关系。 请编程按饭量的大小输出3个人的顺序。
+ 输入  无输入
+ 输出  按照饭量大小输出3人顺序，比如： ABC
+ 样例输入  无  样例输出
+无  #include &amp;lt;iostream&amp;gt; using namespace std; int main() { int a,b,c,A,B,C; char arr[] = &amp;quot;ABC&amp;quot;; for (a=0; a&amp;lt;=2; a++) { for (b=0; b&amp;lt;=2; b++) { for (c=0; c&amp;lt;=2; c++) { A=((b&amp;gt;a)+(c==a)); B=((a&amp;gt;b)+(a&amp;gt;c)); C=((c&amp;gt;b)+(b&amp;gt;a)); if(a==0 &amp;amp;&amp;amp; A!=2) break; if(a==1 &amp;amp;&amp;amp; A!=1) break; if(a==2 &amp;amp;&amp;amp; A!</description>
     </item>
     
   </channel>

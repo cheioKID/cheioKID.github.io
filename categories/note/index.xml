@@ -6,10 +6,24 @@
     <description>Recent content in Note on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 14 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/categories/note/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Detect Network Connection (Dull Way)</title>
+      <link>https://cheioKID.github.io/post/note/detect-network-connection/</link>
+      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/detect-network-connection/</guid>
+      <description>今天搞错了，盲目的查了好久怎么写，又测试了老半天，结果不是让我写的
+我写的时候就一直奇怪为什么要让我写这么难的东西，根本不好实现，弄的我午饭都没好好吃
+因为要删掉了，所以记下来纪念我空耗的两小时
+Constant.java
+public static boolean isConnectedToNetwork(){ try { int timeout = 2000; InetAddress[] addresses = InetAddress.getAllByName(&amp;quot;www.baidu.com&amp;quot;); for (InetAddress address : addresses) { if (address.isReachable(timeout)) { return true; } } } catch (UnknownHostException e) { return false; } catch (IOException e) { e.printStackTrace(); } return true; }  CaseTreeView.java
+exec2.scheduleWithFixedDelay(new Runnable(){ public void run() { if (null != reqParameter.getStrategy() &amp;amp;&amp;amp; !((LongSimplexLinkServerStrategyImpl) reqParameter.getStrategy()).isClientConnected()) { isNetworkAvailable = false; System.out.println(&amp;quot;......................连接已断开&amp;quot;); } if (!</description>
+    </item>
     
     <item>
       <title>匹配非ASC字符</title>
@@ -17,7 +31,8 @@
       <pubDate>Fri, 14 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/non-asc-character/</guid>
-      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换 [^\x00-\x7f]</description>
+      <description>复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换
+[^\x00-\x7f]  </description>
     </item>
     
     <item>

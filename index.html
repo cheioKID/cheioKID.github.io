@@ -52,7 +52,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cheioKID.github.io/" />
-<meta property="og:updated_time" content="2017-08-20T21:38:52&#43;08:00"/>
+<meta property="og:updated_time" content="2019-01-22T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Have a nice day, cheio">
 <meta itemprop="description" content="">
@@ -134,15 +134,15 @@
     
       <article class="post bg-white">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/machine-learning/to-know-lstm/">Know LSTM</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/machine-learning/know-face-recognition-sample/">Know Face Recognition Sample</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 2019-01-19 </span>
+      <span class="post-time"> 2019-01-22 </span>
       <div class="post-category">
           
             <a href="/categories/machine-learning/"> Machine Learning </a>
           
         </div>
-      <span class="more-meta"> 1506 words </span>
+      <span class="more-meta"> 844 words </span>
       <span class="more-meta"> 4 min read </span>
     </div>
   </header>
@@ -150,10 +150,44 @@
   <div class="post-content">
     
     <div class="post-summary">
-      生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含
+      Interpretation  dataset.images : numpy array of shape (13233, 62, 47) Each row is a face image corresponding to one of the 5749 people in the dataset. Changing the slice_ or resize parameters will change the shape of the output.
+ n_samples, h, w = lfw_people.images.shape # no. of samples, height of image and width of image   dataset.data : numpy array of shape (13233, 2914) Each row corresponds to a ravelled face image of original size 62 x 47 pixels.
     </div>
     <div class="read-more">
-      <a href="/post/machine-learning/to-know-lstm/" class="read-more-link">Read more</a>
+      <a href="/post/machine-learning/know-face-recognition-sample/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/note/detect-network-connection/">Detect Network Connection (Dull Way)</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2019-01-21 </span>
+      <div class="post-category">
+          
+            <a href="/categories/note/"> Note </a>
+          
+        </div>
+      <span class="more-meta"> 94 words </span>
+      <span class="more-meta"> 1 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      今天搞错了，盲目的查了好久怎么写，又测试了老半天，结果不是让我写的
+我写的时候就一直奇怪为什么要让我写这么难的东西，根本不好实现，弄的我午饭都没好好吃
+因为要删掉了，所以记下来纪念我空耗的两小时
+Constant.java
+public static boolean isConnectedToNetwork(){ try { int timeout = 2000; InetAddress[] addresses = InetAddress.getAllByName(&quot;www.baidu.com&quot;); for (InetAddress address : addresses) { if (address.isReachable(timeout)) { return true; } } } catch (UnknownHostException e) { return false; } catch (IOException e) { e.printStackTrace(); } return true; }  CaseTreeView.java
+exec2.scheduleWithFixedDelay(new Runnable(){ public void run() { if (null != reqParameter.getStrategy() &amp;&amp; !((LongSimplexLinkServerStrategyImpl) reqParameter.getStrategy()).isClientConnected()) { isNetworkAvailable = false; System.out.println(&quot;......................连接已断开&quot;); } if (!
+    </div>
+    <div class="read-more">
+      <a href="/post/note/detect-network-connection/" class="read-more-link">Read more</a>
     </div>
     
   </div>
@@ -170,15 +204,22 @@
             <a href="/categories/machine-learning/"> Machine Learning </a>
           
         </div>
-      <span class="more-meta"> 1506 words </span>
-      <span class="more-meta"> 4 min read </span>
+      <span class="more-meta"> 365 words </span>
+      <span class="more-meta"> 2 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     
     <div class="post-summary">
-      生成句子CNN 预测单词LSTM 背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。 可以看到RNN包含
+      生成句子CNN
+预测单词LSTM
+背景知识 RNN 循环神经网络的隐藏层中，输出不仅取决于当前的输入还取决于上一时间隐藏层的输出结果。
+可以看到RNN包含历史信息（A recurrent neural network can be thought of as multiple copies of the same network, each passing a message to a successor.）
+
+RNN可以将历史信息关联到当前的任务中，比如根据视频的历史帧赋予对当前帧的理解（One of the appeals of RNNs is the idea that they might be able to connect previous information to the present task, such as using previous video frames might inform the understanding of the present frame.）
+
+如果相关信息和所需位置的差距很小，RNN就可以学习使用过去的信息（In such cases, where the gap between the relevant information and the place that it’s needed is small, RNNs can learn to use the past information.
     </div>
     <div class="read-more">
       <a href="/post/machine-learning/to-know-lstm/" class="read-more-link">Read more</a>
@@ -198,7 +239,7 @@
             <a href="/categories/opencv/"> OpenCV </a>
           
         </div>
-      <span class="more-meta"> 268 words </span>
+      <span class="more-meta"> 126 words </span>
       <span class="more-meta"> 1 min read </span>
     </div>
   </header>
@@ -206,10 +247,55 @@
   <div class="post-content">
     
     <div class="post-summary">
-      Install OpenCV and Compile cpp file for Mac ####安装OpenCV2 brew install opencv@2 echo 'export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;' &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了 编译C++程序 安
+      Install OpenCV and Compile cpp file for Mac 安装OpenCV2 brew install opencv@2 echo 'export PATH=&quot;/usr/local/opt/opencv@2/bin:$PATH&quot;' &gt;&gt; ~/.zshrc export LDFLAGS=&quot;-L/usr/local/opt/opencv@2/lib&quot; export CPPFLAGS=&quot;-I/usr/local/opt/opencv@2/include&quot; export PKG_CONFIG_PATH=&quot;/usr/local/opt/opencv@2/lib/pkgconfig&quot; # 不知道这些环境变量是不是必要的，但还是按照提示执行了  编译C++程序 安装cmake
+brew install cmake  demo程序
+#include &quot;opencv/cv.h&quot; #include &quot;opencv/highgui.h&quot; using namespace cv; int main(int, char**) { VideoCapture cap(0); if(!cap.isOpened()) return -1; Mat frame, edges; namedWindow(&quot;edges&quot;,1); for(;;) { cap &gt;&gt; frame; cvtColor(frame, edges, CV_BGR2GRAY); GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5); Canny(edges, edges, 0, 30, 3); imshow(&quot;edges&quot;, edges); if(waitKey(30) &gt;= 0) break; } return 0; }  CMakeLists.
     </div>
     <div class="read-more">
       <a href="/post/opencv/install-opencv-and-compile-cpp/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/music/symphony-no.9/">Symphony-No.9</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-10-16 </span>
+      <div class="post-category">
+          
+            <a href="/categories/music/"> Music </a>
+          
+        </div>
+      <span class="more-meta"> 492 words </span>
+      <span class="more-meta"> 3 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Edition 1 Froh, froh, wie seine Sonnen, seine Sonnen fliegen,
+froh wie, seine, Sonnen, fliegen,
+durch des Himmels prächt&rsquo;gen Plan,
+laufet, Brüder, eure Bahn,
+laufet, Brüder, eure Bahn,
+Freudig, wie ein Held zum Siegen,
+wie ein Held zum Siegen,
+laufet, Brüder, eure Bahn,
+wie ein Held zum Siegen.
+(合唱)
+Freude, schöner Götterfunken
+Tochter aus Elysium,
+Wir betreten feuertrunken,
+Himmlische, dein Heiligtum!
+Deine Zauber binden wieder
+Was die Mode streng geteilt;
+    </div>
+    <div class="read-more">
+      <a href="/post/music/symphony-no.9/" class="read-more-link">Read more</a>
     </div>
     
   </div>
@@ -226,7 +312,7 @@
             <a href="/categories/note/"> Note </a>
           
         </div>
-      <span class="more-meta"> 53 words </span>
+      <span class="more-meta"> 3 words </span>
       <span class="more-meta"> 1 min read </span>
     </div>
   </header>
@@ -234,7 +320,8 @@
   <div class="post-content">
     
     <div class="post-summary">
-      复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换 [^\x00-\x7f]
+      复制的代码里面有非ASC II的字符，百度了一下，可以通过匹配正则表达式[^\x00-\x7f]来查找替换
+[^\x00-\x7f]  
     </div>
     <div class="read-more">
       <a href="/post/note/non-asc-character/" class="read-more-link">Read more</a>
@@ -254,7 +341,7 @@
             <a href="/categories/java/"> Java </a>
           
         </div>
-      <span class="more-meta"> 751 words </span>
+      <span class="more-meta"> 218 words </span>
       <span class="more-meta"> 2 min read </span>
     </div>
   </header>
@@ -262,7 +349,11 @@
   <div class="post-content">
     
     <div class="post-summary">
-      在Mac上无误的程序 try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveF
+      在Mac上无误的程序
+try { FileUtils.moveFile(file, target);//用renameTo方法也可以，但是win里都没有抛出异常，才改用FileUtils.moveFile isRenamed = true; } catch (Exception e) { Log.error(e.toString()); e.printStackTrace(); return false; }  到win上抛出异常，不能重命名文件
+java.io.IOException: Failed to delete original file 'C:\***\******\************.txt' after copy to 'C:\***\******\************.txt.114110' at org.apache.commons.io.FileUtils.moveFile(FileUtils.java:3011) at com.example.sms.LocalUtil.renameFile(LocalUtil.java:125) at com.example.sms.SendSMS.main(SendSMS.java:152)  但是发现如果没有从FTP上下载，重命名是没有问题的
+看了一下FileUtil.moveFile()的源码
+public static void moveFile(final File srcFile, final File destFile) throws IOException { if (srcFile == null) { throw new NullPointerException(&quot;Source must not be null&quot;); } if (destFile == null) { throw new NullPointerException(&quot;Destination must not be null&quot;); } if (!
     </div>
     <div class="read-more">
       <a href="/post/note/java-io-delete-win/" class="read-more-link">Read more</a>
@@ -282,7 +373,7 @@
             <a href="/categories/java/"> Java </a>
           
         </div>
-      <span class="more-meta"> 386 words </span>
+      <span class="more-meta"> 157 words </span>
       <span class="more-meta"> 1 min read </span>
     </div>
   </header>
@@ -290,7 +381,8 @@
   <div class="post-content">
     
     <div class="post-summary">
-      因为API响应太久，FTP连接已经断开，会抛出异常 org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126)
+      因为API响应太久，FTP连接已经断开，会抛出异常
+org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. 2018-09-11 11:38:09,082 [main] ERROR com.example.sms.FtpUtil - fetch 1st waiting file error at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3409) at org.apache.commons.net.ftp.FTPClient.initiateListParsing(FTPClient.java:3339) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3016) at org.apache.commons.net.ftp.FTPClient.listFiles(FTPClient.java:3069) at com.example.sms.test.main(test.java:126) org.apache.commons.net.ftp.FTPConnectionClosedException: FTP response 421 received. Server closed connection. at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:388) at org.apache.commons.net.ftp.FTP.__getReply(FTP.java:300) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:523) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:648) at org.apache.commons.net.ftp.FTP.sendCommand(FTP.java:622) at org.apache.commons.net.ftp.FTP.pasv(FTP.java:1045) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:895) at org.apache.commons.net.ftp.FTPClient._openDataConnection_(FTPClient.java:785) at org.
     </div>
     <div class="read-more">
       <a href="/post/note/java-ftp/" class="read-more-link">Read more</a>
@@ -310,7 +402,7 @@
             <a href="/categories/cs/"> CS </a>
           
         </div>
-      <span class="more-meta"> 1070 words </span>
+      <span class="more-meta"> 440 words </span>
       <span class="more-meta"> 3 min read </span>
     </div>
   </header>
@@ -318,10 +410,51 @@
   <div class="post-content">
     
     <div class="post-summary">
-      安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境
+      安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git   Sourcery CodeBench contains the complete GNUToolchain including all of the following components:
+ CodeSourcery Debug Sprite for ARM
+GNU Binary Utilities (Binutils) GNU C Compiler (GCC)
+ GNU C Library (GLIBC) GNU C++ Compiler (G++)
+GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer)
+ GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website.   设置环境变量 export CROSS_COMPILE=arm-xilinx-linux-gnueabi- export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH  可能出现的错误： .
     </div>
     <div class="read-more">
       <a href="/post/cs/cross-compile/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cs/ubuntu-kernel/">Install more than one Kernel for Ubuntu Linux</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2018-07-02 </span>
+      <div class="post-category">
+          
+            <a href="/categories/cs/"> CS </a>
+          
+        </div>
+      <span class="more-meta"> 44 words </span>
+      <span class="more-meta"> 1 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Ubuntu 内核
+修改源
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update  安装内核3.16
+sudo apt-get install linux-image-extra-3.16.0-43-generic  查看内核是否安装
+dpkg -l | grep 3.16.0-43-generic  修改grub
+sudo gedit /etc/default/grub  将GRUB_DEFAULT=0替换为
+GRUB_DEFAULT=&quot;1&gt;3&quot; #一级菜单选项1下的第4个选项 #默认选择  注释这一行
+#GRUB_HIDDEN_TIMEOUT=0 #注释这一行  更新grub
+sudo update-grub sudo reboot  
+    </div>
+    <div class="read-more">
+      <a href="/post/cs/ubuntu-kernel/" class="read-more-link">Read more</a>
     </div>
     
   </div>
@@ -362,10 +495,6 @@
     
     <li >
       <a href="/page/3/">3</a>
-    </li>
-    
-    <li >
-      <a href="/page/4/">4</a>
     </li>
     
   </nav>

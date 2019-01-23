@@ -17,7 +17,12 @@
       <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/cross-compile/</guid>
-      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境</description>
+      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git   Sourcery CodeBench contains the complete GNUToolchain including all of the following components:
+ CodeSourcery Debug Sprite for ARM
+GNU Binary Utilities (Binutils) GNU C Compiler (GCC)
+ GNU C Library (GLIBC) GNU C++ Compiler (G++)
+GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer)
+ GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website.   设置环境变量 export CROSS_COMPILE=arm-xilinx-linux-gnueabi- export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH  可能出现的错误： .</description>
     </item>
     
   </channel>

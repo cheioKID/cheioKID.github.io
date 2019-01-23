@@ -17,7 +17,12 @@
       <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/cross-compile/</guid>
-      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git Sourcery CodeBench contains the complete GNUToolchain including all of the following components: CodeSourcery Debug Sprite for ARM GNU Binary Utilities (Binutils) GNU C Compiler (GCC) GNU C Library (GLIBC) GNU C++ Compiler (G++) GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer) GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website. 设置环境</description>
+      <description>安装交叉编译 克隆编译器 git clone https://github.com/xupsh/CodeSourcery.git   Sourcery CodeBench contains the complete GNUToolchain including all of the following components:
+ CodeSourcery Debug Sprite for ARM
+GNU Binary Utilities (Binutils) GNU C Compiler (GCC)
+ GNU C Library (GLIBC) GNU C++ Compiler (G++)
+GNU C++ Runtime Library (Libstdc++) GNU Debug Server (GDBServer)
+ GNU Debugger (GDB)Visit: http://www.codesourcery.comto access the Sourcery CodeBench support website.   设置环境变量 export CROSS_COMPILE=arm-xilinx-linux-gnueabi- export PATH=/home/cheio/CrossCompile/CodeSourcery/bin:$PATH  可能出现的错误： .</description>
     </item>
     
     <item>
@@ -26,7 +31,15 @@
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ubuntu-kernel/</guid>
-      <description>Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替</description>
+      <description>Ubuntu 内核
+修改源
+sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update  安装内核3.16
+sudo apt-get install linux-image-extra-3.16.0-43-generic  查看内核是否安装
+dpkg -l | grep 3.16.0-43-generic  修改grub
+sudo gedit /etc/default/grub  将GRUB_DEFAULT=0替换为
+GRUB_DEFAULT=&amp;quot;1&amp;gt;3&amp;quot; #一级菜单选项1下的第4个选项 #默认选择  注释这一行
+#GRUB_HIDDEN_TIMEOUT=0 #注释这一行  更新grub
+sudo update-grub sudo reboot  </description>
     </item>
     
     <item>
@@ -35,7 +48,13 @@
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/ll1/</guid>
-      <description>LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任</description>
+      <description>LL(1)分析表的构造  LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。
+ 根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。
+ 采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。
+  预测分析过程  预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。 如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。 如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。 循环到符号栈和输入栈都为空，则预测分析完毕。  紧急错误恢复  紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。
+ 如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。
+ 非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析
+  #include&amp;lt;string.h&amp;gt; #include&amp;lt;stdio.h&amp;gt; int ll1[5][6]={{1,0,0,1,99,99}, {0,2,0,0,3,3}, {4,99,0,4,99,99}, {0,6,5,0,6,6}, {8,99,0,7,99,99}}; int main() { char stack[10] = {&#39;$&#39;,&#39;E&#39;}; char input[10]; char str[10]; char ch;//当前看到的字符 int i,j,m,n; int l = 1;//栈的大小 int k = 0;//当前看到的字符的指针 int action; int step = 1; int length = 0; printf(&amp;quot;请输入，输入$结束:&amp;quot;); do { scanf(&amp;quot;%c&amp;quot;,&amp;amp;ch); if(ch == &#39;\n&#39;) continue; input[length]=ch; str[length]=ch; length++; } while(ch !</description>
     </item>
     
   </channel>

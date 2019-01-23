@@ -52,7 +52,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cheioKID.github.io/" />
-<meta property="og:updated_time" content="2018-07-02T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2018-06-15T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Have a nice day, cheio">
 <meta itemprop="description" content="">
@@ -134,34 +134,6 @@
     
       <article class="post bg-white">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/cs/ubuntu-kernel/">Install more than one Kernel for Ubuntu Linux</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-07-02 </span>
-      <div class="post-category">
-          
-            <a href="/categories/cs/"> CS </a>
-          
-        </div>
-      <span class="more-meta"> 115 words </span>
-      <span class="more-meta"> 1 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      Ubuntu 内核 修改源 sudo cp /etc/apt/sources.list /etc/apt/sources.list_bak sudo vim /etc/apt/sources.list deb http://security.ubuntu.com/ubuntu trusty-security main sudo apt-get update 安装内核3.16 sudo apt-get install linux-image-extra-3.16.0-43-generic 查看内核是否安装 dpkg -l | grep 3.16.0-43-generic 修改grub sudo gedit /etc/default/grub 将GRUB_DEFAULT=0替
-    </div>
-    <div class="read-more">
-      <a href="/post/cs/ubuntu-kernel/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/cs/ll1/">LL(1) Grammer</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2018-06-15 </span>
@@ -170,15 +142,21 @@
             <a href="/categories/cs/"> CS </a>
           
         </div>
-      <span class="more-meta"> 2140 words </span>
-      <span class="more-meta"> 5 min read </span>
+      <span class="more-meta"> 393 words </span>
+      <span class="more-meta"> 2 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     
     <div class="post-summary">
-      LL(1)分析表的构造 LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任
+      LL(1)分析表的构造  LL(1)文法没有公共左因子，也不含左递归，并且不是二义的。根据文法可以得到FIRST和FOLLOW集合，如果文法的任意两个产生式A→𝛼|𝛽，FIRST(𝛼) 和FIRST(𝛽)交集为空，即没有公共左因子，若𝛽经过若干步推导为𝜀，那么FIRST(𝛼) 和FOLLOW(A)交集为空，那么𝛽→𝜀的情况就是具体的，也不存在任何冲突。这样的文法就属于LL(1)文法。
+ 根据FIRST和FOLLOW集合可以的到LL(1)分析表，分析表的行对应非终结符，列对应终结符，将每个产生式根据产生式左部的非终结符和产生式右部的FIRST集合填入分析表，如果是推出𝜀的情况，需要根据产生式右部的FOLLOW集合来确定，如果某个非终结符属于产生式右部的FOLLOW集合，那么将该产生式填入分析表。
+ 采用LL(1)文法预测分析过程中没有左递归导致的无限循环，也没有公共左因子导致的回溯现象，根据预测分析表，每一步的推到都是确定的。
+  预测分析过程  预测分析器中，符号栈初始状态下只有一个开始符号，开始符号根据输入栈栈顶的字符进行推导。 如果符号栈栈顶为非终结符，根据该非终结符和面临的输入栈栈顶的终结符可以得到产生式动作，将符号栈栈顶的产生式左部推导为产生式右部。推导的过程中，产生式左部的字符即符号栈栈顶的字符出栈后，产生式右部压栈。因为预测分析采用最左推导，所以采用反序压栈，使最左边的非终结符在出现在栈顶，优先被推导。如果该非终结符和面临的输入栈栈顶的终结符在LL(1)分析表中没有对应的产生式动作，则出错。 如果符号栈栈顶为终结符，判断是否和面临的输出栈栈顶的终结符匹配，如果匹配，两个栈的栈顶元素都出栈，继续分析下一个栈顶符号。如果不匹配则出错情况。 循环到符号栈和输入栈都为空，则预测分析完毕。  紧急错误恢复  紧急错误恢复是一种简单的错误恢复方法，发现错误时弹出输入记号，直到输入记号属于同步记号集为止。
+ 如果终结符在栈顶但是不匹配，最简单的方法就是弹出这个终结符，然后继续分析栈顶记号。
+ 非终结符的FOLLOW集合中的终结符可以作为该非终结符的同步记号，这样可以保证错误恢复后的文法属于LL(1)文法。在实验中采用了这种做法，当得到sync时，弹出栈顶的非终结符，恢复分析
+  #include&lt;string.h&gt; #include&lt;stdio.h&gt; int ll1[5][6]={{1,0,0,1,99,99}, {0,2,0,0,3,3}, {4,99,0,4,99,99}, {0,6,5,0,6,6}, {8,99,0,7,99,99}}; int main() { char stack[10] = {'$','E'}; char input[10]; char str[10]; char ch;//当前看到的字符 int i,j,m,n; int l = 1;//栈的大小 int k = 0;//当前看到的字符的指针 int action; int step = 1; int length = 0; printf(&quot;请输入，输入$结束:&quot;); do { scanf(&quot;%c&quot;,&amp;ch); if(ch == '\n') continue; input[length]=ch; str[length]=ch; length++; } while(ch !
     </div>
     <div class="read-more">
       <a href="/post/cs/ll1/" class="read-more-link">Read more</a>
@@ -198,15 +176,19 @@
             <a href="/categories/algorithm/"> Algorithm </a>
           
         </div>
-      <span class="more-meta"> 455 words </span>
-      <span class="more-meta"> 1 min read </span>
+      <span class="more-meta"> 327 words </span>
+      <span class="more-meta"> 2 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     
     <div class="post-summary">
-      Compare Appetite 比饭量 描述 3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A
+      Compare Appetite 比饭量  描述  3个人比饭量，每人说了两句话： A说：B比我吃的多，C和我吃的一样多 B说：A比我吃的多，A也比C吃的多 C说：我比B吃得多，B比A吃的多。 事实上，饭量和正确断言的个数是反序的关系。 请编程按饭量的大小输出3个人的顺序。
+ 输入  无输入
+ 输出  按照饭量大小输出3人顺序，比如： ABC
+ 样例输入  无  样例输出
+无  #include &lt;iostream&gt; using namespace std; int main() { int a,b,c,A,B,C; char arr[] = &quot;ABC&quot;; for (a=0; a&lt;=2; a++) { for (b=0; b&lt;=2; b++) { for (c=0; c&lt;=2; c++) { A=((b&gt;a)+(c==a)); B=((a&gt;b)+(a&gt;c)); C=((c&gt;b)+(b&gt;a)); if(a==0 &amp;&amp; A!=2) break; if(a==1 &amp;&amp; A!=1) break; if(a==2 &amp;&amp; A!
     </div>
     <div class="read-more">
       <a href="/post/algorithm/compare-appetite/" class="read-more-link">Read more</a>
@@ -226,7 +208,7 @@
             <a href="/categories/algorithm/"> Algorithm </a>
           
         </div>
-      <span class="more-meta"> 262 words </span>
+      <span class="more-meta"> 152 words </span>
       <span class="more-meta"> 1 min read </span>
     </div>
   </header>
@@ -234,7 +216,10 @@
   <div class="post-content">
     
     <div class="post-summary">
-      Cycling competition 循环比赛 描述 设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛
+      Cycling competition 循环比赛  描述  设有N个选手的循环比赛。其中N=2^M(2的M次方)，要求每名选手要与其他N-1名选手都赛一次，每名选手每天比赛一次，循环赛共进行N-1天，要求每天没有选手轮空。
+ 输入  M
+ 输出  表格形式的比赛安排表
+ 样例输入   3   样例输出   1 2 3 4 5 6 7 8 2 1 4 3 6 5 8 7 3 4 1 2 7 8 5 6 4 3 2 1 8 7 6 5 5 6 7 8 1 2 3 4 6 5 8 7 2 1 4 3 7 8 5 6 3 4 1 2 8 7 6 5 4 3 2 1  ​
     </div>
     <div class="read-more">
       <a href="/post/algorithm/cycling-competition/" class="read-more-link">Read more</a>
@@ -268,40 +253,6 @@
     </div>
     <div class="read-more">
       <a href="/post/note/deploy-hugo/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/jane-theme-preview/">Jane Theme Preview</a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 2018-03-06 </span>
-      <div class="post-category">
-          
-            <a href="/categories/shortcodes/"> shortcodes </a>
-          
-            <a href="/categories/index/"> index </a>
-          
-        </div>
-      <span class="more-meta"> 1380 words </span>
-      <span class="more-meta"> 7 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      <p><strong>Markdown</strong> is created by <a href="http://daringfireball.net/">Daring Fireball</a>, the original guideline is <a href="http://daringfireball.net/projects/markdown/syntax">here</a>. Its syntax, however, varies between different parsers or editors.</p>
-
-<p>Please note that HTML fragments in markdown source will be recognized but not parsed or rendered. Also, there may be small reformatting on the original markdown source code after saving.</p>
-
-<p></p>
-    </div>
-    <div class="read-more">
-      <a href="/post/jane-theme-preview/" class="read-more-link">Read more</a>
     </div>
     
   </div>
@@ -350,6 +301,169 @@
 </article>
 
     
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/note/git-note/">Git note</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-11-21 </span>
+      <div class="post-category">
+          
+            <a href="/categories/git/"> Git </a>
+          
+        </div>
+      <span class="more-meta"> 161 words </span>
+      <span class="more-meta"> 1 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      git笔记  版本控制系统Git，代码托管采用Github仓库  初始化  在目录下通过git init 初始化空仓库Initialized empty Git repository  暂存区  通过git add指令将修改添加到暂存区
+ 通过git status查看状态是否commit
+ 通过git rm &lt;filename&gt;删除版本库中的文件，实现和工作区的同步
+ 通过git commit提交修改，git commit -m “commit name&quot; 为本次commit命名
+  git add. # add changed files git rm --cached &lt;file&gt; # delete from git git checkout &lt;file&gt; # get back the file git status git commit -m 'Initial commit'  版本  通过git log查看版本控制记录，即commit历史记录
+ git log &ndash;pretty=oneline breif info`
+    </div>
+    <div class="read-more">
+      <a href="/post/note/git-note/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/cs/leetcode-sql/">LeetCode mySql</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2017-03-29 </span>
+      <div class="post-category">
+          
+            <a href="/categories/sql/"> SQL </a>
+          
+        </div>
+      <span class="more-meta"> 348 words </span>
+      <span class="more-meta"> 2 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
+176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
+177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.
+    </div>
+    <div class="read-more">
+      <a href="/post/cs/leetcode-sql/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/creating-a-new-theme/">Creating a New Theme</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-09-28 </span>
+      <div class="post-category">
+          
+            <a href="/categories/development/"> Development </a>
+          
+            <a href="/categories/golang/"> golang </a>
+          
+            <a href="/categories/index/"> index </a>
+          
+        </div>
+      <span class="more-meta"> 7232 words </span>
+      <span class="more-meta"> 34 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.
+We&rsquo;ll start with creating a new site with a very basic template.
+    </div>
+    <div class="read-more">
+      <a href="/post/creating-a-new-theme/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/goisforlovers/">(Hu)go Template Primer</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-04-02 </span>
+      <div class="post-category">
+          
+            <a href="/categories/development/"> Development </a>
+          
+            <a href="/categories/golang/"> golang </a>
+          
+            <a href="/categories/index/"> index </a>
+          
+        </div>
+      <span class="more-meta"> 1488 words </span>
+      <span class="more-meta"> 7 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.
+    </div>
+    <div class="read-more">
+      <a href="/post/goisforlovers/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
+      <article class="post bg-white">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/migrate-from-jekyll/">Migrate to Hugo from Jekyll</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2014-03-10 </span>
+      <div class="post-category">
+          
+            <a href="/categories/development/"> Development </a>
+          
+            <a href="/categories/golang/"> golang </a>
+          
+            <a href="/categories/index/"> index </a>
+          
+        </div>
+      <span class="more-meta"> 813 words </span>
+      <span class="more-meta"> 4 min read </span>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    
+    <div class="post-summary">
+      Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &lt;root&gt;/ ▾ images/ logo.png  should become
+▾ &lt;root&gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.
+    </div>
+    <div class="read-more">
+      <a href="/post/migrate-from-jekyll/" class="read-more-link">Read more</a>
+    </div>
+    
+  </div>
+</article>
+
+    
   </section>
 
   
@@ -384,10 +498,6 @@
     
     <li >
       <a href="/page/3/">3</a>
-    </li>
-    
-    <li >
-      <a href="/page/4/">4</a>
     </li>
     
   </nav>

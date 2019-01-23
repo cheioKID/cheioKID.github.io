@@ -17,7 +17,12 @@
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/note/git-note/</guid>
-      <description>git笔记 版本控制系统Git，代码托管采用Github仓库 初始化 在目录下通过git init 初始化空仓库Initialized empty Git repository 暂存区 通过git</description>
+      <description>git笔记  版本控制系统Git，代码托管采用Github仓库  初始化  在目录下通过git init 初始化空仓库Initialized empty Git repository  暂存区  通过git add指令将修改添加到暂存区
+ 通过git status查看状态是否commit
+ 通过git rm &amp;lt;filename&amp;gt;删除版本库中的文件，实现和工作区的同步
+ 通过git commit提交修改，git commit -m “commit name&amp;quot; 为本次commit命名
+  git add. # add changed files git rm --cached &amp;lt;file&amp;gt; # delete from git git checkout &amp;lt;file&amp;gt; # get back the file git status git commit -m &#39;Initial commit&#39;  版本  通过git log查看版本控制记录，即commit历史记录
+ git log &amp;ndash;pretty=oneline breif info`</description>
     </item>
     
   </channel>
