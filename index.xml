@@ -30,6 +30,558 @@
     </item>
     
     <item>
+      <title>Rename dir &amp; Gen label</title>
+      <link>https://cheioKID.github.io/post/note/rename-dir-gen-label/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/rename-dir-gen-label/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;rename-dir&#34;&gt;Rename dir&lt;/h2&gt;
+
+&lt;p&gt;把train目录下的所有存储样本的文件夹命名为0,1,2,3…的形式，然后把实际类别名存储在&lt;code&gt;target_names.txt&lt;/code&gt;中&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#coding=utf-8
+import os,sys
+
+
+def rename_dir(txt_file = &amp;quot;target_names.txt&amp;quot;, prefix = &#39;&#39;):
+    path=&#39;.&#39;
+    dir_path = path + &#39;/&#39; + txt_file[:-4]
+    out = []
+    i = 0
+    for dirpath,dirnames,filenames in os.walk(path):
+        if(len(dirnames)) &amp;gt;= 10:
+            for name in dirnames:
+                os.rename(dirpath+&#39;/&#39;+name,dirpath+&#39;/&#39;+str(i))
+                i += 1
+                out += &amp;quot;&#39;&amp;quot; + name + &amp;quot;&#39;,&amp;quot;
+
+
+    with open(txt_file, &#39;w&#39;) as target:
+        target.writelines(out)
+
+    print(&amp;quot;----------------\n&amp;quot;
+          &amp;quot;write(overwrite) done&amp;quot;)
+
+
+txt_file = &amp;quot;test.txt&amp;quot;
+rename_dir()
+# if use prefix, the &#39;/&#39; is need
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gen-labels&#34;&gt;Gen labels&lt;/h2&gt;
+
+&lt;p&gt;遍历目录下按类别存储的所有样本，得到样本和对应的类别，其中类别从0开始编号，结果存在&lt;code&gt;train.txt&lt;/code&gt;中&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#coding=utf-8
+import os,sys
+
+
+def generate_label(txt_file = &amp;quot;train.txt&amp;quot;, prefix = &#39;&#39;):
+    path=&#39;.&#39;
+    dir_path = path + &#39;/&#39; + txt_file[:-4]
+    out = []
+    for dirpath,dirnames,filenames in os.walk(path):
+        if dirpath == dir_path: continue
+        if dirpath.startswith(dir_path):
+            #print(dirpath)
+            for paths,names,files in os.walk(dirpath):
+                # print(files)
+                for sf in files[1:]: # &#39;.DS_Store&#39; is removed
+                    if (sf[len(sf)-3:]) == &#39;ppm&#39;:
+                        label = dirpath[len(dir_path) + 1:]
+                        out.append(prefix + label + &#39;/&#39; + sf + &#39; &#39; + label)
+                        print(out[-1])
+
+    i = 0
+    with open(txt_file, &#39;w&#39;, encoding=&#39;UTF-8&#39;) as train:
+        for line in out:
+            if i == 0: train.writelines(line)
+            else: train.writelines(&#39;\n&#39; + line)
+            i += 1
+
+    print(&amp;quot;----------------\n&amp;quot;
+          &amp;quot;write(overwrite) done&amp;quot;)
+
+
+txt_file = &amp;quot;test.txt&amp;quot;
+generate_label()
+# if use prefix, the &#39;/&#39; is need
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>PCA Trail</title>
+      <link>https://cheioKID.github.io/post/machine-learning/pca-trail/</link>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/pca-trail/</guid>
+      
+        <description>
+
+&lt;h2 id=&#34;note&#34;&gt;Note&lt;/h2&gt;
+
+&lt;h3 id=&#34;prelude&#34;&gt;Prelude&lt;/h3&gt;
+
+&lt;p&gt;方差~离散程度~可区分度&lt;/p&gt;
+
+&lt;p&gt;不同投影的损失&lt;/p&gt;
+
+&lt;p&gt;successive orthogonal components 连续正交分量，在&lt;code&gt;fit&lt;/code&gt;方法中学习n个分量&lt;/p&gt;
+
+&lt;p&gt;奇异值分解SVD&lt;/p&gt;
+
+&lt;p&gt;PCA假定以原点为中心，所以数据需要先中心化&lt;em&gt;(standard scale)&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from sklearn.preprocessing import StandardScaler
+
+X=StandardScaler().fit(X).transform(X)
+# 一般中心化标准化后pca才能体现出效果
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;经过分析速度得到成倍的提升&lt;/p&gt;
+
+&lt;p&gt;PCA 的效果会比 LDA 好一些，还没弄清楚原因&lt;/p&gt;
+
+&lt;h3 id=&#34;error-detail&#34;&gt;Error Detail&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;n_components只能取shape的较小值，是因为SVD吗，现在还不清楚&lt;/p&gt;
+
+&lt;p&gt;这种情况下只能提升样本量&lt;/p&gt;
+
+&lt;h2 id=&#34;source-code&#34;&gt;Source Code&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# -*- coding:utf-8 -*-
+
+from sklearn.svm import SVC
+from skimage import img_as_ubyte
+from sklearn.utils import Bunch
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from matplotlib.font_manager import FontProperties
+from sklearn.neighbors import KNeighborsClassifier as KNC
+from sklearn.model_selection import cross_validate
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from time import time
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from skimage.feature import shape_index
+
+
+def plot_gallery(images, titles, h=100, w=100, n_row=4, n_col=6):
+    &amp;quot;&amp;quot;&amp;quot;Helper function to plot a gallery of portraits&amp;quot;&amp;quot;&amp;quot;
+    font = FontProperties(fname=&#39;/System/Library/Fonts/STHeiti Light.ttc&#39;, size=10)
+    plt.figure(figsize=(1.8 * n_col, 2.4 * n_row))
+    plt.subplots_adjust(bottom=0, left=.01, right=.99, top=.90, hspace=.35)
+    for i in range(n_row * n_col):
+        plt.subplot(n_row, n_col, i + 1)
+        plt.imshow(images[i].reshape((h, w)), cmap=plt.cm.gray)
+        plt.title(titles[i], fontproperties=font)
+        plt.xticks(())
+        plt.yticks(())
+
+
+def title_pred(y_pred, y_test, target_names, i):
+    pred_name = target_names[y_pred[i]-1]
+    true_name = target_names[y_test[i]-1]
+    return &#39;predicted: %s\ntrue:      %s&#39; % (pred_name, true_name)
+
+def title(y_test, target_names, i):
+    true_name = target_names[int(y_test[i])-1]
+    return true_name
+
+def plot_mse(X,y):
+    test_mse=[]
+    train_mse=[]
+
+    for n in range(1,X.shape[0]):
+        pca=PCA(n_components=n,svd_solver=&#39;randomized&#39;, whiten=True)
+        X_fit_pca=pca.fit(X).transform(X)
+
+        knc=KNC()
+        scorer=&#39;accuracy&#39;
+        print(X_fit_pca.shape, y.shape)
+        knc_dict=cross_validate(knc,X_fit_pca,y,cv=5, scoring=scorer, return_train_score=True)
+
+        test_mse.append(knc_dict[&#39;test_score&#39;].mean())
+        train_mse.append(knc_dict[&#39;train_score&#39;].mean())
+
+    sns.set(style=&#39;darkgrid&#39;)
+    print(X.shape, len(test_mse), len(train_mse))
+
+    plt.plot(range(1,X.shape[0]),test_mse,&#39;b-&#39;,label=&#39;test mse&#39;)
+    plt.plot(range(1,X.shape[0]),train_mse,&#39;r-&#39;,label=&#39;train mse&#39;)
+    plt.xlabel(&#39;Dimensions&#39;)
+    plt.ylabel(&#39;MSE&#39;)
+
+    plt.legend()
+
+
+
+def load_samples(path, slen=120, names=[&#39;白菜&#39;,&#39;白梨&#39;,&#39;白萝卜&#39;,&#39;板栗&#39;,&#39;包菜&#39;,&#39;本地黑李&#39;,&#39;本地红提&#39;,&#39;本地黄瓜&#39;,&#39;菠萝&#39;,&#39;菜瓜&#39;,&#39;菜心&#39;,&#39;春菜&#39;]):
+    y = []
+    images = np.zeros((slen, 100, 100), dtype=np.float32) # (24, 100, 100)
+
+    i=0
+    f_fruits = open(path,&#39;r&#39;)
+    for fruits in f_fruits:
+        img_path = path[:-4] + &#39;/&#39; + fruits.split(&amp;quot; &amp;quot;)[0]
+        img = Image.open(img_path).convert(&#39;L&#39;)		#get gray img
+        # shape_img = shape_index(img, sigma = 0.1)
+        # color_img = img_as_ubyte(color_img)			#change from float64 to uint8
+        images[i] = img
+        i+=1
+
+        label = fruits.split(&amp;quot; &amp;quot;)[1]
+        y.append(int(label.split(&amp;quot;\n&amp;quot;)[0]))
+
+    feature_color = images.reshape(len(images), -1) # (24, 10000)
+
+    return Bunch(data=feature_color, images=images,
+                 target=np.array(y), target_names=names)
+
+
+def with_pca(X_train, X_test, y_train, h=100, w=100):
+    ####################
+    # pca
+
+    n_components = 6
+
+    print(&amp;quot;Extracting the top %d samples from %d samples&amp;quot; % (n_components, X_train.shape[0]))
+    pca = PCA(n_components=n_components, svd_solver=&#39;randomized&#39;, whiten=True).fit(X_train)
+
+    images_pca_reshaped = pca.components_.reshape((n_components, h, w))
+
+    X_train_pca = pca.transform(X_train)
+    X_test_pca = pca.transform(X_test)
+
+    ####################
+    # grid search
+    print(&amp;quot;Fitting the classifier to the training set&amp;quot;)
+    t0 = time()
+    param_grid = {&#39;C&#39;: [1e3, 5e3, 1e4, 5e4, 1e5],
+                  &#39;gamma&#39;: [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel=&#39;rbf&#39;, class_weight=&#39;balanced&#39;),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train_pca, y_train)
+    print(&amp;quot;done in %0.3fs&amp;quot; % (time() - t0))
+    print(&amp;quot;Best estimator found by grid search:&amp;quot;)
+    print(clf.best_estimator_)
+
+    return clf, X_test_pca
+
+
+def with_lda(X_train, X_test, y_train, h=100, w=100):
+    ####################
+    # pca
+
+    n_components = 6
+
+    print(&amp;quot;Extracting the top %d samples from %d samples&amp;quot; % (n_components, X_train.shape[0]))
+    lda = LDA(n_components=n_components).fit(X_train, y_train)
+
+    # images_pca_reshaped = lda.components_.reshape((n_components, h, w))
+
+    X_train_pca = lda.transform(X_train)
+    X_test_pca = lda.transform(X_test)
+
+    ####################
+    # grid search
+    print(&amp;quot;Fitting the classifier to the training set&amp;quot;)
+    t0 = time()
+    param_grid = {&#39;C&#39;: [1e3, 5e3, 1e4, 5e4, 1e5],
+                  &#39;gamma&#39;: [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel=&#39;rbf&#39;, class_weight=&#39;balanced&#39;),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train_pca, y_train)
+    print(&amp;quot;done in %0.3fs&amp;quot; % (time() - t0))
+    print(&amp;quot;Best estimator found by grid search:&amp;quot;)
+    print(clf.best_estimator_)
+
+    return clf, X_test_pca
+
+def without_decomposition(X_train, y_train):
+    print(&amp;quot;Fitting the classifier to the training set&amp;quot;)
+    t0 = time()
+    param_grid = {&#39;C&#39;: [1e3, 5e3, 1e4, 5e4, 1e5],
+                  &#39;gamma&#39;: [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel=&#39;rbf&#39;, class_weight=&#39;balanced&#39;),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train, y_train)
+    print(&amp;quot;done in %0.3fs&amp;quot; % (time() - t0))
+    print(&amp;quot;Best estimator found by grid search:&amp;quot;)
+    print(clf.best_estimator_)
+
+    return clf
+
+
+
+train_file = &#39;../fruit_recognize_samples/train.txt&#39;
+test_file = &#39;fruit_recognize_samples/test.txt&#39;
+
+samples = load_samples(train_file)
+
+X = samples.data
+n_features = X.shape[1]
+
+y=samples.target
+target_names = samples.target_names
+n_classes = len(target_names)
+
+n_samples, h, w = samples.images.shape
+
+print(&amp;quot;Total dataset size:&amp;quot;)
+print(&amp;quot;n_samples: %d&amp;quot; % n_samples)
+print(&amp;quot;n_features: %d&amp;quot; % n_features)
+print(&amp;quot;n_classes: %d&amp;quot; % n_classes)
+
+
+X=StandardScaler().fit(X).transform(X)
+
+#plot_mse(X,y)
+#plt.show()
+
+####################
+# split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42)
+
+
+# plot_mse(X_train,y_train)
+
+############################################################
+# with PCA
+
+t0 = time()
+clf, X_test_pca = with_pca(X_train, X_test, y_train)
+
+# predict
+
+print(&amp;quot;Predicting fruits on the test set with pca&amp;quot;)
+t0 = time()
+y_pred = clf.predict(X_test_pca)
+print(&amp;quot;predict done in %0.3fs&amp;quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+# print(confusion_matrix(y_test, y_pred, labels=range(n_classes)))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+print(&amp;quot;\n\n\n\n\n\n&amp;quot;)
+
+############################################################
+# with LDA
+
+t0 = time()
+clf, X_test_pca = with_lda(X_train, X_test, y_train)
+
+# predict
+
+print(&amp;quot;Predicting fruits on the test set with lda&amp;quot;)
+t0 = time()
+y_pred = clf.predict(X_test_pca)
+print(&amp;quot;predict done in %0.3fs&amp;quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+# print(confusion_matrix(y_test, y_pred, labels=range(n_classes)))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+print(&amp;quot;\n\n\n\n\n\n&amp;quot;)
+
+############################################################
+# without PCA
+
+t0 = time()
+clf = without_decomposition(X_train, y_train)
+print(&amp;quot;without pca done in %0.3fs&amp;quot; % (time() - t0))
+
+# predict
+
+print(&amp;quot;Predicting fruits on the test set without pca&amp;quot;)
+t0 = time()
+y_pred = clf.predict(X_test)
+print(&amp;quot;predict done in %0.3fs&amp;quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+
+
+plt.show()
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py&#34;&gt;https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Deutsch Ubungen</title>
+      <link>https://cheioKID.github.io/post/deutsch/deutsch-ubungen/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/deutsch-ubungen/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;deutsch-ubungen-2019&#34;&gt;Deutsch Ubungen 2019&lt;/h1&gt;
+
+&lt;h2 id=&#34;note&#34;&gt;Note&lt;/h2&gt;
+
+&lt;h3 id=&#34;note-1-24&#34;&gt;Note 1.24&lt;/h3&gt;
+
+&lt;h4 id=&#34;购物&#34;&gt;购物&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;KAUFHAUS WALDHEIM&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; | 4. Stock: | Gartenbedarf花园用品  |  Gartenmöbel  |  Sonnenschirme  |  SB-Restaurant  |  Abholung bestellter Waren订购商品  |  Kundenservice  |  Reisebüro旅行社  |  Fundbüro失物招领  |  Garderobe衣帽间  |  Toiletten  |  Wickelraum更衣室  |  Erste Hilfe急救
+
+ | 3. Stock: | Computer  |  Technik  |  Software  |  Foto  |  Optik光学  |  CDs  |  DVDs  |  Blu-Rays  |  Radio  |  TV-HIFI  |  Autozubehör汽车配件  |  Fahrräder自行车  | Sportartikel体育用品  |  Strandmode沙滩服装 
+
+ | 2. Stock: | Betten  |  Matratzen床垫  |  Bett-und Tischwäsche床单和桌布  |  Handtücher毛巾  |  Gardinen窗帘  |  Dekostoffe装饰面料  |  Herrenbekleidung男士服装  |  Spielwaren玩具  |  Kinderwagen儿童车  |  Kinderbekleidung儿童服装  |  Schreibwaren文具  |  Bücher  |  Zeitschriften杂志  |  Zeitungen  |  Glückwunschkarten贺卡
+
+ | 1. Stock: | Damenbekleidung女士服装  |  Junge Mode年轻时尚  |  Nachtwäsche睡衣  |  Schuhe鞋  | Schmuck珠宝  |  Uhren手表  |  Brieftaschen钱包  |  Stock und Schirm棍和伞  |  Accessoires配件  |  Alles für die Küche  |  Glas  |  Geschirr陶器  | Beleuchtung照明  |  Elektroartikel电子产品  |  Souvenirs纪念品
+
+Erdgeschoss: | Kosmetik  |  Parfümerie香水  |  Putz-und Waschmittel清洁剂和洗涤剂  |  Handarbeiten, Kurzwaren针线活，小百货  |  Hobbybedarf爱好需要  |  Lebensmittel食物  |  Feinkost熟食店  |  Weine葡萄酒  |  Schokolade und Kaffee  |  Tabakwaren烟草产品  |  Friseursalon美发沙龙  |  Geldautomat自动取款机
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;广告&#34;&gt;广告&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;bietet Ihnen gratis&lt;/code&gt;  免费为您提供&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;online verfügbar&lt;/code&gt; 可在线的，用作后置定语&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;richtet sich an&lt;/code&gt; 针对，专注于&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;die Auswahl und Korrektur&lt;/code&gt; 选择和修正&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;erfahrenen Kursleitern („Tutoren“)&lt;/code&gt; 经验丰富的教师&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;umfasst&lt;/code&gt; 包括&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Schicken Sie Ihre Bewerbung an …&lt;/code&gt; 请将您的请求发送至&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;im Vorteil&lt;/code&gt;  优势&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;von Vorteil&lt;/code&gt; 有利&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;eine Bedeutung&lt;/code&gt; 一个意思&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;von Sinnen&lt;/code&gt; 感官上&lt;/p&gt;
+
+&lt;h4 id=&#34;意见&#34;&gt;意见&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;Man hat bis jetzt nicht wissenschaftlich gezeigt, dass...&lt;/code&gt; 科学上尚未证明&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;So ein Blödsinn!&lt;/code&gt; 一派胡言&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Ist doch logisch, dass…&lt;/code&gt; &amp;hellip;是合乎逻辑的&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Für mich ist klar:&lt;/code&gt; 我很清楚&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Ich könnte mir vorstellen, dass ein Verbot die gegenteilige Wirkung hätte, denn...&lt;/code&gt; 我认为禁令会产生相反的效果，因为&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Außerdem ist es gar nicht möglich,&lt;/code&gt; 此外，不可能&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Mein Fazit:&lt;/code&gt;  我的结论是：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;wenn es im Endeffekt sowieso...&lt;/code&gt; 到最后无论如何&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Wer entscheidet letztlich darüber, ...&lt;/code&gt;  谁最终决定&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Dürfen diese Menschen dann auch darüber entscheiden,...&lt;/code&gt;这些人可以决定&amp;hellip;?&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Viel wichtiger ist es doch,...&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;...lernen, selbst zwischen virtueller und realer ... zu unterscheiden&lt;/code&gt;  &amp;hellip;学会区分虚拟和真实&amp;hellip;更为重要&lt;/p&gt;
+
+&lt;h4 id=&#34;新闻&#34;&gt;新闻&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;macht sich unabhängig von...&lt;/code&gt; 独立于&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Seit Kurzem deckt ... seinen kompletten ... durch ...&lt;/code&gt; 最近，&amp;hellip;通过&amp;hellip;满足&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Das funktioniert mithilfe …&lt;/code&gt; 借助于&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;erzeugt&lt;/code&gt; 生产&lt;code&gt;produziert&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Anlage&lt;/code&gt; 设备&lt;/p&gt;
+
+&lt;h4 id=&#34;点餐&#34;&gt;点餐&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;bestellt&lt;/code&gt; 点&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;bevorzugt&lt;/code&gt; 更喜欢&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;einen Salat mit Putenstreifen&lt;/code&gt; 火鸡沙拉&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Steak mit Bratkartoffeln&lt;/code&gt; 土豆牛排&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;trifft sich mit ... im ... Restaurant&lt;/code&gt; 在&amp;hellip;餐厅见面&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;findet es deftig und rustikal&lt;/code&gt; 认为它丰盛而质朴&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;In kaum einem Bereich des alltäglichen Lebens gehen das Verhalten und die Gewohnheiten von Mann und Frau so weit auseinander ...&lt;/code&gt; 在日常生活的几乎任何领域，男女的&amp;hellip;行为和习惯都不同&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Das hat zwar auch mit biologischen Unterschieden zu , mehr jedoch mit Tradition und Vorurteilen.&lt;/code&gt; 虽然这有生物学差异，但更多的是传统和偏见&lt;/p&gt;
+
+&lt;h4 id=&#34;信件&#34;&gt;信件&lt;/h4&gt;
+
+&lt;p&gt;&lt;code&gt;Sehr geehrte Damen und Herren,&lt;/code&gt; 亲爱的女士们，先生们，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;An den Taxi-Verband in Fürth 
+Sehr geehrte Damen und Herren, 
+heute 24 ich mich an Sie, um einen Ihrer Mitarbeiter zu loben. Es kommt ja heutzutage nur noch 25 vor, dass man sich auf hilfreiche Mitmenschen 26 kann. Herr Köbe gehört 27 diesen hilfsbereiten Menschen. 
+Ich hatte gestern Nacht auf der Heimfahrt mit dem Taxi meine Aktentasche auf den Rücksitz gelegt und dort liegen lassen. Der Fahrer hätte die Tasche ohne Weiteres wegwerfen, für sich behalten oder sonst etwas damit tun können. Stattdessen war es ihm wichtig , sie mir persönlich zu übergeben. Da es schon spät war, hat er sich nicht sofort bei mir gemeldet, sondern bis zum nächsten Morgen gewartet, um mir die Tasche nach Hause zu bringen. Wenn nur alle so denken und handeln würden wie Herr Köbe! 
+Mit besten Grüßen von einer zufriedenen Kundin 
+之后再看
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;issue&#34;&gt;Issue&lt;/h2&gt;
+
+&lt;h3 id=&#34;issue-1&#34;&gt;Issue 1&lt;/h3&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Know Face Recognition Sample</title>
       <link>https://cheioKID.github.io/post/machine-learning/know-face-recognition-sample/</link>
       <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
@@ -259,6 +811,48 @@ plot_gallery(eigenfaces, eigenface_titles, h, w)
 
 plt.show()
 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;run&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Total dataset size:
+n_samples: 1288
+n_features: 1850
+n_classes: 7
+Extracting the top 150 eigenfaces from 966 faces
+done in 0.155s
+Projecting the input data on the eigenfaces orthonormal basis
+done in 0.011s
+Fitting the classifier to the training set
+done in 44.553s
+Best estimator found by grid search:
+SVC(C=1000.0, cache_size=200, class_weight=&#39;balanced&#39;, coef0=0.0,
+  decision_function_shape=&#39;ovr&#39;, degree=3, gamma=0.005, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+Predicting people&#39;s names on the test set
+done in 0.046s
+                   precision    recall  f1-score   support
+
+     Ariel Sharon       0.80      0.62      0.70        13
+     Colin Powell       0.79      0.87      0.83        60
+  Donald Rumsfeld       0.82      0.52      0.64        27
+    George W Bush       0.81      0.98      0.89       146
+Gerhard Schroeder       1.00      0.68      0.81        25
+      Hugo Chavez       1.00      0.53      0.70        15
+       Tony Blair       0.93      0.72      0.81        36
+
+        micro avg       0.83      0.83      0.83       322
+        macro avg       0.88      0.70      0.77       322
+     weighted avg       0.84      0.83      0.82       322
+
+[[  8   2   1   2   0   0   0]
+ [  1  52   1   5   0   0   1]
+ [  1   2  14  10   0   0   0]
+ [  0   3   0 143   0   0   0]
+ [  0   1   0   6  17   0   1]
+ [  0   3   0   4   0   8   0]
+ [  0   3   1   6   0   0  26]]
 &lt;/code&gt;&lt;/pre&gt;
 </description>
       
@@ -737,6 +1331,164 @@ Freude, schöner Götterfunken
 Tochter aus Elysium,
 Freude, schöner Götterfunken
 Götterfunken!&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>DBSCAN note</title>
+      <link>https://cheioKID.github.io/post/data-mining/dbscan/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/data-mining/dbscan/</guid>
+      
+        <description>&lt;h1 id=&#34;a-densitybased-algorithm-for-discovering-clusters-in-large-spatial-databases-with-noise&#34;&gt;A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements. In this paper, we present the new clustcring algorithm DBSCAN relying on a density-based notion of clusters which is designed to discover clusters of arbitrary shape. DBSCAN requires only one input parameter and supports the user in determining an appropriate value for it. We performed an experimental evaluation of the effectiveness and efficiency of DBSCAN using synthetic data and real data of the SEQUOIA 2000 benchmark. The results of our experiments demonstrate that(l) DBSCAN is significantly more effective in discovering clusters of arbitrary shape than the well-known algorithm CLARANS, and that(2) DBSCAN outperforms CLARANS by a factor of more than 100 in terms of efficiency.
+Keywords: Clustering Algorithms, Arbitrary Shape of Clus-
+ters, Efficiency on Large Spatial Databases, Handling Nlj4-
+275oise.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;聚类算法被用于空间数据库中的类型识别任务，然而对于聚类算法有如下的要求：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;对领域知识的最低要求，用于确定输入参数&lt;/li&gt;
+&lt;li&gt;发现任意形状的聚簇，&lt;em&gt;may be spherical, drawn-out, linear, elongated etc.&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;在大型数据库中表现良好的性能&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;作者提出了新的聚类算法DBSCAN，依赖基于密度的聚类的概念，旨在发现任意形状的聚类&lt;/p&gt;
+
+&lt;h3 id=&#34;clustering-algorithms&#34;&gt;Clustering Algorithms&lt;/h3&gt;
+
+&lt;p&gt;聚类算法有两种基本类型，分区和分层算法。&lt;/p&gt;
+
+&lt;p&gt;分区算法将有n个目标的数据库D的分区，构造成为一个k聚簇。k是算法的输入参数，需要领域知识。分区算法通常从初始分区D开始，使用迭代控制策略优化目标函数。每个聚簇由聚簇的重心来表示&lt;em&gt;(k-means)&lt;/em&gt;，或者位置上接近中心的一个目标&lt;em&gt;(k-medoid)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;因此，分区算法有两个步骤。首先，确定k个代表&lt;em&gt;(representatives)&lt;/em&gt;的最小目标函数，其次，将每个目标聚集到离它最近的代表。第二步意味着一个分区在voronoi图&lt;em&gt;(voronoi diagram)&lt;/em&gt;中是等价的，并且每个聚簇包含在一个voronoi单元&lt;em&gt;(voronoi cells)&lt;/em&gt;中。所以，分区算法中所有聚簇的形状都是凸状的，而这种情况是有限的。&lt;/p&gt;
+
+&lt;p&gt;CLARANS &lt;em&gt;(Clustering Large Applications based on RANdomized Search)&lt;/em&gt;是一个改进的k-medoid方法。Ng &amp;amp; Han也讨论了确定数据库中聚簇的“自然”数&lt;span  class=&#34;math&#34;&gt;\(k_{nat}\)&lt;/span&gt;的方法。他们建议每个聚簇从2到n运行CLARANS一次。计算出每个发现的聚簇的轮廓系数，最后，最大轮廓系数的聚簇即为“自然”聚簇。遗憾的是，大量样本时这种方法的运行时间昂贵，因为它属于CLARANS的&lt;span  class=&#34;math&#34;&gt;\(O(n)\)&lt;/span&gt;次调用。&lt;/p&gt;
+
+&lt;p&gt;CLARANS假设所有聚簇的目标可以同时驻留在主存中，而这不适用于大型数据库，并且时间代价昂贵。&lt;/p&gt;
+
+&lt;p&gt;分层算法创建一个数据库D的层次分解。层次分解以树形图&lt;em&gt;(dendrogram)&lt;/em&gt;表示，树迭代的将D分割为更小的子集，知道每个子集仅由一个目标组成。&lt;/p&gt;
+
+&lt;p&gt;这样一个层次结构中，树的每个结点表示D的一个聚簇。树形图即可以从叶子向上到树根&lt;em&gt;(凝聚方法agglomerative approach)&lt;/em&gt;形成，也可以从树根向下到树叶&lt;em&gt;(分裂方法divisive approach)&lt;/em&gt;，通过每一步合并或者分割簇来生成。异于分区算法，层次算法不需要k作为输入。但是，必须定义终止条件，指定何时终止合并或者分割过程。凝聚算法中终止条件的一个例子是所有簇Q之间的临界距离&lt;span  class=&#34;math&#34;&gt;\(D_{min}\)&lt;/span&gt;。&lt;/p&gt;
+
+&lt;p&gt;到目前为止，层次聚类算法的主要问题是难以获得终止条件的适当参数。例如，&lt;span  class=&#34;math&#34;&gt;\(D_{min}\)&lt;/span&gt;的值足够小以分离所有的自然簇，并且同时足够大以使得没有簇被分割为两部分。最近，在信号处理领域，已经提出了分层算法Ejcluster（García，Fdez-Valdivia，Cortijo＆Molina 1994)自动导出终止条件。它的关键思想是，如果一个足够小的步骤可以从第一个点走到第二个点，那么两个点属于同一个簇。 Ejcluster遵循分裂的方法。它不需要任何域知识输入。此外，实验表明它在发现非凸簇方面非常有效。然而，由于每对点的距离计算，Ejcluster的计算成本是&lt;span  class=&#34;math&#34;&gt;\(O(n^2)\)&lt;/span&gt;。这对于诸如字符识别之类中等程度的n值的应用程序是可接受的，但是对于大型数据库上的应用程序来说这是代价高昂的。 Jain（1988)探索了一种基于密度的方法来识别k维点集中的聚类。数据集被划分为许多非重叠单元格 &lt;em&gt;(nonoverlapping cells)&lt;/em&gt;，并构造直方图。具有相对高频率计数的单元格是潜在的聚类中心，并且聚类之间的边界落入直方图的“谷”中。&lt;/p&gt;
+
+&lt;h3 id=&#34;a-density-based-notion-of-clusters&#34;&gt;A Density Based Notion of Clusters&lt;/h3&gt;
+
+&lt;p&gt;对聚簇的认识：每个聚簇有一个典型的密度，远远高于簇的外部。此外，噪声区域的密度低于任何的簇。&lt;/p&gt;
+
+&lt;p&gt;关键思想是对于聚簇的每个点，给定半径的邻域必须包含至少最小数量的点，即邻域的密度必须超过某个阈值。邻域的形状通过选择两个点p和q的距离函数&lt;span  class=&#34;math&#34;&gt;\(dist(p,q)\)&lt;/span&gt;来确定。例如，在2D空间使用曼哈顿距离，邻域的形状是矩形。DBSCAN适用于任何距离函数，可以在给定的应用中选择适当的函数。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 1&lt;/strong&gt;:(Eps-neighborhood of a point) The Eps-neighborhood of a point p, denoted by &lt;span  class=&#34;math&#34;&gt;\(N_{Eps}(P)\)&lt;/span&gt;, is defined by &lt;span  class=&#34;math&#34;&gt;\(N_{Eps}(P)= {q \in D | dist(p,q) \le Eps}\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;一种朴素的方法可能要求簇中的每个点，在该点的Eps邻域中至少存在最小数量（MinPts)的点。然而这种方法失败了，因为簇中有两种点，簇内部的点 &lt;em&gt;(core points)&lt;/em&gt;和簇边界上的点&lt;em&gt;(border points)&lt;/em&gt;。通常，边界点的Eps邻域包含比核心点的Eps邻域少得多的点。因此不得不设置相对较小的点的最小值来包含属于同一聚簇的所有点。然而，这个值不是各个簇的特征，特别是存在噪音时。所以，我们要求对于簇C中的每个点p，在C中存在点q，使得p在q的Eps邻域内，并且NEps（q)包含至少MinPts点。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 2&lt;/strong&gt;:(directly density-reachable) A point p is directly density-reachable from a point q wrt. Eps, MinPts if&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\[p \in N_{Eps}(q)\]&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(|N_{Eps}(q)|\ge  MinPts\)&lt;/span&gt;(core point condition).&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;显然，直接密度可达对于核心点对是对称的。然而，一般而言，如果涉及一个核心点和一个边界点，则它不是对称的。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 3&lt;/strong&gt;:(density-reachable) A point P is density-reachable from a point q wrt. Eps and MinPts if there is a chain of points &lt;span  class=&#34;math&#34;&gt;\(p_1 ,\dots ,p_n, p_1=q, p_n= p\)&lt;/span&gt; such that &lt;span  class=&#34;math&#34;&gt;\(p_{i+1}\)&lt;/span&gt; is directly density-reachable from &lt;span  class=&#34;math&#34;&gt;\(p_i\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;密度可达性是直接密度可达性的规范扩展。这个关系是可传递的，但不是对称的&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 4&lt;/strong&gt;:(density-connected) A point p is density connected to a point q wrt. Eps and MinPts if there is a point o such that both, p and q are density-reachable from o wrt. Eps and MinPts.&lt;/p&gt;
+
+&lt;p&gt;密度连通性是对称的，随遇密度可达的点，密度连通性是自反的。&lt;/p&gt;
+
+&lt;p&gt;簇被定义为一组密度连接点，具有最大的密度可达性。想对给定的一组的簇的集合定义噪声。噪声只是D中不属于任何一个簇的一组点集。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 5&lt;/strong&gt;:(cluster) Let D be a database of points. A cluster C wrt. Eps and MinPts is a non-empty subset of D satisfying the following conditions:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\forall \ p, q: if\ p \in C\)&lt;/span&gt; and q is density-reachable from p wrt. Eps and MinPts, then &lt;span  class=&#34;math&#34;&gt;\(q \in C\)&lt;/span&gt;.(Maximality)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;span  class=&#34;math&#34;&gt;\(\forall \ p,q \ \in C\)&lt;/span&gt; is density-connected to q wrt. EPS and MinPts.(Connectivity)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition 6&lt;/strong&gt;:(noise) Let &lt;span  class=&#34;math&#34;&gt;\(C_1,..., C_k\)&lt;/span&gt; be the clusters of the database D wrt. parameters &lt;span  class=&#34;math&#34;&gt;\(Eps_i\)&lt;/span&gt; and &lt;span  class=&#34;math&#34;&gt;\(MinPts_i\)&lt;/span&gt;,i= 1,....k. Then we define the noise as the set of points in the database D not belonging to any cluster &lt;span  class=&#34;math&#34;&gt;\(C_i\)&lt;/span&gt;. i.e. noise=&lt;span  class=&#34;math&#34;&gt;\((p\in D|\forall i:p \notin C_i)\)&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;集群C至少包含一个点p，p必须通过某个点o（可能等同于p)与其自身密度连接。因此，o至少需要满足核心点的条件，因此o的eps领域至少包含MinPts个点。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lemma 1&lt;/strong&gt;: Let p be a point in D and &lt;span  class=&#34;math&#34;&gt;\(|N_{Eps}(p)| \ge MinPts\)&lt;/span&gt;. Then the set &lt;span  class=&#34;math&#34;&gt;\(O=\{o|o \in D\)&lt;/span&gt; and o is density-reachable from p wrt. Eps and MinPts} is a cluster wrt. Eps and MinPts.&lt;/p&gt;
+
+&lt;p&gt;聚簇C并不明显的由任何核心点决定。但是C中的每个点密度可达任何一个核心点，所以C恰好包含从C的任意核心点可以密度可达的点。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Lemma 2&lt;/strong&gt;: Let C be a cluster wrt. Eps and MinPts and let p be any point in C with &lt;span  class=&#34;math&#34;&gt;\(|N_{Eps}(p)| \ge MinPts\)&lt;/span&gt;. Then C equals to the set &lt;span  class=&#34;math&#34;&gt;\(O=\{o|o \in D\)&lt;/span&gt; and o is density-reachable from p wrt. Eps and MinPts}&lt;/p&gt;
+
+&lt;h3 id=&#34;4dbscan-density-based-spatial-clustering-of-applications-with-noise&#34;&gt;4.DBSCAN: Density Based Spatial Clustering of Applications with Noise&lt;/h3&gt;
+
+&lt;p&gt;基于密度的噪声空间聚类的应用&lt;/p&gt;
+
+&lt;p&gt;根据定义5和6发现空间数据库中的聚簇和噪声&lt;/p&gt;
+
+&lt;p&gt;简单有效的启发式方法可以确定“最薄”（即最低密度)簇的参数Eps和MinPts的值&lt;/p&gt;
+
+&lt;h5 id=&#34;41算法&#34;&gt;4.1算法&lt;/h5&gt;
+
+&lt;p&gt;DBSCAN从任意点p开始，检索所有密度可达的点，根据Eps和MinPts。如果p是核心点，此过程产生一个聚（Lemma 2)。如果p是边缘点，没有点可以从p密度可达，那么DBSCAN访问下一个点。&lt;/p&gt;
+
+&lt;p&gt;由于我们使用Eps和MinPts的全局值，如果两个不同密度的簇彼此接近，则DBSCAN可以根据定义5将两个簇合并为一个簇。设两组点&lt;span  class=&#34;math&#34;&gt;\(S_1\)&lt;/span&gt;和&lt;span  class=&#34;math&#34;&gt;\(S_2\)&lt;/span&gt;之间的距离定义为&lt;span  class=&#34;math&#34;&gt;\(dist(S_1,S_2)=min\{dist(p,q)|lp \in S_1, q \in S_2 \}\)&lt;/span&gt;。然后，仅当两组之间的距离大于Eps时，具有至少最薄簇的密度的两组点将彼此分离。因此，对于具有较高MinPts值的簇，可能需要递归调用DBSCAN。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DBSCAN的基本版本
+
+DBSCAN(SetOfPoints, Eps, MinPts) 
+// SetOfPoints is UNCLASSIFIED
+ 	ClusterId := nextId(NOISE);
+ 	FOR i FROM 1 TO SetOfPoints.size DO 
+		Point := SetOfPoints.get(i);
+ 		IF Point.ClId = UNCLASSIFIED THEN 
+			IF ExpandCluster(SetOfPoints, ClusterId, Eps, MinPts) THEN 
+				ClusterId := nextId(ClusterId) 
+			END IF 
+		END IF 
+	END FOR 
+END; // DBSCAN 
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;SetOfPoints是整个数据库或先前运行中发现的群集。 Eps和MinPts是手动或根据4.2节中介绍的启发法确定的全局密度参数。函数SetOfPoints.get(i)返回SetOfPoints的第i个元素。 DBSCAN使用的最重要的功能是ExpandCluster，如下所示：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ExpandCluster(SetOfPoints, Point, CiId, Eps, MinPts) : Boolean;
+	seeds:=SetOfPoints.regionQuery(Point, Eps)
+	IF seeds.size&amp;lt;MinPts THEN // no core point
+		SetOfPoint.changeClId(Point, NOISE)
+		RETURN False;
+	ELSE // all points in seeds are density-
+			// reachable from Point 
+		SetOfPoints.changeClIds(seeds, ClId);
+		seeds.delete(Point); 
+		WHILE seeds &amp;lt;&amp;gt; Empty DO
+			currentP := seeds.first();
+			result := setofPoints.regionQuery(currentP,Eps);
+			IF result.size &amp;gt;= MinPts THEN 
+				FOR i FROM 1 TO result.size DO
+					resultP := result.get(i) 
+					IF resultP.ClId IN {UNCLASSIFIED, NOISE} THEN
+						IF resultP.ClId = UNCLASSIFIED THEN
+							seeds, append(resultP)
+						END IF;
+						SetOfPoints. changeClId(resultP, ClId)
+					END IF; // UNCLASSIFIED or NOISE 
+				END FOR ;
+			END IF; // result.size &amp;gt;= MinPts
+			seeds, delete (currentP)
+		END WHILE; // seeds &amp;lt;&amp;gt; Empty
+		RETURN True; 
+	END IF
+END; // ExpandCluster
+&lt;/code&gt;&lt;/pre&gt;
 </description>
       
     </item>
@@ -1325,9 +2077,9 @@ int main() {
 			if(stack[l] != ch) { //栈顶元素和当前看到的字符不匹配
 				if(stack[l] != 39) { //栈顶元素为E,T,F
 					switch(stack[l]) {
-						case&#39;E&#39;:
+						case &#39;E&#39;:
 							m=0; break;
-						case&#39;T&#39;:
+						case &#39;T&#39;:
 							m=2;break;
 						case &#39;F&#39;:
 							m=4;break;
@@ -1468,6 +2220,632 @@ int main() {
 }
 
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Deutsch Grammer</title>
+      <link>https://cheioKID.github.io/post/deutsch/deutsch-grammer/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/deutsch-grammer/</guid>
+      
+        <description>
+
+&lt;h4 id=&#34;换音与变音&#34;&gt;换音与变音&lt;/h4&gt;
+
+&lt;p&gt;元音只在第二人称及第三人称单数时发生变化。
+并非所有带e和a的动词在变位时都会发生元音变化：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;元音无变化
+ich gehe - du gehst, 
+ich lache - du lachst …
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id=&#34;换音动词e-i&#34;&gt;换音动词e-i&lt;/h5&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;e&lt;/th&gt;
+&lt;th&gt;i&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;emptehlen&lt;/td&gt;
+&lt;td&gt;er empfiehlt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;essen&lt;/td&gt;
+&lt;td&gt;er sst&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;geben&lt;/td&gt;
+&lt;td&gt;er gibt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;fernsehen&lt;/td&gt;
+&lt;td&gt;er sieht fern&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;helfen&lt;/td&gt;
+&lt;td&gt;er hilft&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;lesen&lt;/td&gt;
+&lt;td&gt;er liest&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;mitnehmen&lt;/td&gt;
+&lt;td&gt;er nimmt mit&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;nehmen&lt;/td&gt;
+&lt;td&gt;er nimmt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;sehen&lt;/td&gt;
+&lt;td&gt;er sieht&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;sprechen&lt;/td&gt;
+&lt;td&gt;er spricht&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;vergessen&lt;/td&gt;
+&lt;td&gt;er vergisst&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;werden&lt;/td&gt;
+&lt;td&gt;er wird&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h5 id=&#34;变音动词a-a&#34;&gt;变音动词a-a&lt;/h5&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;a&lt;/th&gt;
+&lt;th&gt;a&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;abfahren&lt;/td&gt;
+&lt;td&gt;er fahrt ab&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;anfangen&lt;/td&gt;
+&lt;td&gt;er fangt an&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;einladen&lt;/td&gt;
+&lt;td&gt;er ladt ein&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;einschlafen&lt;/td&gt;
+&lt;td&gt;er schlaft ein&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;fahren&lt;/td&gt;
+&lt;td&gt;er fahrt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;gefallen&lt;/td&gt;
+&lt;td&gt;es gefallt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;laufen&lt;/td&gt;
+&lt;td&gt;er lauft&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;schlafen&lt;/td&gt;
+&lt;td&gt;er schlaft&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;tragen&lt;/td&gt;
+&lt;td&gt;er tragt&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;waschen&lt;/td&gt;
+&lt;td&gt;er wascht&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;müssen, können, dürfen 和wollen 在进行单数人称的变位时元音会发生变化。&lt;code&gt;第一人称单数&lt;/code&gt;和&lt;code&gt;第三人称单数&lt;/code&gt;的&lt;code&gt;现在时&lt;/code&gt;变位同形，&lt;strong&gt;无词尾&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;情态动词位于第二位，&lt;strong&gt;实义动词原形位于句末&lt;/strong&gt;。
+若句子的意思可通过上下文表达明白，&lt;strong&gt;实义动词可以省略&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;h4 id=&#34;情态动词&#34;&gt;情态动词&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;情态动词&lt;/th&gt;
+&lt;th&gt;释义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;müssen&lt;/td&gt;
+&lt;td&gt;没有其他选择&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;können&lt;/td&gt;
+&lt;td&gt;1.习得&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;2.有机会，有可能&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;3.被允许&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;nicht dürfen&lt;/td&gt;
+&lt;td&gt;禁止&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;dürfen&lt;/td&gt;
+&lt;td&gt;允许&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;愿望(礼貌)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;möchten&lt;/td&gt;
+&lt;td&gt;愿望(直接)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;wollen&lt;/td&gt;
+&lt;td&gt;(用这个词表达向他人索取某物的愿望是不礼貌的)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;sollen&lt;/td&gt;
+&lt;td&gt;1.你希望我&amp;hellip;? (只用于问句中)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;2.转述他人对我的要求&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&#34;可分前缀&#34;&gt;可分前缀&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;可分前缀&lt;/th&gt;
+&lt;th&gt;可分前缀&lt;/th&gt;
+&lt;th&gt;可分前缀&lt;/th&gt;
+&lt;th&gt;可分前缀&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;ab-&lt;/td&gt;
+&lt;td&gt;ein-&lt;/td&gt;
+&lt;td&gt;statt-&lt;/td&gt;
+&lt;td&gt;zu-&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;an-&lt;/td&gt;
+&lt;td&gt;fern-&lt;/td&gt;
+&lt;td&gt;teil&lt;/td&gt;
+&lt;td&gt;zurecht-&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;auf-&lt;/td&gt;
+&lt;td&gt;her-&lt;/td&gt;
+&lt;td&gt;um-&lt;/td&gt;
+&lt;td&gt;zurück-&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;aus-&lt;/td&gt;
+&lt;td&gt;mit-&lt;/td&gt;
+&lt;td&gt;vor-&lt;/td&gt;
+&lt;td&gt;zusammen-&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;词重音永远在&lt;strong&gt;前缀&lt;/strong&gt;上: &lt;u&gt;ein&lt;/u&gt;kaufen&lt;/p&gt;
+
+&lt;h4 id=&#34;命令式&#34;&gt;命令式&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;du的动词变位后去掉st，&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ihr和Sie正常变位。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;du和ihr去掉，Sie位于动词后。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;Gehen Sie! Geh! Geht!
+Bringen Sie das mit! Bring das mit! Bringt das mit!
+Seien Sie! Sei! Seid!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;bitte 用于句首或句尾
+Hilf mir doch!
+Hilf mir mal!
+Hilf mir noch mal!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;特殊疑问句&#34;&gt;特殊疑问句&lt;/h4&gt;
+
+&lt;h4 id=&#34;一般疑问句&#34;&gt;一般疑问句&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;动词在第一位，用Ja/Nein回答。&lt;/li&gt;
+&lt;li&gt;有nicht的情况下，Doch表示事实上的肯定，Nein表示事实上否定&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;语序&#34;&gt;语序&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;句型&lt;/th&gt;
+&lt;th&gt;语序&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;陈述句&lt;/td&gt;
+&lt;td&gt;动词位于第二位，主语在动词的左边，如果其它成分位于第一位，则主语位于动词的右边。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;特殊疑问句&lt;/td&gt;
+&lt;td&gt;动词位于第二位，疑问在第一位，主语在第三位。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;一般疑问句&lt;/td&gt;
+&lt;td&gt;动词位于句首，主语在动词的右边。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;命令式&lt;/td&gt;
+&lt;td&gt;动词位于句首，Sie在右边，du和ihr已省略。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;时间及地点&lt;/td&gt;
+&lt;td&gt;时间状语(Wann? Wie lange? Wie oft?) 通常位于左半句(常在第一位)。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;地点状语(Wo? Wohin? Woher?)通常位于右半句。&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;可分动词&lt;/td&gt;
+&lt;td&gt;可分前缀放在句尾，正常变位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;变位动词位于&lt;strong&gt;第二位&lt;/strong&gt;，其他谓语成分(分词)位于句末。
+&lt;code&gt;sein + 形容词&lt;/code&gt;，&lt;code&gt;双动词&lt;/code&gt;及&lt;code&gt;名词-动词&lt;/code&gt;组合与&lt;code&gt;可分动词&lt;/code&gt;用法相同。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;sein + 形容词&lt;/th&gt;
+&lt;th&gt;双动词&lt;/th&gt;
+&lt;th&gt;名词-动词&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;wunderbar sein&lt;/td&gt;
+&lt;td&gt;schwimmen gehen&lt;/td&gt;
+&lt;td&gt;Tennis spielen&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;müde sein&lt;/td&gt;
+&lt;td&gt;einkaufen gehen&lt;/td&gt;
+&lt;td&gt;Deutsch lernen&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;Wein trinken&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&#34;名词复数&#34;&gt;名词复数&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;复述词尾&lt;/th&gt;
+&lt;th&gt;名词&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;-en&lt;/td&gt;
+&lt;td&gt;所有以-ung,-heit,-keit,-ie,-o结尾的名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;几乎所有以-e结尾的名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;很多阴性名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;以-in结尾→-innen&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;(此为最常见的复数词尾)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-er&lt;/td&gt;
+&lt;td&gt;几乎所有中性短名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;一些阳性名词，没有阴性名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-e&lt;/td&gt;
+&lt;td&gt;很多短名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;仅变音&lt;/td&gt;
+&lt;td&gt;很多以er，-en,-e/结尾的名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;所有以-chen 和-ein结尾的名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;-s&lt;/td&gt;
+&lt;td&gt;所有以-a,-i,-o,-y结尾的名词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;所有缩略词&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;很多外来词&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;无复数形式的名词&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;抽象名词&lt;/td&gt;
+&lt;td&gt;das Glück,die Liebe,der Hunger,die Kommunikation,der Sport,die Musik,das Wetter&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;物质名词&lt;/td&gt;
+&lt;td&gt;das Gold,das Wasser,die Milch&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;集合名词&lt;/td&gt;
+&lt;td&gt;das Obst,die Polizei,die Kleidung,der Urlaub&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;动词不定式作名词&lt;/td&gt;
+&lt;td&gt;das Essen,das Sprechen,das Spielen&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;无单数形式名词&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;一些国家名与地理专有名词&lt;/td&gt;
+&lt;td&gt;die USA,die Alpen&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;集合名词&lt;/td&gt;
+&lt;td&gt;die Eltern,die Leute,die Möbel&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;及die Ferien&amp;hellip;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;◦   冠词
+零冠词
+不可数名词属零冠词情况
+(如Zeit, Lust, Geld, Glück, Hunger)
+同属零冠词情况的还有:
+Ich bin + (职业)
+Ich bin Pilotin von Beruf.&lt;/p&gt;
+
+&lt;p&gt;◦   否定
+名词，名词前加冠词kein，注意冠词变位
+其它，nicht&lt;/p&gt;
+
+&lt;p&gt;Ich esse immer zu Mittag. lch esse nie zu Mittag.
+Auf der Party kenne ich alle. lch kenne niemand auf der Party.
+Isst du etwas? Isst du alles? lch esse nichts.
+Kannst du nur mit Brille lesen? Ich kann ohne Brille lesen.
+Warst du schon mal in Paris? Nein, ich war noch nicht in Paris. Ich war noch nie in Frankreich.
+Hast du noch Hunger? Nein, ich habe keinen Hunger mehr.
+Liebst du Thomas noch? Nein,ich liebe ihn nicht mehr.&lt;/p&gt;
+
+&lt;p&gt;◦   第四格
+只有阳性名词的第四格形式与第一格有所不同: den/einen/keinen。
+物主代词的变格同kein: Ich liebe meinen Mann.&lt;/p&gt;
+
+&lt;p&gt;◦   第三格
+阳性名词和中性名词的第三格形式相同。
+第三格复数词尾为-n。
+复数形式以-s结尾的不需另加-n: Wir fahren mit zwei Autos.
+物主代词变格同kein。&lt;/p&gt;
+
+&lt;p&gt;◦   物主代词&lt;/p&gt;
+
+&lt;p&gt;◦   疑问冠词和指示代词
+welch-，dies-词尾变化对应定冠词的变化&lt;/p&gt;
+
+&lt;p&gt;◦   人称代词的三格，四格&lt;/p&gt;
+
+&lt;p&gt;◦   支配双宾语的动词
+动词＋三格＋四格
+三格为间接宾语，只能为人或动物，满足&amp;rdquo;人三物四&amp;rdquo;
+Darf ich Ihnen einen Tee anbieten ?
+anbieten
+Er hat uns die Getränke bezahlt.
+bezahlen
+Er hat uns Kaffee bestellt.
+bestellen
+Bitte bringen Sie mir einen Kaffee.
+bringen
+Ich kann Ihnen ein Restaurant empfehlen.
+empfehlen
+Können Sie mir das Problem erklären?
+erklären
+Meine Oma hat uns immer schöne Geschichten erzählt.
+erzählen
+Bitte geben Sie mir die Rechnung.
+geben
+Er holt uns die Getranke.
+holen
+Ich michte meinem Sohn einen Laptop kaufen.
+kaufen
+Wer kocht uns heute das Mittagessen?
+kochen
+Sie hat ihm ein Buch geliehen.
+leihen
+Die Firma liefert uns die Mobel am Freitag.
+li efern
+Sie bringen ihm aus dem Urlaub ein Souvenir mit.
+mitbringen
+Wir renovieren unseren Freunden die Wohnung.
+renovieren
+19)
+Die Werkstatt kann uns das Auto erst nachste Woche reparieren.
+reparieren
+Bitte reservieren Sie uns einen Tisch fir 20:00 Uhr.
+reservieren
+Hast du ihm die Neuigkeit gesagt?
+sagen
+Sie schenkt ihrem Vater eine Krawatte.
+schenken
+Konnen Sieuns bitte Informationen schicken?
+schicken
+Deriseurhat ihr dieHaresuper gschiten.
+schneiden
+Sie schreibt ihm eine E-Mail.
+schreiben
+ieseviet ihren Cisten Kfeeund Kuchen.
+servieren
+Eeasainenein Brdeseinenaten iPod
+verkaufen
+Ich winsche dir viel Glick!
+winschen
+Die Fau re ihnen die Shenlrdaeicn in der Shadt
+zeigen&lt;/p&gt;
 </description>
       
     </item>
@@ -1845,402 +3223,6 @@ cd ..
     </item>
     
     <item>
-      <title>Shortcodes Preview</title>
-      <link>https://cheioKID.github.io/post/shortcodes-preview/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/shortcodes-preview/</guid>
-      
-        <description>&lt;h2 id=&#34;what-a-shortcode-is&#34;&gt;What a Shortcode is&lt;/h2&gt;
-
-&lt;p&gt;Hugo loves Markdown because of its simple content format, but there are times when Markdown falls short. Often, content authors are forced to add raw HTML (e.g., video &lt;code&gt;&amp;lt;iframes&amp;gt;&lt;/code&gt;) to Markdown content. We think this contradicts the beautiful simplicity of Markdown&amp;rsquo;s syntax.&lt;/p&gt;
-
-&lt;p&gt;Hugo created &lt;strong&gt;shortcodes&lt;/strong&gt; to circumvent these limitations.&lt;/p&gt;
-
-&lt;p&gt;A shortcode is a simple snippet inside a content file that Hugo will render using a predefined template. Note that shortcodes will not work in template files. If you need the type of drop-in functionality that shortcodes provide but in a template, you most likely want a [partial template][partials] instead.&lt;/p&gt;
-
-&lt;p&gt;In addition to cleaner Markdown, shortcodes can be updated any time to reflect new classes, techniques, or standards. At the point of site generation, Hugo shortcodes will easily merge in your changes. You avoid a possibly complicated search and replace operation.&lt;/p&gt;
-
-&lt;p&gt;More details: &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;&gt;https://gohugo.io/content-management/shortcodes/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;blockquotes&#34;&gt;blockquotes&lt;/h2&gt;
-
-&lt;p&gt;Normal quote:
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a simple quote.
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;&lt;/strong&gt;
-    
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Quote with author:
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a quote with only an Author named Author2.
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;Author2&lt;/strong&gt;
-    
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Quote with author and source:
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a quote from Author3 and source &#34;source.&#34;
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;Author3&lt;/strong&gt;
-    
-      &lt;cite&gt;Source&lt;/cite&gt;
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Quote with author and link:
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-      
-      
-      
-    
-     
-      
-    
-    
-
-    
-    
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a quote from Author4 and links to https://www.google.com.
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;Author4&lt;/strong&gt;
-    
-      
-        &lt;cite&gt;
-          &lt;a href=&#34;https://www.google.com&#34; title=&#34;https://www.google.com&#34;&gt;google.com&lt;/a&gt; 
-        &lt;/cite&gt;
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Quote with author, link and title:
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a quote from Author5 and links to https://www.google.com with title &#34;Google.&#34;
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;Author5&lt;/strong&gt;
-    
-      
-        &lt;cite&gt;
-          &lt;a href=&#34;https://www.google.com&#34; title=&#34;https://www.google.com&#34;&gt;Google&lt;/a&gt; 
-        &lt;/cite&gt;
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Quote with author and a link longer than 32 characters, string is first cut at 32 characters then everything after the last forward slash is removed
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-      
-      
-      
-    
-     
-      
-    
-    
-
-    
-    
-         
-         
-         
-
-         
-        
-        
-        
-        
-      
-      
-    
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  This is a quote from Author5 and links to https://twitter.com/CryptoGangsta/status/716427930126196737 which is longer than 32 characters.
-  &lt;br&gt;And this is a new line in the quote with the HTML br tag.
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;Author6&lt;/strong&gt;
-    
-      
-        &lt;cite&gt;
-          &lt;a href=&#34;https://twitter.com/CryptoGangsta/status/716427930126196737&#34; title=&#34;https://twitter.com/CryptoGangsta/status/716427930126196737&#34;&gt;twitter.com/CryptoGangsta/...&lt;/a&gt; 
-        &lt;/cite&gt;
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Test from the Octopress blockquote page at: &lt;a href=&#34;http://octopress.org/docs/plugins/blockquote/&#34;&gt;http://octopress.org/docs/plugins/blockquote/&lt;/a&gt;
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
-
-      
-      
-      
-    
-     
-      
-    
-    
-
-    
-    
-         
-         
-         
-
-         
-        
-        
-        
-        
-        
-        
-      
-      
-    
-  
-
-
-&lt;blockquote&gt;
-  &lt;p&gt;
-  Over the past 24 hours I&#39;ve been reflecting on my life &amp; I&#39;ve realized only one thing. I need a medieval battle axe.
-&lt;/p&gt;
-  &lt;footer&gt;
-    &lt;strong&gt;@allanbranch&lt;/strong&gt;
-    
-      
-        &lt;cite&gt;
-          &lt;a href=&#34;https://twitter.com/allanbranch/status/90766146063712256&#34; title=&#34;https://twitter.com/allanbranch/status/90766146063712256&#34;&gt;twitter.com/allanbranch/status/...&lt;/a&gt; 
-        &lt;/cite&gt;
-      
-    
-  &lt;/footer&gt;
-&lt;/blockquote&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&#34;music&#34;&gt;music&lt;/h2&gt;
-
-  &lt;iframe style=&#34;max-width: 100%&#34;
-      class=&#34;music163&#34;
-      frameborder=&#34;no&#34;
-      border=&#34;0&#34;
-      marginwidth=&#34;0&#34;
-      marginheight=&#34;0&#34;
-      width=&#34;330&#34;
-      height=&#34;86&#34;
-      src=&#34;//music.163.com/outchain/player?type=2&amp;id=3950552&amp;auto=0&amp;height=66&#34;&gt;
-    &lt;/iframe&gt;
-
-&lt;h2 id=&#34;gist&#34;&gt;gist&lt;/h2&gt;
-
-&lt;p&gt;We can embed the gist in our content via username and gist ID pulled from the URL:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{&amp;lt; gist spf13 7896402 &amp;gt;}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Display:&lt;/p&gt;
-
-&lt;script type=&#34;application/javascript&#34; src=&#34;//gist.github.com/spf13/7896402.js&#34;&gt;&lt;/script&gt;
-
-&lt;h2 id=&#34;youtube&#34;&gt;youtube&lt;/h2&gt;
-
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;//www.youtube.com/embed/w7Ft2ymGmfc&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;vimeo&#34;&gt;vimeo&lt;/h2&gt;
-
-
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-  &lt;iframe src=&#34;//player.vimeo.com/video/146022717&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
- &lt;/div&gt;</description>
-      
-    </item>
-    
-    <item>
       <title>Git note</title>
       <link>https://cheioKID.github.io/post/note/git-note/</link>
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
@@ -2375,7 +3357,8 @@ LEFT JOIN address ON person.personID = address.personID;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;左外连接，除去address中person没有的元祖 ```&lt;/p&gt;
+&lt;p&gt;左外连接，除去address中person没有的元祖&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&#34;176&#34;&gt;176&lt;/h2&gt;
 
@@ -2384,7 +3367,9 @@ FROM Employee
 WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;子查询得到最大值，外层查询的最大值满足小于子查询的最大值&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h2 id=&#34;177&#34;&gt;177&lt;/h2&gt;
 
@@ -2398,6 +3383,7 @@ BEGIN
 END 
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;和rank那题思路类似，如果表自身连接，有n条不重复的记录大于等于某个值，那么某个值就是第n高的记录，外层查询的范围是不相关子查询的结果，注意列的别名必须匹配外层查询的字段，而且子查询返回的表必须有别名才能在外层查询中查询，否则会报错&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -2533,2109 +3519,6 @@ GROUP BY request_at
 &lt;blockquote&gt;
 &lt;p&gt;先两表等值连接，满足条件的记录中分组计算取消比率，可以用sum函数（或者也可以用count(if())但是没试过），得出cancalled的记录数量，除以status的总数就是取消比率&lt;/p&gt;
 &lt;/blockquote&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>Creating a New Theme</title>
-      <link>https://cheioKID.github.io/post/creating-a-new-theme/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/creating-a-new-theme/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start with creating a new site with a very basic template. Then we&amp;rsquo;ll add in a few pages and posts. With small variations on that, you will be able to create many different types of web sites.&lt;/p&gt;
-
-&lt;p&gt;In this tutorial, commands that you enter will start with the &amp;ldquo;$&amp;rdquo; prompt. The output will follow. Lines that start with &amp;ldquo;#&amp;rdquo; are comments that I&amp;rsquo;ve added to explain a point. When I show updates to a file, the &amp;ldquo;:wq&amp;rdquo; on the last line means to save the file.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s an example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;## this is a comment
-$ echo this is a command
-this is a command
-
-## edit the file
-$vi foo.md
-+++
-date = &amp;quot;2014-09-28&amp;quot;
-title = &amp;quot;creating a new theme&amp;quot;
-+++
-
-bah and humbug
-:wq
-
-## show it
-$ cat foo.md
-+++
-date = &amp;quot;2014-09-28&amp;quot;
-title = &amp;quot;creating a new theme&amp;quot;
-+++
-
-bah and humbug
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;some-definitions&#34;&gt;Some Definitions&lt;/h2&gt;
-
-&lt;p&gt;There are a few concepts that you need to understand before creating a theme.&lt;/p&gt;
-
-&lt;h3 id=&#34;skins&#34;&gt;Skins&lt;/h3&gt;
-
-&lt;p&gt;Skins are the files responsible for the look and feel of your site. It’s the CSS that controls colors and fonts, it’s the Javascript that determines actions and reactions. It’s also the rules that Hugo uses to transform your content into the HTML that the site will serve to visitors.&lt;/p&gt;
-
-&lt;p&gt;You have two ways to create a skin. The simplest way is to create it in the &lt;code&gt;layouts/&lt;/code&gt; directory. If you do, then you don’t have to worry about configuring Hugo to recognize it. The first place that Hugo will look for rules and files is in the &lt;code&gt;layouts/&lt;/code&gt; directory so it will always find the skin.&lt;/p&gt;
-
-&lt;p&gt;Your second choice is to create it in a sub-directory of the &lt;code&gt;themes/&lt;/code&gt; directory. If you do, then you must always tell Hugo where to search for the skin. It’s extra work, though, so why bother with it?&lt;/p&gt;
-
-&lt;p&gt;The difference between creating a skin in &lt;code&gt;layouts/&lt;/code&gt; and creating it in &lt;code&gt;themes/&lt;/code&gt; is very subtle. A skin in &lt;code&gt;layouts/&lt;/code&gt; can’t be customized without updating the templates and static files that it is built from. A skin created in &lt;code&gt;themes/&lt;/code&gt;, on the other hand, can be and that makes it easier for other people to use it.&lt;/p&gt;
-
-&lt;p&gt;The rest of this tutorial will call a skin created in the &lt;code&gt;themes/&lt;/code&gt; directory a theme.&lt;/p&gt;
-
-&lt;p&gt;Note that you can use this tutorial to create a skin in the &lt;code&gt;layouts/&lt;/code&gt; directory if you wish to. The main difference will be that you won’t need to update the site’s configuration file to use a theme.&lt;/p&gt;
-
-&lt;h3 id=&#34;the-home-page&#34;&gt;The Home Page&lt;/h3&gt;
-
-&lt;p&gt;The home page, or landing page, is the first page that many visitors to a site see. It is the index.html file in the root directory of the web site. Since Hugo writes files to the public/ directory, our home page is public/index.html.&lt;/p&gt;
-
-&lt;h3 id=&#34;site-configuration-file&#34;&gt;Site Configuration File&lt;/h3&gt;
-
-&lt;p&gt;When Hugo runs, it looks for a configuration file that contains settings that override default values for the entire site. The file can use TOML, YAML, or JSON. I prefer to use TOML for my configuration files. If you prefer to use JSON or YAML, you’ll need to translate my examples. You’ll also need to change the name of the file since Hugo uses the extension to determine how to process it.&lt;/p&gt;
-
-&lt;p&gt;Hugo translates Markdown files into HTML. By default, Hugo expects to find Markdown files in your &lt;code&gt;content/&lt;/code&gt; directory and template files in your &lt;code&gt;themes/&lt;/code&gt; directory. It will create HTML files in your &lt;code&gt;public/&lt;/code&gt; directory. You can change this by specifying alternate locations in the configuration file.&lt;/p&gt;
-
-&lt;h3 id=&#34;content&#34;&gt;Content&lt;/h3&gt;
-
-&lt;p&gt;Content is stored in text files that contain two sections. The first section is the “front matter,” which is the meta-information on the content. The second section contains Markdown that will be converted to HTML.&lt;/p&gt;
-
-&lt;h4 id=&#34;front-matter&#34;&gt;Front Matter&lt;/h4&gt;
-
-&lt;p&gt;The front matter is information about the content. Like the configuration file, it can be written in TOML, YAML, or JSON. Unlike the configuration file, Hugo doesn’t use the file’s extension to know the format. It looks for markers to signal the type. TOML is surrounded by “&lt;code&gt;+++&lt;/code&gt;”, YAML by “&lt;code&gt;---&lt;/code&gt;”, and JSON is enclosed in curly braces. I prefer to use TOML, so you’ll need to translate my examples if you prefer YAML or JSON.&lt;/p&gt;
-
-&lt;p&gt;The information in the front matter is passed into the template before the content is rendered into HTML.&lt;/p&gt;
-
-&lt;h4 id=&#34;markdown&#34;&gt;Markdown&lt;/h4&gt;
-
-&lt;p&gt;Content is written in Markdown which makes it easier to create the content. Hugo runs the content through a Markdown engine to create the HTML which will be written to the output file.&lt;/p&gt;
-
-&lt;h3 id=&#34;template-files&#34;&gt;Template Files&lt;/h3&gt;
-
-&lt;p&gt;Hugo uses template files to render content into HTML. Template files are a bridge between the content and presentation. Rules in the template define what content is published, where it&amp;rsquo;s published to, and how it will rendered to the HTML file. The template guides the presentation by specifying the style to use.&lt;/p&gt;
-
-&lt;p&gt;There are three types of templates: single, list, and partial. Each type takes a bit of content as input and transforms it based on the commands in the template.&lt;/p&gt;
-
-&lt;p&gt;Hugo uses its knowledge of the content to find the template file used to render the content. If it can’t find a template that is an exact match for the content, it will shift up a level and search from there. It will continue to do so until it finds a matching template or runs out of templates to try. If it can’t find a template, it will use the default template for the site.&lt;/p&gt;
-
-&lt;p&gt;Please note that you can use the front matter to influence Hugo’s choice of templates.&lt;/p&gt;
-
-&lt;h4 id=&#34;single-template&#34;&gt;Single Template&lt;/h4&gt;
-
-&lt;p&gt;A single template is used to render a single piece of content. For example, an article or post would be a single piece of content and use a single template.&lt;/p&gt;
-
-&lt;h4 id=&#34;list-template&#34;&gt;List Template&lt;/h4&gt;
-
-&lt;p&gt;A list template renders a group of related content. That could be a summary of recent postings or all articles in a category. List templates can contain multiple groups.&lt;/p&gt;
-
-&lt;p&gt;The homepage template is a special type of list template. Hugo assumes that the home page of your site will act as the portal for the rest of the content in the site.&lt;/p&gt;
-
-&lt;h4 id=&#34;partial-template&#34;&gt;Partial Template&lt;/h4&gt;
-
-&lt;p&gt;A partial template is a template that can be included in other templates. Partial templates must be called using the “partial” template command. They are very handy for rolling up common behavior. For example, your site may have a banner that all pages use. Instead of copying the text of the banner into every single and list template, you could create a partial with the banner in it. That way if you decide to change the banner, you only have to change the partial template.&lt;/p&gt;
-
-&lt;h2 id=&#34;create-a-new-site&#34;&gt;Create a New Site&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s use Hugo to create a new web site. I&amp;rsquo;m a Mac user, so I&amp;rsquo;ll create mine in my home directory, in the Sites folder. If you&amp;rsquo;re using Linux, you might have to create the folder first.&lt;/p&gt;
-
-&lt;p&gt;The &amp;ldquo;new site&amp;rdquo; command will create a skeleton of a site. It will give you the basic directory structure and a useable configuration file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo new site ~/Sites/zafta
-$ cd ~/Sites/zafta
-$ ls -l
-total 8
-drwxr-xr-x  7 quoha  staff  238 Sep 29 16:49 .
-drwxr-xr-x  3 quoha  staff  102 Sep 29 16:49 ..
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
--rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Take a look in the content/ directory to confirm that it is empty.&lt;/p&gt;
-
-&lt;p&gt;The other directories (archetypes/, layouts/, and static/) are used when customizing a theme. That&amp;rsquo;s a topic for a different tutorial, so please ignore them for now.&lt;/p&gt;
-
-&lt;h3 id=&#34;generate-the-html-for-the-new-site&#34;&gt;Generate the HTML For the New Site&lt;/h3&gt;
-
-&lt;p&gt;Running the &lt;code&gt;hugo&lt;/code&gt; command with no options will read all the available content and generate the HTML files. It will also copy all static files (that&amp;rsquo;s everything that&amp;rsquo;s not content). Since we have an empty site, it won&amp;rsquo;t do much, but it will do it very quickly.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo --verbose
-INFO: 2014/09/29 Using config file: config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
-WARN: 2014/09/29 Unable to locate layout: [404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 2 ms
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &amp;ldquo;&lt;code&gt;--verbose&lt;/code&gt;&amp;rdquo; flag gives extra information that will be helpful when we build the template. Every line of the output that starts with &amp;ldquo;INFO:&amp;rdquo; or &amp;ldquo;WARN:&amp;rdquo; is present because we used that flag. The lines that start with &amp;ldquo;WARN:&amp;rdquo; are warning messages. We&amp;rsquo;ll go over them later.&lt;/p&gt;
-
-&lt;p&gt;We can verify that the command worked by looking at the directory again.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ ls -l
-total 8
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
--rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
-drwxr-xr-x  4 quoha  staff  136 Sep 29 17:02 public
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;See that new public/ directory? Hugo placed all generated content there. When you&amp;rsquo;re ready to publish your web site, that&amp;rsquo;s the place to start. For now, though, let&amp;rsquo;s just confirm that we have what we&amp;rsquo;d expect from a site with no content.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ ls -l public
-total 16
--rw-r--r--  1 quoha  staff  416 Sep 29 17:02 index.xml
--rw-r--r--  1 quoha  staff  262 Sep 29 17:02 sitemap.xml
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Hugo created two XML files, which is standard, but there are no HTML files.&lt;/p&gt;
-
-&lt;h3 id=&#34;test-the-new-site&#34;&gt;Test the New Site&lt;/h3&gt;
-
-&lt;p&gt;Verify that you can run the built-in web server. It will dramatically shorten your development cycle if you do. Start it by running the &amp;ldquo;server&amp;rdquo; command. If it is successful, you will see output similar to the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo server --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
-WARN: 2014/09/29 Unable to locate layout: [404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 2 ms
-Serving pages from /Users/quoha/Sites/zafta/public
-Web Server is available at http://localhost:1313
-Press Ctrl+C to stop
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Connect to the listed URL (it&amp;rsquo;s on the line that starts with &amp;ldquo;Web Server&amp;rdquo;). If everything is working correctly, you should get a page that shows the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;index.xml
-sitemap.xml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That&amp;rsquo;s a listing of your public/ directory. Hugo didn&amp;rsquo;t create a home page because our site has no content. When there&amp;rsquo;s no index.html file in a directory, the server lists the files in the directory, which is what you should see in your browser.&lt;/p&gt;
-
-&lt;p&gt;Let’s go back and look at those warnings again.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
-WARN: 2014/09/29 Unable to locate layout: [404.html]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That second warning is easier to explain. We haven’t created a template to be used to generate “page not found errors.” The 404 message is a topic for a separate tutorial.&lt;/p&gt;
-
-&lt;p&gt;Now for the first warning. It is for the home page. You can tell because the first layout that it looked for was “index.html.” That’s only used by the home page.&lt;/p&gt;
-
-&lt;p&gt;I like that the verbose flag causes Hugo to list the files that it&amp;rsquo;s searching for. For the home page, they are index.html, _default/list.html, and _default/single.html. There are some rules that we&amp;rsquo;ll cover later that explain the names and paths. For now, just remember that Hugo couldn&amp;rsquo;t find a template for the home page and it told you so.&lt;/p&gt;
-
-&lt;p&gt;At this point, you&amp;rsquo;ve got a working installation and site that we can build upon. All that’s left is to add some content and a theme to display it.&lt;/p&gt;
-
-&lt;h2 id=&#34;create-a-new-theme&#34;&gt;Create a New Theme&lt;/h2&gt;
-
-&lt;p&gt;Hugo doesn&amp;rsquo;t ship with a default theme. There are a few available (I counted a dozen when I first installed Hugo) and Hugo comes with a command to create new themes.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;re going to create a new theme called &amp;ldquo;zafta.&amp;rdquo; Since the goal of this tutorial is to show you how to fill out the files to pull in your content, the theme will not contain any CSS. In other words, ugly but functional.&lt;/p&gt;
-
-&lt;p&gt;All themes have opinions on content and layout. For example, Zafta uses &amp;ldquo;post&amp;rdquo; over &amp;ldquo;blog&amp;rdquo;. Strong opinions make for simpler templates but differing opinions make it tougher to use themes. When you build a theme, consider using the terms that other themes do.&lt;/p&gt;
-
-&lt;h3 id=&#34;create-a-skeleton&#34;&gt;Create a Skeleton&lt;/h3&gt;
-
-&lt;p&gt;Use the hugo &amp;ldquo;new&amp;rdquo; command to create the skeleton of a theme. This creates the directory structure and places empty files for you to fill out.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo new theme zafta
-
-$ ls -l
-total 8
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
--rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
-drwxr-xr-x  4 quoha  staff  136 Sep 29 17:02 public
-drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
-drwxr-xr-x  3 quoha  staff  102 Sep 29 17:31 themes
-
-$ find themes -type f | xargs ls -l
--rw-r--r--  1 quoha  staff  1081 Sep 29 17:31 themes/zafta/LICENSE.md
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/archetypes/default.md
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/_default/single.html
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/index.html
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/partials/footer.html
--rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/partials/header.html
--rw-r--r--  1 quoha  staff    93 Sep 29 17:31 themes/zafta/theme.toml
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The skeleton includes templates (the files ending in .html), license file, a description of your theme (the theme.toml file), and an empty archetype.&lt;/p&gt;
-
-&lt;p&gt;Please take a minute to fill out the theme.toml and LICENSE.md files. They&amp;rsquo;re optional, but if you&amp;rsquo;re going to be distributing your theme, it tells the world who to praise (or blame). It&amp;rsquo;s also nice to declare the license so that people will know how they can use the theme.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/theme.toml
-author = &amp;quot;michael d henderson&amp;quot;
-description = &amp;quot;a minimal working template&amp;quot;
-license = &amp;quot;MIT&amp;quot;
-name = &amp;quot;zafta&amp;quot;
-source_repo = &amp;quot;&amp;quot;
-tags = [&amp;quot;tags&amp;quot;, &amp;quot;categories&amp;quot;]
-:wq
-
-## also edit themes/zafta/LICENSE.md and change
-## the bit that says &amp;quot;YOUR_NAME_HERE&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that the the skeleton&amp;rsquo;s template files are empty. Don&amp;rsquo;t worry, we&amp;rsquo;ll be changing that shortly.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/single.html
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/index.html
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/partials/footer.html
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/partials/header.html
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;update-the-configuration-file-to-use-the-theme&#34;&gt;Update the Configuration File to Use the Theme&lt;/h3&gt;
-
-&lt;p&gt;Now that we&amp;rsquo;ve got a theme to work with, it&amp;rsquo;s a good idea to add the theme name to the configuration file. This is optional, because you can always add &amp;ldquo;-t zafta&amp;rdquo; on all your commands. I like to put it the configuration file because I like shorter command lines. If you don&amp;rsquo;t put it in the configuration file or specify it on the command line, you won&amp;rsquo;t use the template that you&amp;rsquo;re expecting to.&lt;/p&gt;
-
-&lt;p&gt;Edit the file to add the theme, add a title for the site, and specify that all of our content will use the TOML format.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi config.toml
-theme = &amp;quot;zafta&amp;quot;
-baseurl = &amp;quot;&amp;quot;
-languageCode = &amp;quot;en-us&amp;quot;
-title = &amp;quot;zafta - totally refreshing&amp;quot;
-MetaDataFormat = &amp;quot;toml&amp;quot;
-:wq
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;generate-the-site&#34;&gt;Generate the Site&lt;/h3&gt;
-
-&lt;p&gt;Now that we have an empty theme, let&amp;rsquo;s generate the site again.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 2 ms
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Did you notice that the output is different? The warning message for the home page has disappeared and we have an additional information line saying that Hugo is syncing from the theme&amp;rsquo;s directory.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s check the public/ directory to see what Hugo&amp;rsquo;s created.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ ls -l public
-total 16
-drwxr-xr-x  2 quoha  staff   68 Sep 29 17:56 css
--rw-r--r--  1 quoha  staff    0 Sep 29 17:56 index.html
--rw-r--r--  1 quoha  staff  407 Sep 29 17:56 index.xml
-drwxr-xr-x  2 quoha  staff   68 Sep 29 17:56 js
--rw-r--r--  1 quoha  staff  243 Sep 29 17:56 sitemap.xml
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice four things:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Hugo created a home page. This is the file public/index.html.&lt;/li&gt;
-&lt;li&gt;Hugo created a css/ directory.&lt;/li&gt;
-&lt;li&gt;Hugo created a js/ directory.&lt;/li&gt;
-&lt;li&gt;Hugo claimed that it created 0 pages. It created a file and copied over static files, but didn&amp;rsquo;t create any pages. That&amp;rsquo;s because it considers a &amp;ldquo;page&amp;rdquo; to be a file created directly from a content file. It doesn&amp;rsquo;t count things like the index.html files that it creates automatically.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&#34;the-home-page-1&#34;&gt;The Home Page&lt;/h4&gt;
-
-&lt;p&gt;Hugo supports many different types of templates. The home page is special because it gets its own type of template and its own template file. The file, layouts/index.html, is used to generate the HTML for the home page. The Hugo documentation says that this is the only required template, but that depends. Hugo&amp;rsquo;s warning message shows that it looks for three different templates:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If it can&amp;rsquo;t find any of these, it completely skips creating the home page. We noticed that when we built the site without having a theme installed.&lt;/p&gt;
-
-&lt;p&gt;When Hugo created our theme, it created an empty home page template. Now, when we build the site, Hugo finds the template and uses it to generate the HTML for the home page. Since the template file is empty, the HTML file is empty, too. If the template had any rules in it, then Hugo would have used them to generate the home page.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find . -name index.html | xargs ls -l
--rw-r--r--  1 quoha  staff  0 Sep 29 20:21 ./public/index.html
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 ./themes/zafta/layouts/index.html
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;the-magic-of-static&#34;&gt;The Magic of Static&lt;/h4&gt;
-
-&lt;p&gt;Hugo does two things when generating the site. It uses templates to transform content into HTML and it copies static files into the site. Unlike content, static files are not transformed. They are copied exactly as they are.&lt;/p&gt;
-
-&lt;p&gt;Hugo assumes that your site will use both CSS and JavaScript, so it creates directories in your theme to hold them. Remember opinions? Well, Hugo&amp;rsquo;s opinion is that you&amp;rsquo;ll store your CSS in a directory named css/ and your JavaScript in a directory named js/. If you don&amp;rsquo;t like that, you can change the directory names in your theme directory or even delete them completely. Hugo&amp;rsquo;s nice enough to offer its opinion, then behave nicely if you disagree.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find themes/zafta -type d | xargs ls -ld
-drwxr-xr-x  7 quoha  staff  238 Sep 29 17:38 themes/zafta
-drwxr-xr-x  3 quoha  staff  102 Sep 29 17:31 themes/zafta/archetypes
-drwxr-xr-x  5 quoha  staff  170 Sep 29 17:31 themes/zafta/layouts
-drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/layouts/_default
-drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/layouts/partials
-drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/static
-drwxr-xr-x  2 quoha  staff   68 Sep 29 17:31 themes/zafta/static/css
-drwxr-xr-x  2 quoha  staff   68 Sep 29 17:31 themes/zafta/static/js
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;the-theme-development-cycle&#34;&gt;The Theme Development Cycle&lt;/h2&gt;
-
-&lt;p&gt;When you&amp;rsquo;re working on a theme, you will make changes in the theme&amp;rsquo;s directory, rebuild the site, and check your changes in the browser. Hugo makes this very easy:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Purge the public/ directory.&lt;/li&gt;
-&lt;li&gt;Run the built in web server in watch mode.&lt;/li&gt;
-&lt;li&gt;Open your site in a browser.&lt;/li&gt;
-&lt;li&gt;Update the theme.&lt;/li&gt;
-&lt;li&gt;Glance at your browser window to see changes.&lt;/li&gt;
-&lt;li&gt;Return to step 4.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;I’ll throw in one more opinion: never work on a theme on a live site. Always work on a copy of your site. Make changes to your theme, test them, then copy them up to your site. For added safety, use a tool like Git to keep a revision history of your content and your theme. Believe me when I say that it is too easy to lose both your mind and your changes.&lt;/p&gt;
-
-&lt;p&gt;Check the main Hugo site for information on using Git with Hugo.&lt;/p&gt;
-
-&lt;h3 id=&#34;purge-the-public-directory&#34;&gt;Purge the public/ Directory&lt;/h3&gt;
-
-&lt;p&gt;When generating the site, Hugo will create new files and update existing ones in the &lt;code&gt;public/&lt;/code&gt; directory. It will not delete files that are no longer used. For example, files that were created in the wrong directory or with the wrong title will remain. If you leave them, you might get confused by them later. I recommend cleaning out your site prior to generating it.&lt;/p&gt;
-
-&lt;p&gt;Note: If you&amp;rsquo;re building on an SSD, you should ignore this. Churning on a SSD can be costly.&lt;/p&gt;
-
-&lt;h3 id=&#34;hugo-s-watch-option&#34;&gt;Hugo&amp;rsquo;s Watch Option&lt;/h3&gt;
-
-&lt;p&gt;Hugo&amp;rsquo;s &amp;ldquo;&lt;code&gt;--watch&lt;/code&gt;&amp;rdquo; option will monitor the content/ and your theme directories for changes and rebuild the site automatically.&lt;/p&gt;
-
-&lt;h3 id=&#34;live-reload&#34;&gt;Live Reload&lt;/h3&gt;
-
-&lt;p&gt;Hugo&amp;rsquo;s built in web server supports live reload. As pages are saved on the server, the browser is told to refresh the page. Usually, this happens faster than you can say, &amp;ldquo;Wow, that&amp;rsquo;s totally amazing.&amp;rdquo;&lt;/p&gt;
-
-&lt;h3 id=&#34;development-commands&#34;&gt;Development Commands&lt;/h3&gt;
-
-&lt;p&gt;Use the following commands as the basis for your workflow.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;## purge old files. hugo will recreate the public directory.
-##
-$ rm -rf public
-##
-## run hugo in watch mode
-##
-$ hugo server --watch --verbose
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here&amp;rsquo;s sample output showing Hugo detecting a change to the template for the home page. Once generated, the web browser automatically reloaded the page. I&amp;rsquo;ve said this before, it&amp;rsquo;s amazing.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ rm -rf public
-$ hugo server --watch --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 2 ms
-Watching for changes in /Users/quoha/Sites/zafta/content
-Serving pages from /Users/quoha/Sites/zafta/public
-Web Server is available at http://localhost:1313
-Press Ctrl+C to stop
-INFO: 2014/09/29 File System Event: [&amp;quot;/Users/quoha/Sites/zafta/themes/zafta/layouts/index.html&amp;quot;: MODIFY|ATTRIB]
-Change detected, rebuilding site
-
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 1 ms
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;update-the-home-page-template&#34;&gt;Update the Home Page Template&lt;/h2&gt;
-
-&lt;p&gt;The home page is one of a few special pages that Hugo creates automatically. As mentioned earlier, it looks for one of three files in the theme&amp;rsquo;s layout/ directory:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;index.html&lt;/li&gt;
-&lt;li&gt;_default/list.html&lt;/li&gt;
-&lt;li&gt;_default/single.html&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;We could update one of the default templates, but a good design decision is to update the most specific template available. That&amp;rsquo;s not a hard and fast rule (in fact, we&amp;rsquo;ll break it a few times in this tutorial), but it is a good generalization.&lt;/p&gt;
-
-&lt;h3 id=&#34;make-a-static-home-page&#34;&gt;Make a Static Home Page&lt;/h3&gt;
-
-&lt;p&gt;Right now, that page is empty because we don&amp;rsquo;t have any content and we don&amp;rsquo;t have any logic in the template. Let&amp;rsquo;s change that by adding some text to the template.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-:wq
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-0 pages created
-0 tags created
-0 categories created
-in 2 ms
-
-$ find public -type f -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff  78 Sep 29 21:26 public/index.html
-
-$ cat public/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;live-reload-1&#34;&gt;Live Reload&lt;/h4&gt;
-
-&lt;p&gt;Note: If you&amp;rsquo;re running the server with the &lt;code&gt;--watch&lt;/code&gt; option, you&amp;rsquo;ll see different content in the file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cat public/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt;
-&amp;lt;script&amp;gt;document.write(&#39;&amp;lt;script src=&amp;quot;http://&#39;
-        + (location.host || &#39;localhost&#39;).split(&#39;:&#39;)[0]
-    + &#39;:1313/livereload.js?mindelay=10&amp;quot;&amp;gt;&amp;lt;/&#39;
-        + &#39;script&amp;gt;&#39;)&amp;lt;/script&amp;gt;&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;When you use &lt;code&gt;--watch&lt;/code&gt;, the Live Reload script is added by Hugo. Look for live reload in the documentation to see what it does and how to disable it.&lt;/p&gt;
-
-&lt;h3 id=&#34;build-a-dynamic-home-page&#34;&gt;Build a &amp;ldquo;Dynamic&amp;rdquo; Home Page&lt;/h3&gt;
-
-&lt;p&gt;&amp;ldquo;Dynamic home page?&amp;rdquo; Hugo&amp;rsquo;s a static web site generator, so this seems an odd thing to say. I mean let&amp;rsquo;s have the home page automatically reflect the content in the site every time Hugo builds it. We&amp;rsquo;ll use iteration in the template to do that.&lt;/p&gt;
-
-&lt;h4 id=&#34;create-new-posts&#34;&gt;Create New Posts&lt;/h4&gt;
-
-&lt;p&gt;Now that we have the home page generating static content, let&amp;rsquo;s add some content to the site. We&amp;rsquo;ll display these posts as a list on the home page and on their own page, too.&lt;/p&gt;
-
-&lt;p&gt;Hugo has a command to generate a skeleton post, just like it does for sites and themes.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ hugo --verbose new post/first.md
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 attempting to create  post/first.md of post
-INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/default.md
-ERROR: 2014/09/29 Unable to Cast &amp;lt;nil&amp;gt; to map[string]interface{}
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;That wasn&amp;rsquo;t very nice, was it?&lt;/p&gt;
-
-&lt;p&gt;The &amp;ldquo;new&amp;rdquo; command uses an archetype to create the post file. Hugo created an empty default archetype file, but that causes an error when there&amp;rsquo;s a theme. For me, the workaround was to create an archetypes file specifically for the post type.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/archetypes/post.md
-+++
-Description = &amp;quot;&amp;quot;
-Tags = []
-Categories = []
-+++
-:wq
-
-$ find themes/zafta/archetypes -type f | xargs ls -l
--rw-r--r--  1 quoha  staff   0 Sep 29 21:53 themes/zafta/archetypes/default.md
--rw-r--r--  1 quoha  staff  51 Sep 29 21:54 themes/zafta/archetypes/post.md
-
-$ hugo --verbose new post/first.md
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 attempting to create  post/first.md of post
-INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/post.md
-INFO: 2014/09/29 creating /Users/quoha/Sites/zafta/content/post/first.md
-/Users/quoha/Sites/zafta/content/post/first.md created
-
-$ hugo --verbose new post/second.md
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 attempting to create  post/second.md of post
-INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/post.md
-INFO: 2014/09/29 creating /Users/quoha/Sites/zafta/content/post/second.md
-/Users/quoha/Sites/zafta/content/post/second.md created
-
-$ ls -l content/post
-total 16
--rw-r--r--  1 quoha  staff  104 Sep 29 21:54 first.md
--rw-r--r--  1 quoha  staff  105 Sep 29 21:57 second.md
-
-$ cat content/post/first.md
-+++
-Categories = []
-Description = &amp;quot;&amp;quot;
-Tags = []
-date = &amp;quot;2014-09-29T21:54:53-05:00&amp;quot;
-title = &amp;quot;first&amp;quot;
-
-+++
-my first post
-
-$ cat content/post/second.md
-+++
-Categories = []
-Description = &amp;quot;&amp;quot;
-Tags = []
-date = &amp;quot;2014-09-29T21:57:09-05:00&amp;quot;
-title = &amp;quot;second&amp;quot;
-
-+++
-my second post
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ rm -rf public
-$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;, &amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;}
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-2 pages created
-0 tags created
-0 categories created
-in 4 ms
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The output says that it created 2 pages. Those are our new posts:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find public -type f -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff  78 Sep 29 22:13 public/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/first/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/second/index.html
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The new files are empty because because the templates used to generate the content are empty. The homepage doesn&amp;rsquo;t show the new content, either. We have to update the templates to add the posts.&lt;/p&gt;
-
-&lt;h3 id=&#34;list-and-single-templates&#34;&gt;List and Single Templates&lt;/h3&gt;
-
-&lt;p&gt;In Hugo, we have three major kinds of templates. There&amp;rsquo;s the home page template that we updated previously. It is used only by the home page. We also have &amp;ldquo;single&amp;rdquo; templates which are used to generate output for a single content file. We also have &amp;ldquo;list&amp;rdquo; templates that are used to group multiple pieces of content before generating output.&lt;/p&gt;
-
-&lt;p&gt;Generally speaking, list templates are named &amp;ldquo;list.html&amp;rdquo; and single templates are named &amp;ldquo;single.html.&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;There are three other types of templates: partials, content views, and terms. We will not go into much detail on these.&lt;/p&gt;
-
-&lt;h3 id=&#34;add-content-to-the-homepage&#34;&gt;Add Content to the Homepage&lt;/h3&gt;
-
-&lt;p&gt;The home page will contain a list of posts. Let&amp;rsquo;s update its template to add the posts that we just created. The logic in the template will run every time we build the site.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  {{ range first 10 .Data.Pages }}
-    &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  {{ end }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-:wq
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Hugo uses the Go template engine. That engine scans the template files for commands which are enclosed between &amp;ldquo;{{&amp;rdquo; and &amp;ldquo;}}&amp;rdquo;. In our template, the commands are:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;range&lt;/li&gt;
-&lt;li&gt;.Title&lt;/li&gt;
-&lt;li&gt;end&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;The &amp;ldquo;range&amp;rdquo; command is an iterator. We&amp;rsquo;re going to use it to go through the first ten pages. Every HTML file that Hugo creates is treated as a page, so looping through the list of pages will look at every file that will be created.&lt;/p&gt;
-
-&lt;p&gt;The &amp;ldquo;.Title&amp;rdquo; command prints the value of the &amp;ldquo;title&amp;rdquo; variable. Hugo pulls it from the front matter in the Markdown file.&lt;/p&gt;
-
-&lt;p&gt;The &amp;ldquo;end&amp;rdquo; command signals the end of the range iterator. The engine loops back to the top of the iteration when it finds &amp;ldquo;end.&amp;rdquo; Everything between the &amp;ldquo;range&amp;rdquo; and &amp;ldquo;end&amp;rdquo; is evaluated every time the engine goes through the iteration. In this file, that would cause the title from the first ten pages to be output as heading level one.&lt;/p&gt;
-
-&lt;p&gt;It&amp;rsquo;s helpful to remember that some variables, like .Data, are created before any output files. Hugo loads every content file into the variable and then gives the template a chance to process before creating the HTML files.&lt;/p&gt;
-
-&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ rm -rf public
-$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-2 pages created
-0 tags created
-0 categories created
-in 4 ms
-$ find public -type f -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff  94 Sep 29 22:23 public/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/first/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/index.html
--rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/second/index.html
-$ cat public/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-
-    &amp;lt;h1&amp;gt;second&amp;lt;/h1&amp;gt;
-
-    &amp;lt;h1&amp;gt;first&amp;lt;/h1&amp;gt;
-
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Congratulations, the home page shows the title of the two posts. The posts themselves are still empty, but let&amp;rsquo;s take a moment to appreciate what we&amp;rsquo;ve done. Your template now generates output dynamically. Believe it or not, by inserting the range command inside of those curly braces, you&amp;rsquo;ve learned everything you need to know to build a theme. All that&amp;rsquo;s really left is understanding which template will be used to generate each content file and becoming familiar with the commands for the template engine.&lt;/p&gt;
-
-&lt;p&gt;And, if that were entirely true, this tutorial would be much shorter. There are a few things to know that will make creating a new template much easier. Don&amp;rsquo;t worry, though, that&amp;rsquo;s all to come.&lt;/p&gt;
-
-&lt;h3 id=&#34;add-content-to-the-posts&#34;&gt;Add Content to the Posts&lt;/h3&gt;
-
-&lt;p&gt;We&amp;rsquo;re working with posts, which are in the content/post/ directory. That means that their section is &amp;ldquo;post&amp;rdquo; (and if we don&amp;rsquo;t do something weird, their type is also &amp;ldquo;post&amp;rdquo;).&lt;/p&gt;
-
-&lt;p&gt;Hugo uses the section and type to find the template file for every piece of content. Hugo will first look for a template file that matches the section or type name. If it can&amp;rsquo;t find one, then it will look in the _default/ directory. There are some twists that we&amp;rsquo;ll cover when we get to categories and tags, but for now we can assume that Hugo will try post/single.html, then _default/single.html.&lt;/p&gt;
-
-&lt;p&gt;Now that we know the search rule, let&amp;rsquo;s see what we actually have available:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name single.html | xargs ls -l
--rw-r--r--  1 quoha  staff  132 Sep 29 17:31 themes/zafta/layouts/_default/single.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;We could create a new template, post/single.html, or change the default. Since we don&amp;rsquo;t know of any other content types, let&amp;rsquo;s start with updating the default.&lt;/p&gt;
-
-&lt;p&gt;Remember, any content that we haven&amp;rsquo;t created a template for will end up using this template. That can be good or bad. Bad because I know that we&amp;rsquo;re going to be adding different types of content and we&amp;rsquo;re going to end up undoing some of the changes we&amp;rsquo;ve made. It&amp;rsquo;s good because we&amp;rsquo;ll be able to see immediate results. It&amp;rsquo;s also good to start here because we can start to build the basic layout for the site. As we add more content types, we&amp;rsquo;ll refactor this file and move logic around. Hugo makes that fairly painless, so we&amp;rsquo;ll accept the cost and proceed.&lt;/p&gt;
-
-&lt;p&gt;Please see the Hugo documentation on template rendering for all the details on determining which template to use. And, as the docs mention, if you&amp;rsquo;re building a single page application (SPA) web site, you can delete all of the other templates and work with just the default single page. That&amp;rsquo;s a refreshing amount of joy right there.&lt;/p&gt;
-
-&lt;h4 id=&#34;update-the-template-file&#34;&gt;Update the Template File&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  {{ .Content }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-:wq
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Build the web site and verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ rm -rf public
-$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-2 pages created
-0 tags created
-0 categories created
-in 4 ms
-
-$ find public -type f -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff   94 Sep 29 22:40 public/index.html
--rw-r--r--  1 quoha  staff  125 Sep 29 22:40 public/post/first/index.html
--rw-r--r--  1 quoha  staff    0 Sep 29 22:40 public/post/index.html
--rw-r--r--  1 quoha  staff  128 Sep 29 22:40 public/post/second/index.html
-
-$ cat public/post/first/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;title&amp;gt;first&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;h1&amp;gt;first&amp;lt;/h1&amp;gt;
-  &amp;lt;p&amp;gt;my first post&amp;lt;/p&amp;gt;
-
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-
-$ cat public/post/second/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-  &amp;lt;title&amp;gt;second&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;h1&amp;gt;second&amp;lt;/h1&amp;gt;
-  &amp;lt;p&amp;gt;my second post&amp;lt;/p&amp;gt;
-
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice that the posts now have content. You can go to localhost:1313/post/first to verify.&lt;/p&gt;
-
-&lt;h3 id=&#34;linking-to-content&#34;&gt;Linking to Content&lt;/h3&gt;
-
-&lt;p&gt;The posts are on the home page. Let&amp;rsquo;s add a link from there to the post. Since this is the home page, we&amp;rsquo;ll update its template.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  {{ range first 10 .Data.Pages }}
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-  {{ end }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Build the web site and verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ rm -rf public
-$ hugo --verbose
-INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
-INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
-WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
-0 draft content
-0 future content
-2 pages created
-0 tags created
-0 categories created
-in 4 ms
-
-$ find public -type f -name &#39;*.html&#39; | xargs ls -l
--rw-r--r--  1 quoha  staff  149 Sep 29 22:44 public/index.html
--rw-r--r--  1 quoha  staff  125 Sep 29 22:44 public/post/first/index.html
--rw-r--r--  1 quoha  staff    0 Sep 29 22:44 public/post/index.html
--rw-r--r--  1 quoha  staff  128 Sep 29 22:44 public/post/second/index.html
-
-$ cat public/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;/post/second/&amp;quot;&amp;gt;second&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;/post/first/&amp;quot;&amp;gt;first&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-
-$
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;create-a-post-listing&#34;&gt;Create a Post Listing&lt;/h3&gt;
-
-&lt;p&gt;We have the posts displaying on the home page and on their own page. We also have a file public/post/index.html that is empty. Let&amp;rsquo;s make it show a list of all posts (not just the first ten).&lt;/p&gt;
-
-&lt;p&gt;We need to decide which template to update. This will be a listing, so it should be a list template. Let&amp;rsquo;s take a quick look and see which list templates are available.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name list.html | xargs ls -l
--rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As with the single post, we have to decide to update _default/list.html or create post/list.html. We still don&amp;rsquo;t have multiple content types, so let&amp;rsquo;s stay consistent and update the default list template.&lt;/p&gt;
-
-&lt;h2 id=&#34;creating-top-level-pages&#34;&gt;Creating Top Level Pages&lt;/h2&gt;
-
-&lt;p&gt;Let&amp;rsquo;s add an &amp;ldquo;about&amp;rdquo; page and display it at the top level (as opposed to a sub-level like we did with posts).&lt;/p&gt;
-
-&lt;p&gt;The default in Hugo is to use the directory structure of the content/ directory to guide the location of the generated html in the public/ directory. Let&amp;rsquo;s verify that by creating an &amp;ldquo;about&amp;rdquo; page at the top level:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi content/about.md
-+++
-title = &amp;quot;about&amp;quot;
-description = &amp;quot;about this site&amp;quot;
-date = &amp;quot;2014-09-27&amp;quot;
-slug = &amp;quot;about time&amp;quot;
-+++
-
-## about us
-
-i&#39;m speechless
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify the results.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find public -name &#39;*.html&#39; | xargs ls -l
--rw-rw-r--  1 mdhender  staff   334 Sep 27 15:08 public/about-time/index.html
--rw-rw-r--  1 mdhender  staff   527 Sep 27 15:08 public/index.html
--rw-rw-r--  1 mdhender  staff   358 Sep 27 15:08 public/post/first-post/index.html
--rw-rw-r--  1 mdhender  staff     0 Sep 27 15:08 public/post/index.html
--rw-rw-r--  1 mdhender  staff   342 Sep 27 15:08 public/post/second-post/index.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice that the page wasn&amp;rsquo;t created at the top level. It was created in a sub-directory named &amp;lsquo;about-time/&amp;rsquo;. That name came from our slug. Hugo will use the slug to name the generated content. It&amp;rsquo;s a reasonable default, by the way, but we can learn a few things by fighting it for this file.&lt;/p&gt;
-
-&lt;p&gt;One other thing. Take a look at the home page.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cat public/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/theme/&amp;quot;&amp;gt;creating a new theme&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/about-time/&amp;quot;&amp;gt;about&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/second-post/&amp;quot;&amp;gt;second&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/first-post/&amp;quot;&amp;gt;first&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
-&amp;lt;script&amp;gt;document.write(&#39;&amp;lt;script src=&amp;quot;http://&#39;
-        + (location.host || &#39;localhost&#39;).split(&#39;:&#39;)[0]
-		+ &#39;:1313/livereload.js?mindelay=10&amp;quot;&amp;gt;&amp;lt;/&#39;
-        + &#39;script&amp;gt;&#39;)&amp;lt;/script&amp;gt;&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice that the &amp;ldquo;about&amp;rdquo; link is listed with the posts? That&amp;rsquo;s not desirable, so let&amp;rsquo;s change that first.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;body&amp;gt;
-  &amp;lt;h1&amp;gt;posts&amp;lt;/h1&amp;gt;
-  {{ range first 10 .Data.Pages }}
-    {{ if eq .Type &amp;quot;post&amp;quot;}}
-      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
-    {{ end }}
-  {{ end }}
-
-  &amp;lt;h1&amp;gt;pages&amp;lt;/h1&amp;gt;
-  {{ range .Data.Pages }}
-    {{ if eq .Type &amp;quot;page&amp;quot; }}
-      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
-    {{ end }}
-  {{ end }}
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify the results. The home page has two sections, posts and pages, and each section has the right set of headings and links in it.&lt;/p&gt;
-
-&lt;p&gt;But, that about page still renders to about-time/index.html.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ find public -name &#39;*.html&#39; | xargs ls -l
--rw-rw-r--  1 mdhender  staff    334 Sep 27 15:33 public/about-time/index.html
--rw-rw-r--  1 mdhender  staff    645 Sep 27 15:33 public/index.html
--rw-rw-r--  1 mdhender  staff    358 Sep 27 15:33 public/post/first-post/index.html
--rw-rw-r--  1 mdhender  staff      0 Sep 27 15:33 public/post/index.html
--rw-rw-r--  1 mdhender  staff    342 Sep 27 15:33 public/post/second-post/index.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Knowing that hugo is using the slug to generate the file name, the simplest solution is to change the slug. Let&amp;rsquo;s do it the hard way and change the permalink in the configuration file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi config.toml
-[permalinks]
-	page = &amp;quot;/:title/&amp;quot;
-	about = &amp;quot;/:filename/&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify that this didn&amp;rsquo;t work. Hugo lets &amp;ldquo;slug&amp;rdquo; or &amp;ldquo;URL&amp;rdquo; override the permalinks setting in the configuration file. Go ahead and comment out the slug in content/about.md, then generate the web site to get it to be created in the right place.&lt;/p&gt;
-
-&lt;h2 id=&#34;sharing-templates&#34;&gt;Sharing Templates&lt;/h2&gt;
-
-&lt;p&gt;If you&amp;rsquo;ve been following along, you probably noticed that posts have titles in the browser and the home page doesn&amp;rsquo;t. That&amp;rsquo;s because we didn&amp;rsquo;t put the title in the home page&amp;rsquo;s template (layouts/index.html). That&amp;rsquo;s an easy thing to do, but let&amp;rsquo;s look at a different option.&lt;/p&gt;
-
-&lt;p&gt;We can put the common bits into a shared template that&amp;rsquo;s stored in the themes/zafta/layouts/partials/ directory.&lt;/p&gt;
-
-&lt;h3 id=&#34;create-the-header-and-footer-partials&#34;&gt;Create the Header and Footer Partials&lt;/h3&gt;
-
-&lt;p&gt;In Hugo, a partial is a sugar-coated template. Normally a template reference has a path specified. Partials are different. Hugo searches for them along a TODO defined search path. This makes it easier for end-users to override the theme&amp;rsquo;s presentation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/partials/header.html
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-	&amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-:wq
-
-$ vi themes/zafta/layouts/partials/footer.html
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;update-the-home-page-template-to-use-the-partials&#34;&gt;Update the Home Page Template to Use the Partials&lt;/h3&gt;
-
-&lt;p&gt;The most noticeable difference between a template call and a partials call is the lack of path:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ template &amp;quot;theme/partials/header.html&amp;quot; . }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;versus&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ partial &amp;quot;header.html&amp;quot; . }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Both pass in the context.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s change the home page template to use these new partials.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
-{{ partial &amp;quot;header.html&amp;quot; . }}
-
-  &amp;lt;h1&amp;gt;posts&amp;lt;/h1&amp;gt;
-  {{ range first 10 .Data.Pages }}
-    {{ if eq .Type &amp;quot;post&amp;quot;}}
-      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
-    {{ end }}
-  {{ end }}
-
-  &amp;lt;h1&amp;gt;pages&amp;lt;/h1&amp;gt;
-  {{ range .Data.Pages }}
-    {{ if or (eq .Type &amp;quot;page&amp;quot;) (eq .Type &amp;quot;about&amp;quot;) }}
-      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Type }} - {{ .Title }} - {{ .RelPermalink }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
-    {{ end }}
-  {{ end }}
-
-{{ partial &amp;quot;footer.html&amp;quot; . }}
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify the results. The title on the home page is now &amp;ldquo;your title here&amp;rdquo;, which comes from the &amp;ldquo;title&amp;rdquo; variable in the config.toml file.&lt;/p&gt;
-
-&lt;h3 id=&#34;update-the-default-single-template-to-use-the-partials&#34;&gt;Update the Default Single Template to Use the Partials&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html
-{{ partial &amp;quot;header.html&amp;quot; . }}
-
-  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  {{ .Content }}
-
-{{ partial &amp;quot;footer.html&amp;quot; . }}
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify the results. The title on the posts and the about page should both reflect the value in the markdown file.&lt;/p&gt;
-
-&lt;h2 id=&#34;add-date-published-to-posts&#34;&gt;Add “Date Published” to Posts&lt;/h2&gt;
-
-&lt;p&gt;It&amp;rsquo;s common to have posts display the date that they were written or published, so let&amp;rsquo;s add that. The front matter of our posts has a variable named &amp;ldquo;date.&amp;rdquo; It&amp;rsquo;s usually the date the content was created, but let&amp;rsquo;s pretend that&amp;rsquo;s the value we want to display.&lt;/p&gt;
-
-&lt;h3 id=&#34;add-date-published-to-the-template&#34;&gt;Add “Date Published” to the Template&lt;/h3&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start by updating the template used to render the posts. The template code will look like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Posts use the default single template, so we&amp;rsquo;ll change that file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html
-{{ partial &amp;quot;header.html&amp;quot; . }}
-
-  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  &amp;lt;h2&amp;gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}&amp;lt;/h2&amp;gt;
-  {{ .Content }}
-
-{{ partial &amp;quot;footer.html&amp;quot; . }}
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Generate the web site and verify the results. The posts now have the date displayed in them. There&amp;rsquo;s a problem, though. The &amp;ldquo;about&amp;rdquo; page also has the date displayed.&lt;/p&gt;
-
-&lt;p&gt;As usual, there are a couple of ways to make the date display only on posts. We could do an &amp;ldquo;if&amp;rdquo; statement like we did on the home page. Another way would be to create a separate template for posts.&lt;/p&gt;
-
-&lt;p&gt;The &amp;ldquo;if&amp;rdquo; solution works for sites that have just a couple of content types. It aligns with the principle of &amp;ldquo;code for today,&amp;rdquo; too.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s assume, though, that we&amp;rsquo;ve made our site so complex that we feel we have to create a new template type. In Hugo-speak, we&amp;rsquo;re going to create a section template.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s restore the default single template before we forget.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ mkdir themes/zafta/layouts/post
-$ vi themes/zafta/layouts/_default/single.html
-{{ partial &amp;quot;header.html&amp;quot; . }}
-
-  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  {{ .Content }}
-
-{{ partial &amp;quot;footer.html&amp;quot; . }}
-:wq
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now we&amp;rsquo;ll update the post&amp;rsquo;s version of the single template. If you remember Hugo&amp;rsquo;s rules, the template engine will use this version over the default.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/post/single.html
-{{ partial &amp;quot;header.html&amp;quot; . }}
-
-  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
-  &amp;lt;h2&amp;gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}&amp;lt;/h2&amp;gt;
-  {{ .Content }}
-
-{{ partial &amp;quot;footer.html&amp;quot; . }}
-:wq
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that we removed the date logic from the default template and put it in the post template. Generate the web site and verify the results. Posts have dates and the about page doesn&amp;rsquo;t.&lt;/p&gt;
-
-&lt;h3 id=&#34;don-t-repeat-yourself&#34;&gt;Don&amp;rsquo;t Repeat Yourself&lt;/h3&gt;
-
-&lt;p&gt;DRY is a good design goal and Hugo does a great job supporting it. Part of the art of a good template is knowing when to add a new template and when to update an existing one. While you&amp;rsquo;re figuring that out, accept that you&amp;rsquo;ll be doing some refactoring. Hugo makes that easy and fast, so it&amp;rsquo;s okay to delay splitting up a template.&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://cheioKID.github.io/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
-      
-        <description>
-
-&lt;p&gt;Hugo uses the excellent &lt;a href=&#34;http://golang.org/&amp;gt;&#34;&gt;go&lt;/a&gt; &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;html/template&lt;/a&gt; library for
-its template engine. It is an extremely lightweight engine that provides a very
-small amount of logic. In our experience that it is just the right amount of
-logic to be able to create a good static website. If you have used other
-template systems from different languages or frameworks you will find a lot of
-similarities in go templates.&lt;/p&gt;
-
-&lt;p&gt;This document is a brief primer on using go templates. The &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;go docs&lt;/a&gt;
-provide more details.&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction-to-go-templates&#34;&gt;Introduction to Go Templates&lt;/h2&gt;
-
-&lt;p&gt;Go templates provide an extremely simple template language. It adheres to the
-belief that only the most basic of logic belongs in the template or view layer.
-One consequence of this simplicity is that go templates parse very quickly.&lt;/p&gt;
-
-&lt;p&gt;A unique characteristic of go templates is they are content aware. Variables and
-content will be sanitized depending on the context of where they are used. More
-details can be found in the &lt;a href=&#34;http://golang.org/pkg/html/template/&amp;gt;&#34;&gt;go docs&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;basic-syntax&#34;&gt;Basic Syntax&lt;/h2&gt;
-
-&lt;p&gt;Go lang templates are html files with the addition of variables and
-functions.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Go variables and functions are accessible within {{ }}&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Accessing a predefined variable &amp;ldquo;foo&amp;rdquo;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ foo }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Parameters are separated using spaces&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Calling the add function with input of 1, 2:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ add 1 2 }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Methods and fields are accessed via dot notation&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Accessing the Page Parameter &amp;ldquo;bar&amp;rdquo;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ .Params.bar }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Parentheses can be used to group items together&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if or (isset .Params &amp;quot;alt&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;) }} Caption {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;variables&#34;&gt;Variables&lt;/h2&gt;
-
-&lt;p&gt;Each go template has a struct (object) made available to it. In hugo each
-template is passed either a page or a node struct depending on which type of
-page you are rendering. More details are available on the
-&lt;a href=&#34;https://cheioKID.github.io/layout/variables&#34;&gt;variables&lt;/a&gt; page.&lt;/p&gt;
-
-&lt;p&gt;A variable is accessed by referencing the variable name.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Variables can also be defined and referenced.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ $address := &amp;quot;123 Main St.&amp;quot;}}
-{{ $address }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;functions&#34;&gt;Functions&lt;/h2&gt;
-
-&lt;p&gt;Go template ship with a few functions which provide basic functionality. The go
-template system also provides a mechanism for applications to extend the
-available functions with their own. &lt;a href=&#34;https://cheioKID.github.io/layout/functions&#34;&gt;Hugo template
-functions&lt;/a&gt; provide some additional functionality we believe
-are useful for building websites. Functions are called by using their name
-followed by the required parameters separated by spaces. Template
-functions cannot be added without recompiling hugo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ add 1 2 }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;includes&#34;&gt;Includes&lt;/h2&gt;
-
-&lt;p&gt;When including another template you will pass to it the data it will be
-able to access. To pass along the current context please remember to
-include a trailing dot. The templates location will always be starting at
-the /layout/ directory within Hugo.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ template &amp;quot;chrome/header.html&amp;quot; . }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;logic&#34;&gt;Logic&lt;/h2&gt;
-
-&lt;p&gt;Go templates provide the most basic iteration and conditional logic.&lt;/p&gt;
-
-&lt;h3 id=&#34;iteration&#34;&gt;Iteration&lt;/h3&gt;
-
-&lt;p&gt;Just like in go, the go templates make heavy use of range to iterate over
-a map, array or slice. The following are different examples of how to use
-range.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1: Using Context&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ range array }}
-    {{ . }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: Declaring value variable name&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{range $element := array}}
-    {{ $element }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: Declaring key and value variable name&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{range $index, $element := array}}
-    {{ $index }}
-    {{ $element }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;conditionals&#34;&gt;Conditionals&lt;/h3&gt;
-
-&lt;p&gt;If, else, with, or, &amp;amp; and provide the framework for handling conditional
-logic in Go Templates. Like range, each statement is closed with &lt;code&gt;end&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Go Templates treat the following values as false:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;false&lt;/li&gt;
-&lt;li&gt;0&lt;/li&gt;
-&lt;li&gt;any array, slice, map, or string of length zero&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1: If&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;title&amp;quot; }}&amp;lt;h4&amp;gt;{{ index .Params &amp;quot;title&amp;quot; }}&amp;lt;/h4&amp;gt;{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2: If -&amp;gt; Else&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;alt&amp;quot; }}
-    {{ index .Params &amp;quot;alt&amp;quot; }}
-{{else}}
-    {{ index .Params &amp;quot;caption&amp;quot; }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 3: And &amp;amp; Or&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if and (or (isset .Params &amp;quot;title&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;)) (isset .Params &amp;quot;attr&amp;quot;)}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 4: With&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;An alternative way of writing &amp;ldquo;if&amp;rdquo; and then referencing the same value
-is to use &amp;ldquo;with&amp;rdquo; instead. With rebinds the context &lt;code&gt;.&lt;/code&gt; within its scope,
-and skips the block if the variable is absent.&lt;/p&gt;
-
-&lt;p&gt;The first example above could be simplified as:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ with .Params.title }}&amp;lt;h4&amp;gt;{{ . }}&amp;lt;/h4&amp;gt;{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 5: If -&amp;gt; Else If&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if isset .Params &amp;quot;alt&amp;quot; }}
-    {{ index .Params &amp;quot;alt&amp;quot; }}
-{{ else if isset .Params &amp;quot;caption&amp;quot; }}
-    {{ index .Params &amp;quot;caption&amp;quot; }}
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;pipes&#34;&gt;Pipes&lt;/h2&gt;
-
-&lt;p&gt;One of the most powerful components of go templates is the ability to
-stack actions one after another. This is done by using pipes. Borrowed
-from unix pipes, the concept is simple, each pipeline&amp;rsquo;s output becomes the
-input of the following pipe.&lt;/p&gt;
-
-&lt;p&gt;Because of the very simple syntax of go templates, the pipe is essential
-to being able to chain together function calls. One limitation of the
-pipes is that they only can work with a single value and that value
-becomes the last parameter of the next pipeline.&lt;/p&gt;
-
-&lt;p&gt;A few simple examples should help convey how to use the pipe.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 1 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if eq 1 1 }} Same {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;is the same as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ eq 1 1 | if }} Same {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;It does look odd to place the if at the end, but it does provide a good
-illustration of how to use the pipes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 2 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ index .Params &amp;quot;disqus_url&amp;quot; | html }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Access the page parameter called &amp;ldquo;disqus_url&amp;rdquo; and escape the HTML.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example 3 :&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{ if or (or (isset .Params &amp;quot;title&amp;quot;) (isset .Params &amp;quot;caption&amp;quot;)) (isset .Params &amp;quot;attr&amp;quot;)}}
-Stuff Here
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Could be rewritten as&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{  isset .Params &amp;quot;caption&amp;quot; | or isset .Params &amp;quot;title&amp;quot; | or isset .Params &amp;quot;attr&amp;quot; | if }}
-Stuff Here
-{{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;context-aka-the-dot&#34;&gt;Context (aka. the dot)&lt;/h2&gt;
-
-&lt;p&gt;The most easily overlooked concept to understand about go templates is that {{ . }}
-always refers to the current context. In the top level of your template this
-will be the data set made available to it. Inside of a iteration it will have
-the value of the current item. When inside of a loop the context has changed. .
-will no longer refer to the data available to the entire page. If you need to
-access this from within the loop you will likely want to set it to a variable
-instead of depending on the context.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  {{ $title := .Site.Title }}
-  {{ range .Params.tags }}
-    &amp;lt;li&amp;gt; &amp;lt;a href=&amp;quot;{{ $baseurl }}/tags/{{ . | urlize }}&amp;quot;&amp;gt;{{ . }}&amp;lt;/a&amp;gt; - {{ $title }} &amp;lt;/li&amp;gt;
-  {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Notice how once we have entered the loop the value of {{ . }} has changed. We
-have defined a variable outside of the loop so we have access to it from within
-the loop.&lt;/p&gt;
-
-&lt;h1 id=&#34;hugo-parameters&#34;&gt;Hugo Parameters&lt;/h1&gt;
-
-&lt;p&gt;Hugo provides the option of passing values to the template language
-through the site configuration (for sitewide values), or through the meta
-data of each specific piece of content. You can define any values of any
-type (supported by your front matter/config format) and use them however
-you want to inside of your templates.&lt;/p&gt;
-
-&lt;h2 id=&#34;using-content-page-parameters&#34;&gt;Using Content (page) Parameters&lt;/h2&gt;
-
-&lt;p&gt;In each piece of content you can provide variables to be used by the
-templates. This happens in the &lt;a href=&#34;https://cheioKID.github.io/content/front-matter&#34;&gt;front matter&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;An example of this is used in this documentation site. Most of the pages
-benefit from having the table of contents provided. Sometimes the TOC just
-doesn&amp;rsquo;t make a lot of sense. We&amp;rsquo;ve defined a variable in our front matter
-of some pages to turn off the TOC from being displayed.&lt;/p&gt;
-
-&lt;p&gt;Here is the example front matter:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-title: &amp;quot;Permalinks&amp;quot;
-date: &amp;quot;2013-11-18&amp;quot;
-aliases:
-  - &amp;quot;/doc/permalinks/&amp;quot;
-groups: [&amp;quot;extras&amp;quot;]
-groups_weight: 30
-notoc: true
----
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here is the corresponding code inside of the template:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  {{ if not .Params.notoc }}
-    &amp;lt;div id=&amp;quot;toc&amp;quot; class=&amp;quot;well col-md-4 col-sm-6&amp;quot;&amp;gt;
-    {{ .TableOfContents }}
-    &amp;lt;/div&amp;gt;
-  {{ end }}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;using-site-config-parameters&#34;&gt;Using Site (config) Parameters&lt;/h2&gt;
-
-&lt;p&gt;In your top-level configuration file (eg, &lt;code&gt;config.yaml&lt;/code&gt;) you can define site
-parameters, which are values which will be available to you in chrome.&lt;/p&gt;
-
-&lt;p&gt;For instance, you might declare:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;params:
-  CopyrightHTML: &amp;quot;Copyright &amp;amp;#xA9; 2013 John Doe. All Rights Reserved.&amp;quot;
-  TwitterUser: &amp;quot;spf13&amp;quot;
-  SidebarRecentLimit: 5
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Within a footer layout, you might then declare a &lt;code&gt;&amp;lt;footer&amp;gt;&lt;/code&gt; which is only
-provided if the &lt;code&gt;CopyrightHTML&lt;/code&gt; parameter is provided, and if it is given,
-you would declare it to be HTML-safe, so that the HTML entity is not escaped
-again.  This would let you easily update just your top-level config file each
-January 1st, instead of hunting through your templates.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{if .Site.Params.CopyrightHTML}}&amp;lt;footer&amp;gt;
-&amp;lt;div class=&amp;quot;text-center&amp;quot;&amp;gt;{{.Site.Params.CopyrightHTML | safeHtml}}&amp;lt;/div&amp;gt;
-&amp;lt;/footer&amp;gt;{{end}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;An alternative way of writing the &amp;ldquo;if&amp;rdquo; and then referencing the same value
-is to use &amp;ldquo;with&amp;rdquo; instead. With rebinds the context &lt;code&gt;.&lt;/code&gt; within its scope,
-and skips the block if the variable is absent:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{with .Site.Params.TwitterUser}}&amp;lt;span class=&amp;quot;twitter&amp;quot;&amp;gt;
-&amp;lt;a href=&amp;quot;https://twitter.com/{{.}}&amp;quot; rel=&amp;quot;author&amp;quot;&amp;gt;
-&amp;lt;img src=&amp;quot;/images/twitter.png&amp;quot; width=&amp;quot;48&amp;quot; height=&amp;quot;48&amp;quot; title=&amp;quot;Twitter: {{.}}&amp;quot;
- alt=&amp;quot;Twitter&amp;quot;&amp;gt;&amp;lt;/a&amp;gt;
-&amp;lt;/span&amp;gt;{{end}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Finally, if you want to pull &amp;ldquo;magic constants&amp;rdquo; out of your layouts, you can do
-so, such as in this example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;nav class=&amp;quot;recent&amp;quot;&amp;gt;
-  &amp;lt;h1&amp;gt;Recent Posts&amp;lt;/h1&amp;gt;
-  &amp;lt;ul&amp;gt;{{range first .Site.Params.SidebarRecentLimit .Site.Recent}}
-    &amp;lt;li&amp;gt;&amp;lt;a href=&amp;quot;{{.RelPermalink}}&amp;quot;&amp;gt;{{.Title}}&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt;
-  {{end}}&amp;lt;/ul&amp;gt;
-&amp;lt;/nav&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title>Migrate to Hugo from Jekyll</title>
-      <link>https://cheioKID.github.io/post/migrate-from-jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/migrate-from-jekyll/</guid>
-      
-        <description>
-
-&lt;h2 id=&#34;move-static-content-to-static&#34;&gt;Move static content to &lt;code&gt;static&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;Jekyll has a rule that any directory not starting with &lt;code&gt;_&lt;/code&gt; will be copied as-is to the &lt;code&gt;_site&lt;/code&gt; output. Hugo keeps all static content under &lt;code&gt;static&lt;/code&gt;. You should therefore move it all there.
-With Jekyll, something that looked like&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;▾ &amp;lt;root&amp;gt;/
-    ▾ images/
-        logo.png
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;should become&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;▾ &amp;lt;root&amp;gt;/
-    ▾ static/
-        ▾ images/
-            logo.png
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as &lt;code&gt;CNAME&lt;/code&gt;) to be moved to &lt;code&gt;static&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;create-your-hugo-configuration-file&#34;&gt;Create your Hugo configuration file&lt;/h2&gt;
-
-&lt;p&gt;Hugo can read your configuration as JSON, YAML or TOML. Hugo supports parameters custom configuration too. Refer to the &lt;a href=&#34;https://cheioKID.github.io/overview/configuration/&#34;&gt;Hugo configuration documentation&lt;/a&gt; for details.&lt;/p&gt;
-
-&lt;h2 id=&#34;set-your-configuration-publish-folder-to-site&#34;&gt;Set your configuration publish folder to &lt;code&gt;_site&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;The default is for Jekyll to publish to &lt;code&gt;_site&lt;/code&gt; and for Hugo to publish to &lt;code&gt;public&lt;/code&gt;. If, like me, you have &lt;a href=&#34;http://blog.blindgaenger.net/generate_github_pages_in_a_submodule.html&#34;&gt;&lt;code&gt;_site&lt;/code&gt; mapped to a git submodule on the &lt;code&gt;gh-pages&lt;/code&gt; branch&lt;/a&gt;, you&amp;rsquo;ll want to do one of two alternatives:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Change your submodule to point to map &lt;code&gt;gh-pages&lt;/code&gt; to public instead of &lt;code&gt;_site&lt;/code&gt; (recommended).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;git submodule deinit _site
-git rm _site
-git submodule add -b gh-pages git@github.com:your-username/your-repo.git public
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Or, change the Hugo configuration to use &lt;code&gt;_site&lt;/code&gt; instead of &lt;code&gt;public&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-    ..
-    &amp;quot;publishdir&amp;quot;: &amp;quot;_site&amp;quot;,
-    ..
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;convert-jekyll-templates-to-hugo-templates&#34;&gt;Convert Jekyll templates to Hugo templates&lt;/h2&gt;
-
-&lt;p&gt;That&amp;rsquo;s the bulk of the work right here. The documentation is your friend. You should refer to &lt;a href=&#34;http://jekyllrb.com/docs/templates/&#34;&gt;Jekyll&amp;rsquo;s template documentation&lt;/a&gt; if you need to refresh your memory on how you built your blog and &lt;a href=&#34;https://cheioKID.github.io/layout/templates/&#34;&gt;Hugo&amp;rsquo;s template&lt;/a&gt; to learn Hugo&amp;rsquo;s way.&lt;/p&gt;
-
-&lt;p&gt;As a single reference data point, converting my templates for &lt;a href=&#34;http://heyitsalex.net/&#34;&gt;heyitsalex.net&lt;/a&gt; took me no more than a few hours.&lt;/p&gt;
-
-&lt;h2 id=&#34;convert-jekyll-plugins-to-hugo-shortcodes&#34;&gt;Convert Jekyll plugins to Hugo shortcodes&lt;/h2&gt;
-
-&lt;p&gt;Jekyll has &lt;a href=&#34;http://jekyllrb.com/docs/plugins/&#34;&gt;plugins&lt;/a&gt;; Hugo has &lt;a href=&#34;https://cheioKID.github.io/doc/shortcodes/&#34;&gt;shortcodes&lt;/a&gt;. It&amp;rsquo;s fairly trivial to do a port.&lt;/p&gt;
-
-&lt;h3 id=&#34;implementation&#34;&gt;Implementation&lt;/h3&gt;
-
-&lt;p&gt;As an example, I was using a custom &lt;a href=&#34;https://github.com/alexandre-normand/alexandre-normand/blob/74bb12036a71334fdb7dba84e073382fc06908ec/_plugins/image_tag.rb&#34;&gt;&lt;code&gt;image_tag&lt;/code&gt;&lt;/a&gt; plugin to generate figures with caption when running Jekyll. As I read about shortcodes, I found Hugo had a nice built-in shortcode that does exactly the same thing.&lt;/p&gt;
-
-&lt;p&gt;Jekyll&amp;rsquo;s plugin:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;module Jekyll
-  class ImageTag &amp;lt; Liquid::Tag
-    @url = nil
-    @caption = nil
-    @class = nil
-    @link = nil
-    // Patterns
-    IMAGE_URL_WITH_CLASS_AND_CAPTION =
-    IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK = /(\w+)(\s+)((https?:\/\/|\/)(\S+))(\s+)&amp;quot;(.*?)&amp;quot;(\s+)-&amp;gt;((https?:\/\/|\/)(\S+))(\s*)/i
-    IMAGE_URL_WITH_CAPTION = /((https?:\/\/|\/)(\S+))(\s+)&amp;quot;(.*?)&amp;quot;/i
-    IMAGE_URL_WITH_CLASS = /(\w+)(\s+)((https?:\/\/|\/)(\S+))/i
-    IMAGE_URL = /((https?:\/\/|\/)(\S+))/i
-    def initialize(tag_name, markup, tokens)
-      super
-      if markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK
-        @class   = $1
-        @url     = $3
-        @caption = $7
-        @link = $9
-      elsif markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION
-        @class   = $1
-        @url     = $3
-        @caption = $7
-      elsif markup =~ IMAGE_URL_WITH_CAPTION
-        @url     = $1
-        @caption = $5
-      elsif markup =~ IMAGE_URL_WITH_CLASS
-        @class = $1
-        @url   = $3
-      elsif markup =~ IMAGE_URL
-        @url = $1
-      end
-    end
-    def render(context)
-      if @class
-        source = &amp;quot;&amp;lt;figure class=&#39;#{@class}&#39;&amp;gt;&amp;quot;
-      else
-        source = &amp;quot;&amp;lt;figure&amp;gt;&amp;quot;
-      end
-      if @link
-        source += &amp;quot;&amp;lt;a href=\&amp;quot;#{@link}\&amp;quot;&amp;gt;&amp;quot;
-      end
-      source += &amp;quot;&amp;lt;img src=\&amp;quot;#{@url}\&amp;quot;&amp;gt;&amp;quot;
-      if @link
-        source += &amp;quot;&amp;lt;/a&amp;gt;&amp;quot;
-      end
-      source += &amp;quot;&amp;lt;figcaption&amp;gt;#{@caption}&amp;lt;/figcaption&amp;gt;&amp;quot; if @caption
-      source += &amp;quot;&amp;lt;/figure&amp;gt;&amp;quot;
-      source
-    end
-  end
-end
-Liquid::Template.register_tag(&#39;image&#39;, Jekyll::ImageTag)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;is written as this Hugo shortcode:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;!-- image --&amp;gt;
-&amp;lt;figure {{ with .Get &amp;quot;class&amp;quot; }}class=&amp;quot;{{.}}&amp;quot;{{ end }}&amp;gt;
-    {{ with .Get &amp;quot;link&amp;quot;}}&amp;lt;a href=&amp;quot;{{.}}&amp;quot;&amp;gt;{{ end }}
-        &amp;lt;img src=&amp;quot;{{ .Get &amp;quot;src&amp;quot; }}&amp;quot; {{ if or (.Get &amp;quot;alt&amp;quot;) (.Get &amp;quot;caption&amp;quot;) }}alt=&amp;quot;{{ with .Get &amp;quot;alt&amp;quot;}}{{.}}{{else}}{{ .Get &amp;quot;caption&amp;quot; }}{{ end }}&amp;quot;{{ end }} /&amp;gt;
-    {{ if .Get &amp;quot;link&amp;quot;}}&amp;lt;/a&amp;gt;{{ end }}
-    {{ if or (or (.Get &amp;quot;title&amp;quot;) (.Get &amp;quot;caption&amp;quot;)) (.Get &amp;quot;attr&amp;quot;)}}
-    &amp;lt;figcaption&amp;gt;{{ if isset .Params &amp;quot;title&amp;quot; }}
-        {{ .Get &amp;quot;title&amp;quot; }}{{ end }}
-        {{ if or (.Get &amp;quot;caption&amp;quot;) (.Get &amp;quot;attr&amp;quot;)}}&amp;lt;p&amp;gt;
-        {{ .Get &amp;quot;caption&amp;quot; }}
-        {{ with .Get &amp;quot;attrlink&amp;quot;}}&amp;lt;a href=&amp;quot;{{.}}&amp;quot;&amp;gt; {{ end }}
-            {{ .Get &amp;quot;attr&amp;quot; }}
-        {{ if .Get &amp;quot;attrlink&amp;quot;}}&amp;lt;/a&amp;gt; {{ end }}
-        &amp;lt;/p&amp;gt; {{ end }}
-    &amp;lt;/figcaption&amp;gt;
-    {{ end }}
-&amp;lt;/figure&amp;gt;
-&amp;lt;!-- image --&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id=&#34;usage&#34;&gt;Usage&lt;/h3&gt;
-
-&lt;p&gt;I simply changed:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{% image full http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg &amp;quot;One of my favorite touristy-type photos. I secretly waited for the good light while we were &amp;quot;having fun&amp;quot; and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing.&amp;quot; -&amp;gt;http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/ %}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;to this (this example uses a slightly extended version named &lt;code&gt;fig&lt;/code&gt;, different than the built-in &lt;code&gt;figure&lt;/code&gt;):&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{{% fig class=&amp;quot;full&amp;quot; src=&amp;quot;http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg&amp;quot; title=&amp;quot;One of my favorite touristy-type photos. I secretly waited for the good light while we were having fun and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing.&amp;quot; link=&amp;quot;http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/&amp;quot; %}}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As a bonus, the shortcode named parameters are, arguably, more readable.&lt;/p&gt;
-
-&lt;h2 id=&#34;finishing-touches&#34;&gt;Finishing touches&lt;/h2&gt;
-
-&lt;h3 id=&#34;fix-content&#34;&gt;Fix content&lt;/h3&gt;
-
-&lt;p&gt;Depending on the amount of customization that was done with each post with Jekyll, this step will require more or less effort. There are no hard and fast rules here except that &lt;code&gt;hugo server --watch&lt;/code&gt; is your friend. Test your changes and fix errors as needed.&lt;/p&gt;
-
-&lt;h3 id=&#34;clean-up&#34;&gt;Clean up&lt;/h3&gt;
-
-&lt;p&gt;You&amp;rsquo;ll want to remove the Jekyll configuration at this point. If you have anything else that isn&amp;rsquo;t used, delete it.&lt;/p&gt;
-
-&lt;h2 id=&#34;a-practical-example-in-a-diff&#34;&gt;A practical example in a diff&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://heyitsalex.net/&#34;&gt;Hey, it&amp;rsquo;s Alex&lt;/a&gt; was migrated in less than a &lt;em&gt;father-with-kids day&lt;/em&gt; from Jekyll to Hugo. You can see all the changes (and screw-ups) by looking at this &lt;a href=&#34;https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610&#34;&gt;diff&lt;/a&gt;.&lt;/p&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/data-mining/dbscan/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/data-mining/dbscan/</guid>
-      
-        <description>
-
-&lt;p&gt;##A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements. In this paper, we present the new clustcring algorithm DBSCAN relying on a density-based notion of clusters which is designed to discover clusters of arbitrary shape. DBSCAN requires only one input parameter and supports the user in determining an appropriate value for it. We performed an experimental evaluation of the effectiveness and efficiency of DBSCAN using synthetic data and real data of the SEQUOIA 2000 benchmark. The results of our experiments demonstrate that(l) DBSCAN is significantly more effective in discovering clusters of arbitrary shape than the well-known algorithm CLARANS, and that(2) DBSCAN outperforms CLARANS by a factor of more than 100 in terms of efficiency.
-Keywords: Clustering Algorithms, Arbitrary Shape of Clus-
-ters, Efficiency on Large Spatial Databases, Handling Nlj4-
-275oise.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;聚类算法被用于空间数据库中的类型识别任务，然而对于聚类算法有如下的要求：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;对领域知识的最低要求，用于确定输入参数&lt;/li&gt;
-&lt;li&gt;发现任意形状的聚簇，&lt;em&gt;may be spherical, drawn-out, linear, elongated etc.&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;在大型数据库中表现良好的性能&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;作者提出了新的聚类算法DBSCAN，依赖基于密度的聚类的概念，旨在发现任意形状的聚类&lt;/p&gt;
-
-&lt;p&gt;###Clustering Algorithms&lt;/p&gt;
-
-&lt;p&gt;聚类算法有两种基本类型，分区和分层算法。&lt;/p&gt;
-
-&lt;p&gt;分区算法将有n个目标的数据库D的分区，构造成为一个k聚簇。k是算法的输入参数，需要领域知识。分区算法通常从初始分区D开始，使用迭代控制策略优化目标函数。每个聚簇由聚簇的重心来表示_(k-means)&lt;em&gt;，或者位置上接近中心的一个目标&lt;/em&gt;(k-medoid)_&lt;/p&gt;
-
-&lt;p&gt;因此，分区算法有两个步骤。首先，确定k个代表_(representatives)&lt;em&gt;的最小目标函数，其次，将每个目标聚集到离它最近的代表。第二步意味着一个分区在voronoi图&lt;/em&gt;(voronoi diagram)&lt;em&gt;中是等价的，并且每个聚簇包含在一个voronoi单元&lt;/em&gt;(voronoi cells)_中。所以，分区算法中所有聚簇的形状都是凸状的，而这种情况是有限的。&lt;/p&gt;
-
-&lt;p&gt;CLARANS _(Clustering Large Applications based on RANdomized Search)&lt;em&gt;是一个改进的k-medoid方法。Ng &amp;amp; Han也讨论了确定数据库中聚簇的”自然“数$k&lt;/em&gt;{nat}$的方法。他们建议每个聚簇从2到n运行CLARANS一次。计算出每个发现的聚簇的轮廓系数，最后，最大轮廓系数的聚簇即为“自然”聚簇。遗憾的是，大量样本时这种方法的运行时间昂贵，因为它属于CLARANS的$O(n)$次调用。&lt;/p&gt;
-
-&lt;p&gt;CLARANS假设所有聚簇的目标可以同时驻留在主存中，而这不适用于大型数据库，并且时间代价昂贵。&lt;/p&gt;
-
-&lt;p&gt;分层算法创建一个数据库D的层次分解。层次分解以树形图_(dendrogram)_表示，树迭代的将D分割为更小的子集，知道每个子集仅由一个目标组成。&lt;/p&gt;
-
-&lt;p&gt;这样一个层次结构中，树的每个结点表示D的一个聚簇。树形图即可以从叶子向上到树根*(凝聚方法agglomerative approach)&lt;em&gt;形成，也可以从树根向下到树叶&lt;/em&gt;(分裂方法divisive approach)*，通过每一步合并或者分割簇来生成。异于分区算法，层次算法不需要k作为输入。但是，必须定义终止条件，指定何时终止合并或者分割过程。凝聚算法中终止条件的一个例子是所有簇Q之间的临界距离$D_{min}$。&lt;/p&gt;
-
-&lt;p&gt;到目前为止，层次聚类算法的主要问题是难以获得终止条件的适当参数。例如，$D&lt;em&gt;{min}$的值足够小以分离所有的自然簇，并且同时足够大以使得没有簇被分割为两部分。最近，在信号处理领域，已经提出了分层算法Ejcluster（García，Fdez-Valdivia，Cortijo＆Molina 1994)自动导出终止条件。它的关键思想是，如果一个足够小的步骤可以从第一个点走到第二个点，那么两个点属于同一个簇。 Ejcluster遵循分裂的方法。它不需要任何域知识输入。此外，实验表明它在发现非凸簇方面非常有效。然而，由于每对点的距离计算，Ejcluster的计算成本是$O(n^2)$。这对于诸如字符识别之类中等程度的n值的应用程序是可接受的，但是对于大型数据库上的应用程序来说这是代价高昂的。 Jain（1988)探索了一种基于密度的方法来识别k维点集中的聚类。数据集被划分为许多非重叠单元格&lt;/em&gt;(nonoverlapping cells)_，并构造直方图。具有相对高频率计数的单元格是潜在的聚类中心，并且聚类之间的边界落入直方图的“谷”中。&lt;/p&gt;
-
-&lt;h3 id=&#34;a-density-based-notion-of-clusters&#34;&gt;A Density Based Notion of Clusters&lt;/h3&gt;
-
-&lt;p&gt;对聚簇的认识：每个聚簇有一个典型的密度，远远高于簇的外部。此外，噪声区域的密度低于任何的簇。&lt;/p&gt;
-
-&lt;p&gt;关键思想是对于聚簇的每个点，给定半径的邻域必须包含至少最小数量的点，即邻域的密度必须超过某个阈值。邻域的形状通过选择两个点p和q的距离函数$dist(p,q)$来确定。例如，在2D空间使用曼哈顿距离，邻域的形状是矩形。DBSCAN适用于任何距离函数，可以在给定的应用中选择适当的函数。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 1&lt;/strong&gt;:(Eps-neighborhood of a point) The Eps-neighborhood of a point p, denoted by $N&lt;em&gt;{Eps}(P)$, is defined by $N&lt;/em&gt;{Eps}(P)= {q \in D | dist(p,q) \le Eps}$.&lt;/p&gt;
-
-&lt;p&gt;一种朴素的方法可能要求簇中的每个点，在该点的Eps邻域中至少存在最小数量（MinPts)的点。然而这种方法失败了，因为簇中有两种点，簇内部的点 _(core points)&lt;em&gt;和簇边界上的点&lt;/em&gt;(border points)_。通常，边界点的Eps邻域包含比核心点的Eps邻域少得多的点。因此不得不设置相对较小的点的最小值来包含属于同一聚簇的所有点。然而，这个值不是各个簇的特征，特别是存在噪音时。所以，我们要求对于簇C中的每个点p，在C中存在点q，使得p在q的Eps邻域内，并且NEps（q)包含至少MinPts点。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 2&lt;/strong&gt;:(directly density-reachable) A point p is directly density-reachable from a point q wrt. Eps, MinPts if&lt;/p&gt;
-
-&lt;p&gt;1) $p \in N_{Eps}(q)$&lt;/p&gt;
-
-&lt;p&gt;2) $|N_{Eps}(q)|\ge  MinPts$(core point condition).&lt;/p&gt;
-
-&lt;p&gt;显然，直接密度可达对于核心点对是对称的。然而，一般而言，如果涉及一个核心点和一个边界点，则它不是对称的。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 3&lt;/strong&gt;:(density-reachable) A point P is density-reachable from a point q wrt. Eps and MinPts if there is a chain of points $p_1 ,\dots ,p_n, p_1=q, p&lt;em&gt;n= p$ such that $p&lt;/em&gt;{i+1}$ is directly density-reachable from $p_i$.&lt;/p&gt;
-
-&lt;p&gt;密度可达性是直接密度可达性的规范扩展。这个关系是可传递的，但不是对称的&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 4&lt;/strong&gt;:(density-connected) A point p is density connected to a point q wrt. Eps and MinPts if there is a point o such that both, p and q are density-reachable from o wrt. Eps and MinPts.&lt;/p&gt;
-
-&lt;p&gt;密度连通性是对称的，随遇密度可达的点，密度连通性是自反的。&lt;/p&gt;
-
-&lt;p&gt;簇被定义为一组密度连接点，具有最大的密度可达性。想对给定的一组的簇的集合定义噪声。噪声只是D中不属于任何一个簇的一组点集。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 5&lt;/strong&gt;:(cluster) Let D be a database of points. A cluster C wrt. Eps and MinPts is a non-empty subset of D satisfying the following conditions:&lt;/p&gt;
-
-&lt;p&gt;1) $\forall \ p, q: if\ p \in C$ and q is density-reachable from p wrt. Eps and MinPts, then $q \in C$.(Maximality)&lt;/p&gt;
-
-&lt;p&gt;2) $\forall \ p,q \ \in C$ is density-connected to q wrt. EPS and MinPts.(Connectivity)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Definition 6&lt;/strong&gt;:(noise) Let $C_1,&amp;hellip;, C_k$ be the clusters of the database D wrt. parameters $Eps_i$ and $MinPts_i$,i= 1,&amp;hellip;.k. Then we define the noise as the set of points in the database D not belonging to any cluster $C_i$. i.e. noise=$(p\in D|\forall i:p \notin C_i)$.&lt;/p&gt;
-
-&lt;p&gt;集群C至少包含一个点p，p必须通过某个点o（可能等同于p)与其自身密度连接。因此，o至少需要满足核心点的条件，因此o的eps领域至少包含MinPts个点。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Lemma 1&lt;/strong&gt;: Let p be a point in D and $|N_{Eps}(p)| \ge MinPts$. Then the set $O={o|o \in D$ and o is density-reachable from p wrt. Eps and MinPts} is a cluster wrt. Eps and MinPts.&lt;/p&gt;
-
-&lt;p&gt;聚簇C并不明显的由任何核心点决定。但是C中的每个点密度可达任何一个核心点，所以C恰好包含从C的任意核心点可以密度可达的点。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Lemma 2&lt;/strong&gt;: Let C be a cluster wrt. Eps and MinPts and let p be any point in C with $|N_{Eps}(p)| \ge MinPts$. Then C equals to the set $O={o|o \in D$ and o is density-reachable from p wrt. Eps and MinPts}&lt;/p&gt;
-
-&lt;h3 id=&#34;4-dbscan-density-based-spatial-clustering-of-applications-with-noise&#34;&gt;4.DBSCAN: Density Based Spatial Clustering of Applications with Noise&lt;/h3&gt;
-
-&lt;p&gt;基于密度的噪声空间聚类的应用&lt;/p&gt;
-
-&lt;p&gt;根据定义5和6发现空间数据库中的聚簇和噪声&lt;/p&gt;
-
-&lt;p&gt;简单有效的启发式方法可以确定“最薄”（即最低密度)簇的参数Eps和MinPts的值&lt;/p&gt;
-
-&lt;h5 id=&#34;4-1算法&#34;&gt;4.1算法&lt;/h5&gt;
-
-&lt;p&gt;DBSCAN从任意点p开始，检索所有密度可达的点，根据Eps和MinPts。如果p是核心点，此过程产生一个聚（Lemma 2)。如果p是边缘点，没有点可以从p密度可达，那么DBSCAN访问下一个点。&lt;/p&gt;
-
-&lt;p&gt;由于我们使用Eps和MinPts的全局值，如果两个不同密度的簇彼此接近，则DBSCAN可以根据定义5将两个簇合并为一个簇。设两组点$S_1$和$S_2$之间的距离定义为$dist(S_1,S_2)=min{dist(p,q)|lp \in S_1, q \in S_2 }$。然后，仅当两组之间的距离大于Eps时，具有至少最薄簇的密度的两组点将彼此分离。因此，对于具有较高MinPts值的簇，可能需要递归调用DBSCAN。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;DBSCAN的基本版本
-
-DBSCAN(SetOfPoints, Eps, MinPts) 
-// SetOfPoints is UNCLASSIFIED
- 	ClusterId := nextId(NOISE);
- 	FOR i FROM 1 TO SetOfPoints.size DO 
-		Point := SetOfPoints.get(i);
- 		IF Point.ClId = UNCLASSIFIED THEN 
-			IF ExpandCluster(SetOfPoints, ClusterId, Eps, MinPts) THEN 
-				ClusterId := nextId(ClusterId) 
-			END IF 
-		END IF 
-	END FOR 
-END; // DBSCAN 
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;SetOfPoints是整个数据库或先前运行中发现的群集。 Eps和MinPts是手动或根据4.2节中介绍的启发法确定的全局密度参数。函数SetOfPoints.get(i)返回SetOfPoints的第i个元素。 DBSCAN使用的最重要的功能是ExpandCluster，如下所示：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ExpandCluster(SetOfPoints, Point, CiId, Eps, MinPts) : Boolean;
-	seeds:=SetOfPoints.regionQuery(Point, Eps)
-	IF seeds.size&amp;lt;MinPts THEN // no core point
-		SetOfPoint.changeClId(Point, NOISE)
-		RETURN False;
-	ELSE // all points in seeds are density-
-			// reachable from Point 
-		SetOfPoints.changeClIds(seeds, ClId);
-		seeds.delete(Point); 
-		WHILE seeds &amp;lt;&amp;gt; Empty DO
-			currentP := seeds.first();
-			result := setofPoints.regionQuery(currentP,Eps);
-			IF result.size &amp;gt;= MinPts THEN 
-				FOR i FROM 1 TO result.size DO
-					resultP := result.get(i) 
-					IF resultP.ClId IN {UNCLASSIFIED, NOISE} THEN
-						IF resultP.ClId = UNCLASSIFIED THEN
-							seeds, append(resultP)
-						END IF;
-						SetOfPoints. changeClId(resultP, ClId)
-					END IF; // UNCLASSIFIED or NOISE 
-				END FOR ;
-			END IF; // result.size &amp;gt;= MinPts
-			seeds, delete (currentP)
-		END WHILE; // seeds &amp;lt;&amp;gt; Empty
-		RETURN True; 
-	END IF
-END; // ExpandCluster
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-      
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</guid>
-      
-        <description>&lt;p&gt;####换音与变音
-元音只在第二人称及第三人称单数时发生变化。
-并非所有带e和a的动词在变位时都会发生元音变化：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;元音无变化
-ich gehe - du gehst, 
-ich lache - du lachst …
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;#####换音动词e-i
-| e | i |
-| &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- |
-| emptehlen | er empfiehlt |
-| essen | er sst |
-| geben | er gibt |
-| fernsehen | er sieht fern |
-| helfen | er hilft |
-| lesen | er liest |
-| mitnehmen | er nimmt mit |
-| nehmen | er nimmt |
-| sehen | er sieht |
-| sprechen | er spricht |
-| vergessen | er vergisst |
-| werden | er wird |
-|||&lt;/p&gt;
-
-&lt;p&gt;#####变音动词a-a
-| a | a |
-| &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- |
-| abfahren | er fahrt ab |
-| anfangen | er fangt an |
-| einladen | er ladt ein |
-| einschlafen | er schlaft ein |
-| fahren | er fahrt |
-| gefallen | es gefallt |
-| laufen | er lauft |
-| schlafen | er schlaft |
-| tragen | er tragt |
-| waschen | er wascht |
-|||&lt;/p&gt;
-
-&lt;p&gt;müssen, können, dürfen 和wollen 在进行单数人称的变位时元音会发生变化。&lt;code&gt;第一人称单数&lt;/code&gt;和&lt;code&gt;第三人称单数&lt;/code&gt;的&lt;code&gt;现在时&lt;/code&gt;变位同形，&lt;strong&gt;无词尾&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;情态动词位于第二位，&lt;strong&gt;实义动词原形位于句末&lt;/strong&gt;。
-若句子的意思可通过上下文表达明白，&lt;strong&gt;实义动词可以省略&lt;/strong&gt;。&lt;/p&gt;
-
-&lt;p&gt;####情态动词
-|情态动词|释义|
-|&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-|&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-|
-|müssen|没有其他选择|
-|können|1.习得|
-||2.有机会，有可能|
-||3.被允许|
-|nicht dürfen |禁止|
-|dürfen |允许|
-||愿望(礼貌)|
-|möchten|愿望(直接)|
-|wollen|(用这个词表达向他人索取某物的愿望是不礼貌的)|
-|sollen|1.你希望我&amp;hellip;? (只用于问句中)|
-||2.转述他人对我的要求|&lt;/p&gt;
-
-&lt;p&gt;####可分前缀&lt;/p&gt;
-
-&lt;p&gt;|可分前缀| 可分前缀 |可分前缀|可分前缀|
-|&amp;ndash;|&amp;ndash;|&amp;ndash;|&amp;ndash;|
-|ab-|ein-|statt-|zu-|
-|an-|fern-|teil|zurecht-|
-|auf-|her-|um-|zurück-|
-|aus-|mit-|vor-|zusammen-|
-词重音永远在&lt;strong&gt;前缀&lt;/strong&gt;上: &lt;u&gt;ein&lt;/u&gt;kaufen&lt;/p&gt;
-
-&lt;p&gt;####命令式&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;du的动词变位后去掉st，&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;ihr和Sie正常变位。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;du和ihr去掉，Sie位于动词后。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;Gehen Sie! Geh! Geht!
-Bringen Sie das mit! Bring das mit! Bringt das mit!
-Seien Sie! Sei! Seid!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;bitte 用于句首或句尾
-Hilf mir doch!
-Hilf mir mal!
-Hilf mir noch mal!
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;####特殊疑问句&lt;/p&gt;
-
-&lt;p&gt;####一般疑问句&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;动词在第一位，用Ja/Nein回答。&lt;/li&gt;
-&lt;li&gt;有nicht的情况下，Doch表示事实上的肯定，Nein表示事实上否定&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;####语序&lt;/p&gt;
-
-&lt;p&gt;|句型|语序|
-|&amp;ndash;|&amp;ndash;|
-|陈述句|动词位于第二位，主语在动词的左边，如果其它成分位于第一位，则主语位于动词的右边。|
-|特殊疑问句|动词位于第二位，疑问在第一位，主语在第三位。|
-|一般疑问句|动词位于句首，主语在动词的右边。|
-|命令式|动词位于句首，Sie在右边，du和ihr已省略。|
-|时间及地点|时间状语(Wann? Wie lange? Wie oft?) 通常位于左半句(常在第一位)。|
-||地点状语(Wo? Wohin? Woher?)通常位于右半句。|
-|可分动词|可分前缀放在句尾，正常变位|&lt;/p&gt;
-
-&lt;p&gt;变位动词位于&lt;strong&gt;第二位&lt;/strong&gt;，其他谓语成分(分词)位于句末。
-&lt;code&gt;sein + 形容词&lt;/code&gt;，&lt;code&gt;双动词&lt;/code&gt;及&lt;code&gt;名词-动词&lt;/code&gt;组合与&lt;code&gt;可分动词&lt;/code&gt;用法相同。
-| sein + 形容词 | 双动词 | 名词-动词 |
-|&amp;ndash;|&amp;ndash;|&amp;ndash;|
-|wunderbar sein|schwimmen gehen|Tennis spielen|
-|müde sein|einkaufen gehen|Deutsch lernen|
-|||Wein trinken|&lt;/p&gt;
-
-&lt;p&gt;####名词复数&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;复述词尾&lt;/th&gt;
-&lt;th&gt;名词&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;-en&lt;/td&gt;
-&lt;td&gt;所有以-ung,-heit,-keit,-ie,-o结尾的名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;几乎所有以-e结尾的名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;很多阴性名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;以-in结尾→-innen&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;(此为最常见的复数词尾)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;-er&lt;/td&gt;
-&lt;td&gt;几乎所有中性短名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;一些阳性名词，没有阴性名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;-e&lt;/td&gt;
-&lt;td&gt;很多短名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;仅变音&lt;/td&gt;
-&lt;td&gt;很多以er，-en,-e/结尾的名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;所有以-chen 和-ein结尾的名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;-s&lt;/td&gt;
-&lt;td&gt;所有以-a,-i,-o,-y结尾的名词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;所有缩略词&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;很多外来词&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;|无复数形式的名词| |
-|&amp;ndash;|&amp;ndash;|
-|抽象名词|das Glück,die Liebe,der Hunger,die Kommunikation,der Sport,die Musik,das Wetter&amp;hellip;|
-|物质名词|das Gold,das Wasser,die Milch&amp;hellip;|
-|集合名词|das Obst,die Polizei,die Kleidung,der Urlaub&amp;hellip;|
-|动词不定式作名词|das Essen,das Sprechen,das Spielen&amp;hellip;|&lt;/p&gt;
-
-&lt;p&gt;| 无单数形式名词|          |
-| &amp;mdash; | &amp;ndash; |
-| 一些国家名与地理专有名词 | die USA,die Alpen&amp;hellip;           |
-| 集合名词     | die Eltern,die Leute,die Möbel |
-|           | 及die Ferien&amp;hellip;       |&lt;/p&gt;
-
-&lt;p&gt;◦   冠词
-零冠词
-不可数名词属零冠词情况
-(如Zeit, Lust, Geld, Glück, Hunger)
-同属零冠词情况的还有:
-Ich bin + (职业)
-Ich bin Pilotin von Beruf.&lt;/p&gt;
-
-&lt;p&gt;◦   否定
-名词，名词前加冠词kein，注意冠词变位
-其它，nicht&lt;/p&gt;
-
-&lt;p&gt;Ich esse immer zu Mittag. lch esse nie zu Mittag.
-Auf der Party kenne ich alle. lch kenne niemand auf der Party.
-Isst du etwas? Isst du alles? lch esse nichts.
-Kannst du nur mit Brille lesen? Ich kann ohne Brille lesen.
-Warst du schon mal in Paris? Nein, ich war noch nicht in Paris. Ich war noch nie in Frankreich.
-Hast du noch Hunger? Nein, ich habe keinen Hunger mehr.
-Liebst du Thomas noch? Nein,ich liebe ihn nicht mehr.&lt;/p&gt;
-
-&lt;p&gt;◦   第四格
-只有阳性名词的第四格形式与第一格有所不同: den/einen/keinen。
-物主代词的变格同kein: Ich liebe meinen Mann.&lt;/p&gt;
-
-&lt;p&gt;◦   第三格
-阳性名词和中性名词的第三格形式相同。
-第三格复数词尾为-n。
-复数形式以-s结尾的不需另加-n: Wir fahren mit zwei Autos.
-物主代词变格同kein。&lt;/p&gt;
-
-&lt;p&gt;◦   物主代词&lt;/p&gt;
-
-&lt;p&gt;◦   疑问冠词和指示代词
-welch-，dies-词尾变化对应定冠词的变化&lt;/p&gt;
-
-&lt;p&gt;◦   人称代词的三格，四格&lt;/p&gt;
-
-&lt;p&gt;◦   支配双宾语的动词
-动词＋三格＋四格
-三格为间接宾语，只能为人或动物，满足&amp;rdquo;人三物四&amp;rdquo;
-Darf ich Ihnen einen Tee anbieten ?
-anbieten
-Er hat uns die Getränke bezahlt.
-bezahlen
-Er hat uns Kaffee bestellt.
-bestellen
-Bitte bringen Sie mir einen Kaffee.
-bringen
-Ich kann Ihnen ein Restaurant empfehlen.
-empfehlen
-Können Sie mir das Problem erklären?
-erklären
-Meine Oma hat uns immer schöne Geschichten erzählt.
-erzählen
-Bitte geben Sie mir die Rechnung.
-geben
-Er holt uns die Getranke.
-holen
-Ich michte meinem Sohn einen Laptop kaufen.
-kaufen
-Wer kocht uns heute das Mittagessen?
-kochen
-Sie hat ihm ein Buch geliehen.
-leihen
-Die Firma liefert uns die Mobel am Freitag.
-li efern
-Sie bringen ihm aus dem Urlaub ein Souvenir mit.
-mitbringen
-Wir renovieren unseren Freunden die Wohnung.
-renovieren
-19)
-Die Werkstatt kann uns das Auto erst nachste Woche reparieren.
-reparieren
-Bitte reservieren Sie uns einen Tisch fir 20:00 Uhr.
-reservieren
-Hast du ihm die Neuigkeit gesagt?
-sagen
-Sie schenkt ihrem Vater eine Krawatte.
-schenken
-Konnen Sieuns bitte Informationen schicken?
-schicken
-Deriseurhat ihr dieHaresuper gschiten.
-schneiden
-Sie schreibt ihm eine E-Mail.
-schreiben
-ieseviet ihren Cisten Kfeeund Kuchen.
-servieren
-Eeasainenein Brdeseinenaten iPod
-verkaufen
-Ich winsche dir viel Glick!
-winschen
-Die Fau re ihnen die Shenlrdaeicn in der Shadt
-zeigen&lt;/p&gt;
 </description>
       
     </item>

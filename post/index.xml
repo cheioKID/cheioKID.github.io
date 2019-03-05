@@ -6,10 +6,48 @@
     <description>Recent content in Posts on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Rename dir &amp; Gen label</title>
+      <link>https://cheioKID.github.io/post/note/rename-dir-gen-label/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/rename-dir-gen-label/</guid>
+      <description>Rename dir 把train目录下的所有存储样本的文件夹命名为0,1,2,3…的形式，然后把实际类别名存储在target_names.txt中
+#coding=utf-8 import os,sys def rename_dir(txt_file = &amp;quot;target_names.txt&amp;quot;, prefix = &#39;&#39;): path=&#39;.&#39; dir_path = path + &#39;/&#39; + txt_file[:-4] out = [] i = 0 for dirpath,dirnames,filenames in os.walk(path): if(len(dirnames)) &amp;gt;= 10: for name in dirnames: os.rename(dirpath+&#39;/&#39;+name,dirpath+&#39;/&#39;+str(i)) i += 1 out += &amp;quot;&#39;&amp;quot; + name + &amp;quot;&#39;,&amp;quot; with open(txt_file, &#39;w&#39;) as target: target.writelines(out) print(&amp;quot;----------------\n&amp;quot; &amp;quot;write(overwrite) done&amp;quot;) txt_file = &amp;quot;test.txt&amp;quot; rename_dir() # if use prefix, the &#39;/&#39; is need  Gen labels 遍历目录下按类别存储的所有样本，得到样本和对应的类别，其中类别从0开始编号，结果存在train.</description>
+    </item>
+    
+    <item>
+      <title>PCA Trail</title>
+      <link>https://cheioKID.github.io/post/machine-learning/pca-trail/</link>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/pca-trail/</guid>
+      <description>Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn.</description>
+    </item>
+    
+    <item>
+      <title>Deutsch Ubungen</title>
+      <link>https://cheioKID.github.io/post/deutsch/deutsch-ubungen/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/deutsch-ubungen/</guid>
+      <description>Deutsch Ubungen 2019 Note Note 1.24 购物 KAUFHAUS WALDHEIM
+ | 4. Stock: | Gartenbedarf花园用品 | Gartenmöbel | Sonnenschirme | SB-Restaurant | Abholung bestellter Waren订购商品 | Kundenservice | Reisebüro旅行社 | Fundbüro失物招领 | Garderobe衣帽间 | Toiletten | Wickelraum更衣室 | Erste Hilfe急救 | 3. Stock: | Computer | Technik | Software | Foto | Optik光学 | CDs | DVDs | Blu-Rays | Radio | TV-HIFI | Autozubehör汽车配件 | Fahrräder自行车 | Sportartikel体育用品 | Strandmode沙滩服装 | 2.</description>
+    </item>
     
     <item>
       <title>Know Face Recognition Sample</title>
@@ -84,6 +122,15 @@ Wir betreten feuertrunken,
 Himmlische, dein Heiligtum!
 Deine Zauber binden wieder
 Was die Mode streng geteilt;</description>
+    </item>
+    
+    <item>
+      <title>DBSCAN note</title>
+      <link>https://cheioKID.github.io/post/data-mining/dbscan/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/data-mining/dbscan/</guid>
+      <description>A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise  Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements.</description>
     </item>
     
     <item>
@@ -166,6 +213,16 @@ sudo update-grub sudo reboot  </description>
     </item>
     
     <item>
+      <title>Deutsch Grammer</title>
+      <link>https://cheioKID.github.io/post/deutsch/deutsch-grammer/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/deutsch-grammer/</guid>
+      <description>换音与变音 元音只在第二人称及第三人称单数时发生变化。 并非所有带e和a的动词在变位时都会发生元音变化：
+元音无变化 ich gehe - du gehst, ich lache - du lachst …  换音动词e-i    e i     emptehlen er empfiehlt   essen er sst   geben er gibt   fernsehen er sieht fern   helfen er hilft   lesen er liest   mitnehmen er nimmt mit   nehmen er nimmt   sehen er sieht   sprechen er spricht   vergessen er vergisst   werden er wird        变音动词a-a    a a     abfahren er fahrt ab   anfangen er fangt an   einladen er ladt ein   einschlafen er schlaft ein   fahren er fahrt   gefallen es gefallt   laufen er lauft   schlafen er schlaft   tragen er tragt   waschen er wascht        müssen, können, dürfen 和wollen 在进行单数人称的变位时元音会发生变化。第一人称单数和第三人称单数的现在时变位同形，无词尾。</description>
+    </item>
+    
+    <item>
       <title>Compare Appetite</title>
       <link>https://cheioKID.github.io/post/algorithm/compare-appetite/</link>
       <pubDate>Sun, 25 Mar 2018 00:00:00 +0000</pubDate>
@@ -202,27 +259,6 @@ sudo update-grub sudo reboot  </description>
     </item>
     
     <item>
-      <title>Shortcodes Preview</title>
-      <link>https://cheioKID.github.io/post/shortcodes-preview/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/shortcodes-preview/</guid>
-      <description>&lt;h2 id=&#34;what-a-shortcode-is&#34;&gt;What a Shortcode is&lt;/h2&gt;
-
-&lt;p&gt;Hugo loves Markdown because of its simple content format, but there are times when Markdown falls short. Often, content authors are forced to add raw HTML (e.g., video &lt;code&gt;&amp;lt;iframes&amp;gt;&lt;/code&gt;) to Markdown content. We think this contradicts the beautiful simplicity of Markdown&amp;rsquo;s syntax.&lt;/p&gt;
-
-&lt;p&gt;Hugo created &lt;strong&gt;shortcodes&lt;/strong&gt; to circumvent these limitations.&lt;/p&gt;
-
-&lt;p&gt;A shortcode is a simple snippet inside a content file that Hugo will render using a predefined template. Note that shortcodes will not work in template files. If you need the type of drop-in functionality that shortcodes provide but in a template, you most likely want a [partial template][partials] instead.&lt;/p&gt;
-
-&lt;p&gt;In addition to cleaner Markdown, shortcodes can be updated any time to reflect new classes, techniques, or standards. At the point of site generation, Hugo shortcodes will easily merge in your changes. You avoid a possibly complicated search and replace operation.&lt;/p&gt;
-
-&lt;p&gt;More details: &lt;a href=&#34;https://gohugo.io/content-management/shortcodes/&#34;&gt;https://gohugo.io/content-management/shortcodes/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>Git note</title>
       <link>https://cheioKID.github.io/post/note/git-note/</link>
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
@@ -242,60 +278,9 @@ sudo update-grub sudo reboot  </description>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/post/cs/leetcode-sql/</guid>
-      <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
-176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
-177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.</description>
-    </item>
-    
-    <item>
-      <title>Creating a New Theme</title>
-      <link>https://cheioKID.github.io/post/creating-a-new-theme/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/creating-a-new-theme/</guid>
-      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
-We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://cheioKID.github.io/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/goisforlovers/</guid>
-      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Migrate to Hugo from Jekyll</title>
-      <link>https://cheioKID.github.io/post/migrate-from-jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/migrate-from-jekyll/</guid>
-      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
-▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/data-mining/dbscan/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/data-mining/dbscan/</guid>
-      <description>##A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise
- Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/post/deutsch/deutsch_grammer/</guid>
-      <description>####换音与变音 元音只在第二人称及第三人称单数时发生变化。 并非所有带e和a的动词在变位时都会发生元音变化：
-元音无变化 ich gehe - du gehst, ich lache - du lachst …  #####换音动词e-i | e | i | | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | &amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;- | | emptehlen | er empfiehlt | | essen | er sst | | geben | er gibt | | fernsehen | er sieht fern | | helfen | er hilft | | lesen | er liest | | mitnehmen | er nimmt mit | | nehmen | er nimmt | | sehen | er sieht | | sprechen | er spricht | | vergessen | er vergisst | | werden | er wird | |||</description>
+      <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.</description>
     </item>
     
   </channel>

@@ -48,6 +48,15 @@
     </item>
     
     <item>
+      <title>Cluster</title>
+      <link>https://cheioKID.github.io/tags/cluster/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Cmake</title>
       <link>https://cheioKID.github.io/tags/cmake/</link>
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
@@ -66,6 +75,15 @@
     </item>
     
     <item>
+      <title>Data Mining</title>
+      <link>https://cheioKID.github.io/tags/data-mining/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/data-mining/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Database Principles</title>
       <link>https://cheioKID.github.io/tags/database-principles/</link>
       <pubDate>Wed, 29 Mar 2017 00:00:00 +0000</pubDate>
@@ -75,11 +93,20 @@
     </item>
     
     <item>
-      <title>Development</title>
-      <link>https://cheioKID.github.io/tags/development/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      <title>Dbscan</title>
+      <link>https://cheioKID.github.io/tags/dbscan/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/tags/development/</guid>
+      <guid>https://cheioKID.github.io/tags/dbscan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Deutsch</title>
+      <link>https://cheioKID.github.io/tags/deutsch/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/deutsch/</guid>
       <description></description>
     </item>
     
@@ -111,6 +138,15 @@
     </item>
     
     <item>
+      <title>German</title>
+      <link>https://cheioKID.github.io/tags/german/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/german/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Git</title>
       <link>https://cheioKID.github.io/tags/git/</link>
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
@@ -129,24 +165,6 @@
     </item>
     
     <item>
-      <title>Go</title>
-      <link>https://cheioKID.github.io/tags/go/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang</title>
-      <link>https://cheioKID.github.io/tags/golang/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Grammar</title>
       <link>https://cheioKID.github.io/tags/grammar/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
@@ -156,20 +174,20 @@
     </item>
     
     <item>
+      <title>Grammer</title>
+      <link>https://cheioKID.github.io/tags/grammer/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/grammer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Java</title>
       <link>https://cheioKID.github.io/tags/java/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Jekyll</title>
-      <link>https://cheioKID.github.io/tags/jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/jekyll/</guid>
       <description></description>
     </item>
     
@@ -194,7 +212,7 @@
     <item>
       <title>Machine Learning</title>
       <link>https://cheioKID.github.io/tags/machine-learning/</link>
-      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/machine-learning/</guid>
       <description></description>
@@ -221,7 +239,7 @@
     <item>
       <title>Note</title>
       <link>https://cheioKID.github.io/tags/note/</link>
-      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/note/</guid>
       <description></description>
@@ -239,27 +257,27 @@
     <item>
       <title>Pca</title>
       <link>https://cheioKID.github.io/tags/pca/</link>
-      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/pca/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Preview</title>
-      <link>https://cheioKID.github.io/tags/preview/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
+      <title>Python</title>
+      <link>https://cheioKID.github.io/tags/python/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/tags/preview/</guid>
+      <guid>https://cheioKID.github.io/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Shortcodes</title>
-      <link>https://cheioKID.github.io/tags/shortcodes/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
+      <title>Script</title>
+      <link>https://cheioKID.github.io/tags/script/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/tags/shortcodes/</guid>
+      <guid>https://cheioKID.github.io/tags/script/</guid>
       <description></description>
     </item>
     
@@ -275,7 +293,7 @@
     <item>
       <title>Svm</title>
       <link>https://cheioKID.github.io/tags/svm/</link>
-      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/svm/</guid>
       <description></description>
@@ -291,29 +309,11 @@
     </item>
     
     <item>
-      <title>Tag 6</title>
-      <link>https://cheioKID.github.io/tags/tag-6/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
+      <title>Ubungen</title>
+      <link>https://cheioKID.github.io/tags/ubungen/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/tags/tag-6/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Templates</title>
-      <link>https://cheioKID.github.io/tags/templates/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/templates/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Themes</title>
-      <link>https://cheioKID.github.io/tags/themes/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/tags/themes/</guid>
+      <guid>https://cheioKID.github.io/tags/ubungen/</guid>
       <description></description>
     </item>
     

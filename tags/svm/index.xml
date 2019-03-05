@@ -6,10 +6,28 @@
     <description>Recent content in Svm on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 22 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/tags/svm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PCA Trail</title>
+      <link>https://cheioKID.github.io/post/machine-learning/pca-trail/</link>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/machine-learning/pca-trail/</guid>
+      <description>Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn.</description>
+    </item>
     
     <item>
       <title>Know Face Recognition Sample</title>

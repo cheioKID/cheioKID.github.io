@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>PCA Trail - Have a nice day, cheio</title>
+  <link rel="alternate" hreflang="en" href="https://cheioKID.github.io/" />
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="cheio" />
+  <meta name="description" content="Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn." />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.49.2" />
+
+
+<link rel="canonical" href="https://cheioKID.github.io/post/machine-learning/pca-trail/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="PCA Trail" />
+<meta property="og:description" content="Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cheioKID.github.io/post/machine-learning/pca-trail/" /><meta property="article:published_time" content="2019-01-25T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-01-25T00:00:00&#43;00:00"/>
+
+<meta itemprop="name" content="PCA Trail">
+<meta itemprop="description" content="Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn.">
+
+
+<meta itemprop="datePublished" content="2019-01-25T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-01-25T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="810">
+
+
+
+<meta itemprop="keywords" content="Machine Learning,SVM,PCA," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PCA Trail"/>
+<meta name="twitter:description" content="Note Prelude 方差~离散程度~可区分度
+不同投影的损失
+successive orthogonal components 连续正交分量，在fit方法中学习n个分量
+奇异值分解SVD
+PCA假定以原点为中心，所以数据需要先中心化(standard scale)
+from sklearn.preprocessing import StandardScaler X=StandardScaler().fit(X).transform(X) # 一般中心化标准化后pca才能体现出效果  Conclusion 经过分析速度得到成倍的提升
+PCA 的效果会比 LDA 好一些，还没弄清楚原因
+Error Detail ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver=&#39;randomized&#39;  n_components只能取shape的较小值，是因为SVD吗，现在还不清楚
+这种情况下只能提升样本量
+Source Code # -*- coding:utf-8 -*- from sklearn.svm import SVC from skimage import img_as_ubyte from sklearn.utils import Bunch import numpy as np from PIL import Image import matplotlib.pyplot as plt from sklearn."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Have a nice day, cheio</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">Have a nice day, cheio</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">PCA Trail</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-01-25 </span>
+        <div class="post-category">
+            
+              <a href="/categories/machine-learning/"> Machine Learning </a>
+            
+          </div>
+        <span class="more-meta"> 810 words </span>
+        <span class="more-meta"> 4 min read </span>
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#note">Note</a>
+<ul>
+<li><a href="#prelude">Prelude</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#error-detail">Error Detail</a></li>
+</ul></li>
+<li><a href="#source-code">Source Code</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      
+
+<h2 id="note">Note</h2>
+
+<h3 id="prelude">Prelude</h3>
+
+<p>方差~离散程度~可区分度</p>
+
+<p>不同投影的损失</p>
+
+<p>successive orthogonal components 连续正交分量，在<code>fit</code>方法中学习n个分量</p>
+
+<p>奇异值分解SVD</p>
+
+<p>PCA假定以原点为中心，所以数据需要先中心化<em>(standard scale)</em></p>
+
+<pre><code class="language-python">from sklearn.preprocessing import StandardScaler
+
+X=StandardScaler().fit(X).transform(X)
+# 一般中心化标准化后pca才能体现出效果
+</code></pre>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>经过分析速度得到成倍的提升</p>
+
+<p>PCA 的效果会比 LDA 好一些，还没弄清楚原因</p>
+
+<h3 id="error-detail">Error Detail</h3>
+
+<pre><code>ValueError: n_components=25 must be between 1 and min(n_samples, n_features)=24 with svd_solver='randomized'
+</code></pre>
+
+<p>n_components只能取shape的较小值，是因为SVD吗，现在还不清楚</p>
+
+<p>这种情况下只能提升样本量</p>
+
+<h2 id="source-code">Source Code</h2>
+
+<pre><code class="language-python"># -*- coding:utf-8 -*-
+
+from sklearn.svm import SVC
+from skimage import img_as_ubyte
+from sklearn.utils import Bunch
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from matplotlib.font_manager import FontProperties
+from sklearn.neighbors import KNeighborsClassifier as KNC
+from sklearn.model_selection import cross_validate
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from time import time
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from skimage.feature import shape_index
+
+
+def plot_gallery(images, titles, h=100, w=100, n_row=4, n_col=6):
+    &quot;&quot;&quot;Helper function to plot a gallery of portraits&quot;&quot;&quot;
+    font = FontProperties(fname='/System/Library/Fonts/STHeiti Light.ttc', size=10)
+    plt.figure(figsize=(1.8 * n_col, 2.4 * n_row))
+    plt.subplots_adjust(bottom=0, left=.01, right=.99, top=.90, hspace=.35)
+    for i in range(n_row * n_col):
+        plt.subplot(n_row, n_col, i + 1)
+        plt.imshow(images[i].reshape((h, w)), cmap=plt.cm.gray)
+        plt.title(titles[i], fontproperties=font)
+        plt.xticks(())
+        plt.yticks(())
+
+
+def title_pred(y_pred, y_test, target_names, i):
+    pred_name = target_names[y_pred[i]-1]
+    true_name = target_names[y_test[i]-1]
+    return 'predicted: %s\ntrue:      %s' % (pred_name, true_name)
+
+def title(y_test, target_names, i):
+    true_name = target_names[int(y_test[i])-1]
+    return true_name
+
+def plot_mse(X,y):
+    test_mse=[]
+    train_mse=[]
+
+    for n in range(1,X.shape[0]):
+        pca=PCA(n_components=n,svd_solver='randomized', whiten=True)
+        X_fit_pca=pca.fit(X).transform(X)
+
+        knc=KNC()
+        scorer='accuracy'
+        print(X_fit_pca.shape, y.shape)
+        knc_dict=cross_validate(knc,X_fit_pca,y,cv=5, scoring=scorer, return_train_score=True)
+
+        test_mse.append(knc_dict['test_score'].mean())
+        train_mse.append(knc_dict['train_score'].mean())
+
+    sns.set(style='darkgrid')
+    print(X.shape, len(test_mse), len(train_mse))
+
+    plt.plot(range(1,X.shape[0]),test_mse,'b-',label='test mse')
+    plt.plot(range(1,X.shape[0]),train_mse,'r-',label='train mse')
+    plt.xlabel('Dimensions')
+    plt.ylabel('MSE')
+
+    plt.legend()
+
+
+
+def load_samples(path, slen=120, names=['白菜','白梨','白萝卜','板栗','包菜','本地黑李','本地红提','本地黄瓜','菠萝','菜瓜','菜心','春菜']):
+    y = []
+    images = np.zeros((slen, 100, 100), dtype=np.float32) # (24, 100, 100)
+
+    i=0
+    f_fruits = open(path,'r')
+    for fruits in f_fruits:
+        img_path = path[:-4] + '/' + fruits.split(&quot; &quot;)[0]
+        img = Image.open(img_path).convert('L')		#get gray img
+        # shape_img = shape_index(img, sigma = 0.1)
+        # color_img = img_as_ubyte(color_img)			#change from float64 to uint8
+        images[i] = img
+        i+=1
+
+        label = fruits.split(&quot; &quot;)[1]
+        y.append(int(label.split(&quot;\n&quot;)[0]))
+
+    feature_color = images.reshape(len(images), -1) # (24, 10000)
+
+    return Bunch(data=feature_color, images=images,
+                 target=np.array(y), target_names=names)
+
+
+def with_pca(X_train, X_test, y_train, h=100, w=100):
+    ####################
+    # pca
+
+    n_components = 6
+
+    print(&quot;Extracting the top %d samples from %d samples&quot; % (n_components, X_train.shape[0]))
+    pca = PCA(n_components=n_components, svd_solver='randomized', whiten=True).fit(X_train)
+
+    images_pca_reshaped = pca.components_.reshape((n_components, h, w))
+
+    X_train_pca = pca.transform(X_train)
+    X_test_pca = pca.transform(X_test)
+
+    ####################
+    # grid search
+    print(&quot;Fitting the classifier to the training set&quot;)
+    t0 = time()
+    param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+                  'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train_pca, y_train)
+    print(&quot;done in %0.3fs&quot; % (time() - t0))
+    print(&quot;Best estimator found by grid search:&quot;)
+    print(clf.best_estimator_)
+
+    return clf, X_test_pca
+
+
+def with_lda(X_train, X_test, y_train, h=100, w=100):
+    ####################
+    # pca
+
+    n_components = 6
+
+    print(&quot;Extracting the top %d samples from %d samples&quot; % (n_components, X_train.shape[0]))
+    lda = LDA(n_components=n_components).fit(X_train, y_train)
+
+    # images_pca_reshaped = lda.components_.reshape((n_components, h, w))
+
+    X_train_pca = lda.transform(X_train)
+    X_test_pca = lda.transform(X_test)
+
+    ####################
+    # grid search
+    print(&quot;Fitting the classifier to the training set&quot;)
+    t0 = time()
+    param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+                  'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train_pca, y_train)
+    print(&quot;done in %0.3fs&quot; % (time() - t0))
+    print(&quot;Best estimator found by grid search:&quot;)
+    print(clf.best_estimator_)
+
+    return clf, X_test_pca
+
+def without_decomposition(X_train, y_train):
+    print(&quot;Fitting the classifier to the training set&quot;)
+    t0 = time()
+    param_grid = {'C': [1e3, 5e3, 1e4, 5e4, 1e5],
+                  'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1], }
+    clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'),
+                       param_grid, cv=5)
+    clf = clf.fit(X_train, y_train)
+    print(&quot;done in %0.3fs&quot; % (time() - t0))
+    print(&quot;Best estimator found by grid search:&quot;)
+    print(clf.best_estimator_)
+
+    return clf
+
+
+
+train_file = '../fruit_recognize_samples/train.txt'
+test_file = 'fruit_recognize_samples/test.txt'
+
+samples = load_samples(train_file)
+
+X = samples.data
+n_features = X.shape[1]
+
+y=samples.target
+target_names = samples.target_names
+n_classes = len(target_names)
+
+n_samples, h, w = samples.images.shape
+
+print(&quot;Total dataset size:&quot;)
+print(&quot;n_samples: %d&quot; % n_samples)
+print(&quot;n_features: %d&quot; % n_features)
+print(&quot;n_classes: %d&quot; % n_classes)
+
+
+X=StandardScaler().fit(X).transform(X)
+
+#plot_mse(X,y)
+#plt.show()
+
+####################
+# split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42)
+
+
+# plot_mse(X_train,y_train)
+
+############################################################
+# with PCA
+
+t0 = time()
+clf, X_test_pca = with_pca(X_train, X_test, y_train)
+
+# predict
+
+print(&quot;Predicting fruits on the test set with pca&quot;)
+t0 = time()
+y_pred = clf.predict(X_test_pca)
+print(&quot;predict done in %0.3fs&quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+# print(confusion_matrix(y_test, y_pred, labels=range(n_classes)))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+print(&quot;\n\n\n\n\n\n&quot;)
+
+############################################################
+# with LDA
+
+t0 = time()
+clf, X_test_pca = with_lda(X_train, X_test, y_train)
+
+# predict
+
+print(&quot;Predicting fruits on the test set with lda&quot;)
+t0 = time()
+y_pred = clf.predict(X_test_pca)
+print(&quot;predict done in %0.3fs&quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+# print(confusion_matrix(y_test, y_pred, labels=range(n_classes)))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+print(&quot;\n\n\n\n\n\n&quot;)
+
+############################################################
+# without PCA
+
+t0 = time()
+clf = without_decomposition(X_train, y_train)
+print(&quot;without pca done in %0.3fs&quot; % (time() - t0))
+
+# predict
+
+print(&quot;Predicting fruits on the test set without pca&quot;)
+t0 = time()
+y_pred = clf.predict(X_test)
+print(&quot;predict done in %0.3fs&quot; % (time() - t0))
+
+print(y_test)
+print(y_pred)
+print(classification_report(y_test, y_pred, target_names=target_names))
+
+titles = [title_pred(y_pred, y_test, target_names, i) for i in range(len(y_test))]
+plot_gallery(X_test, titles, n_row=3, n_col=10)
+############################################################
+
+
+
+plt.show()
+
+</code></pre>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+<li><a href="https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py">https://scikit-learn.org/stable/auto_examples/applications/plot_face_recognition.html#sphx-glr-auto-examples-applications-plot-face-recognition-py</a></li>
+</ul>
+
+    </div>
+
+    
+    
+<div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">cheio</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">2019-01-25</span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/machine-learning/">Machine Learning</a>
+          
+          <a href="/tags/svm/">SVM</a>
+          
+          <a href="/tags/pca/">PCA</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/note/rename-dir-gen-label/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Rename dir &amp; Gen label</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+          <a class="next" href="/post/deutsch/deutsch-ubungen/">
+            <span class="next-text nav-default">Deutsch Ubungen</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+    
+
+  
+
+  
+
+  
+  </article>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:achillescheio@gmail.com" rel="me" class="iconfont icon-email" title="email"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-twitter" title="twitter"></a>
+      <a href="https://github.com/cheioKID" rel="me" class="iconfont icon-github" title="github"></a>
+      <a href="https://weibo.com/u/3626582502" rel="me" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="http://localhost:1313" rel="me" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://cheioKID.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">cheio</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+
+
+
+
+
+</body>
+</html>

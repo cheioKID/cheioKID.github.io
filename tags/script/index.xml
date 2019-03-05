@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Script on Have a nice day, cheio</title>
+    <link>https://cheioKID.github.io/tags/script/</link>
+    <description>Recent content in Script on Have a nice day, cheio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 05 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://cheioKID.github.io/tags/script/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rename dir &amp; Gen label</title>
+      <link>https://cheioKID.github.io/post/note/rename-dir-gen-label/</link>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/note/rename-dir-gen-label/</guid>
+      <description>Rename dir 把train目录下的所有存储样本的文件夹命名为0,1,2,3…的形式，然后把实际类别名存储在target_names.txt中
+#coding=utf-8 import os,sys def rename_dir(txt_file = &amp;quot;target_names.txt&amp;quot;, prefix = &#39;&#39;): path=&#39;.&#39; dir_path = path + &#39;/&#39; + txt_file[:-4] out = [] i = 0 for dirpath,dirnames,filenames in os.walk(path): if(len(dirnames)) &amp;gt;= 10: for name in dirnames: os.rename(dirpath+&#39;/&#39;+name,dirpath+&#39;/&#39;+str(i)) i += 1 out += &amp;quot;&#39;&amp;quot; + name + &amp;quot;&#39;,&amp;quot; with open(txt_file, &#39;w&#39;) as target: target.writelines(out) print(&amp;quot;----------------\n&amp;quot; &amp;quot;write(overwrite) done&amp;quot;) txt_file = &amp;quot;test.txt&amp;quot; rename_dir() # if use prefix, the &#39;/&#39; is need  Gen labels 遍历目录下按类别存储的所有样本，得到样本和对应的类别，其中类别从0开始编号，结果存在train.</description>
+    </item>
+    
+  </channel>
+</rss>

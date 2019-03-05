@@ -52,6 +52,7 @@
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cheioKID.github.io/" />
+<meta property="og:updated_time" content="2017-03-29T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Have a nice day, cheio">
 <meta itemprop="description" content="">
@@ -133,48 +134,28 @@
     
       <article class="post bg-white">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/data-mining/dbscan/"></a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/cs/leetcode-sql/">LeetCode mySql</a></h1>
     <div class="post-meta">
-      <span class="post-time"> 0001-01-01 </span>
-      
-      <span class="more-meta"> 739 words </span>
-      <span class="more-meta"> 4 min read </span>
+      <span class="post-time"> 2017-03-29 </span>
+      <div class="post-category">
+          
+            <a href="/categories/sql/"> SQL </a>
+          
+        </div>
+      <span class="more-meta"> 346 words </span>
+      <span class="more-meta"> 2 min read </span>
     </div>
   </header>
   
   <div class="post-content">
     
     <div class="post-summary">
-      ##A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise
- Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements.
+      175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.
     </div>
     <div class="read-more">
-      <a href="/post/data-mining/dbscan/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-    
-      <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/deutsch/deutsch_grammer/"></a></h1>
-    <div class="post-meta">
-      <span class="post-time"> 0001-01-01 </span>
-      
-      <span class="more-meta"> 692 words </span>
-      <span class="more-meta"> 4 min read </span>
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      ####换音与变音 元音只在第二人称及第三人称单数时发生变化。 并非所有带e和a的动词在变位时都会发生元音变化：
-元音无变化 ich gehe - du gehst, ich lache - du lachst …  #####换音动词e-i | e | i | | &mdash;&mdash;&mdash;&mdash;- | &mdash;&mdash;&mdash;&mdash;- | | emptehlen | er empfiehlt | | essen | er sst | | geben | er gibt | | fernsehen | er sieht fern | | helfen | er hilft | | lesen | er liest | | mitnehmen | er nimmt mit | | nehmen | er nimmt | | sehen | er sieht | | sprechen | er spricht | | vergessen | er vergisst | | werden | er wird | |||
-    </div>
-    <div class="read-more">
-      <a href="/post/deutsch/deutsch_grammer/" class="read-more-link">Read more</a>
+      <a href="/post/cs/leetcode-sql/" class="read-more-link">Read more</a>
     </div>
     
   </div>

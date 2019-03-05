@@ -19,9 +19,9 @@
 
 
 <meta name="author" content="cheio" />
-  <meta name="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
-176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
-177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc." />
+  <meta name="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc." />
 
 
 
@@ -51,31 +51,31 @@
 
 
 <meta property="og:title" content="LeetCode mySql" />
-<meta property="og:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
-176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
-177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc." />
+<meta property="og:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://cheioKID.github.io/post/cs/leetcode-sql/" /><meta property="article:published_time" content="2017-03-29T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2017-03-29T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="LeetCode mySql">
-<meta itemprop="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
-176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
-177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.">
+<meta itemprop="description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.">
 
 
 <meta itemprop="datePublished" content="2017-03-29T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-03-29T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="348">
+<meta itemprop="wordCount" content="346">
 
 
 
 <meta itemprop="keywords" content="mySql,Database Principles," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="LeetCode mySql"/>
-<meta name="twitter:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖 ```
-176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);  子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```
-177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc."/>
+<meta name="twitter:description" content="175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
+ 176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
+ 177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -155,7 +155,7 @@
               <a href="/categories/sql/"> SQL </a>
             
           </div>
-        <span class="more-meta"> 348 words </span>
+        <span class="more-meta"> 346 words </span>
         <span class="more-meta"> 2 min read </span>
       </div>
     </header>
@@ -201,7 +201,8 @@ LEFT JOIN address ON person.personID = address.personID;
 </code></pre>
 
 <blockquote>
-<p>左外连接，除去address中person没有的元祖 ```</p>
+<p>左外连接，除去address中person没有的元祖</p>
+</blockquote>
 
 <h2 id="176">176</h2>
 
@@ -210,7 +211,9 @@ FROM Employee
 WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);
 </code></pre>
 
-<p>子查询得到最大值，外层查询的最大值满足小于子查询的最大值 ```</p>
+<blockquote>
+<p>子查询得到最大值，外层查询的最大值满足小于子查询的最大值</p>
+</blockquote>
 
 <h2 id="177">177</h2>
 
@@ -224,6 +227,7 @@ BEGIN
 END 
 </code></pre>
 
+<blockquote>
 <p>和rank那题思路类似，如果表自身连接，有n条不重复的记录大于等于某个值，那么某个值就是第n高的记录，外层查询的范围是不相关子查询的结果，注意列的别名必须匹配外层查询的字段，而且子查询返回的表必须有别名才能在外层查询中查询，否则会报错</p>
 </blockquote>
 
@@ -401,11 +405,6 @@ GROUP BY request_at
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/creating-a-new-theme/">
-            <span class="next-text nav-default">Creating a New Theme</span>
-            <span class="prev-text nav-mobile">Next</span>
-            <i class="iconfont icon-right"></i>
-          </a>
       </nav>
     </footer>
     

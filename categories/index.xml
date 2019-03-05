@@ -30,11 +30,20 @@
     </item>
     
     <item>
-      <title>Development</title>
-      <link>https://cheioKID.github.io/categories/development/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      <title>Data Mining</title>
+      <link>https://cheioKID.github.io/categories/data-mining/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://cheioKID.github.io/categories/development/</guid>
+      <guid>https://cheioKID.github.io/categories/data-mining/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Deutsch</title>
+      <link>https://cheioKID.github.io/categories/deutsch/</link>
+      <pubDate>Thu, 24 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/categories/deutsch/</guid>
       <description></description>
     </item>
     
@@ -44,24 +53,6 @@
       <pubDate>Tue, 21 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/categories/git/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang</title>
-      <link>https://cheioKID.github.io/categories/golang/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://cheioKID.github.io/categories/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Index</title>
-      <link>https://cheioKID.github.io/categories/index/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/categories/index/</guid>
       <description></description>
     </item>
     
@@ -77,7 +68,7 @@
     <item>
       <title>Machine Learning</title>
       <link>https://cheioKID.github.io/categories/machine-learning/</link>
-      <pubDate>Tue, 22 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/categories/machine-learning/</guid>
       <description></description>
@@ -95,7 +86,7 @@
     <item>
       <title>Note</title>
       <link>https://cheioKID.github.io/categories/note/</link>
-      <pubDate>Mon, 21 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/categories/note/</guid>
       <description></description>
@@ -107,15 +98,6 @@
       <pubDate>Wed, 28 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/categories/opencv/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Shortcodes</title>
-      <link>https://cheioKID.github.io/categories/shortcodes/</link>
-      <pubDate>Sun, 04 Mar 2018 16:01:23 +0800</pubDate>
-      
-      <guid>https://cheioKID.github.io/categories/shortcodes/</guid>
       <description></description>
     </item>
     
