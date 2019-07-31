@@ -30,6 +30,72 @@
     </item>
     
     <item>
+      <title>Die Harzreise Ⅰ Prolog</title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</link>
+      <pubDate>Wed, 31 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;die-harzreise&#34;&gt;Die Harzreise&lt;/h1&gt;
+
+&lt;h2 id=&#34;von-heinrich-heine&#34;&gt;von Heinrich Heine&lt;/h2&gt;
+
+&lt;p&gt;Schwarze Röcke, seidne Strümpfe,&lt;/p&gt;
+
+&lt;p&gt;Weiße, höfliche Manschetten,&lt;/p&gt;
+
+&lt;p&gt;Sanfte Reden, Embrassieren –&lt;/p&gt;
+
+&lt;p&gt;Ach, wenn sie nur Herzen hätten!&lt;/p&gt;
+
+&lt;p&gt;黑裙，丝质长筒袜，礼貌的白色袖口，温和的言语，令人害羞。啊，如果他们出于真心！&lt;/p&gt;
+
+&lt;p&gt;Herzen in der Brust, und Liebe,&lt;/p&gt;
+
+&lt;p&gt;Warme Liebe in dem Herzen –&lt;/p&gt;
+
+&lt;p&gt;Ach, mich tötet ihr Gesinge&lt;/p&gt;
+
+&lt;p&gt;Von erlognen Liebesschmerzen.&lt;/p&gt;
+
+&lt;p&gt;胸腔内的心，和爱，心中温暖的爱。啊，她的歌声杀死了难以捉摸的爱之痛中的我。&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Wo die frommen Hütten stehen,&lt;/p&gt;
+
+&lt;p&gt;Wo die Brust sich frei erschließet&lt;/p&gt;
+
+&lt;p&gt;Und die freien Lüfte wehen.&lt;/p&gt;
+
+&lt;p&gt;我想爬上那座山，那里有可望而不可及的简陋木屋，那里我将顺畅地呼吸，自由的风吹拂着。&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Wo die dunklen Tannen ragen,&lt;/p&gt;
+
+&lt;p&gt;Bäche rauschen, Vögel singen,&lt;/p&gt;
+
+&lt;p&gt;Und die stolzen Wolken jagen.&lt;/p&gt;
+
+&lt;p&gt;我想爬上那座山，那里黑色冷杉矗立，小溪潺流，小鸟歌唱，辉煌的云彩掠过。&lt;/p&gt;
+
+&lt;p&gt;Lebet wohl, ihr glatten Säle,&lt;/p&gt;
+
+&lt;p&gt;Glatte Herren, glatte Frauen!&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Lachend auf euch niederschauen.&lt;/p&gt;
+
+&lt;p&gt;再会，安静的听众，安静的先生，安静的女士，我想爬上那座山，笑着俯视你们。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Rename dir &amp; Gen label</title>
       <link>https://cheioKID.github.io/post/note/rename-dir-gen-label/</link>
       <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
@@ -3520,6 +3586,121 @@ GROUP BY request_at
 &lt;p&gt;先两表等值连接，满足条件的记录中分组计算取消比率，可以用sum函数（或者也可以用count(if())但是没试过），得出cancalled的记录数量，除以status的总数就是取消比率&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-2/</guid>
+      
+        <description>&lt;p&gt;Schwarze Röcke, seidne Strümpfe,&lt;/p&gt;
+
+&lt;p&gt;Weiße, höfliche Manschetten,&lt;/p&gt;
+
+&lt;p&gt;Sanfte Reden, Embrassieren –&lt;/p&gt;
+
+&lt;p&gt;Ach, wenn sie nur Herzen hätten!&lt;/p&gt;
+
+&lt;p&gt;黑裙，丝质长筒袜，礼貌的白色袖口，温和的言语，令人害羞。啊，如果他们出于真心！&lt;/p&gt;
+
+&lt;p&gt;Herzen in der Brust, und Liebe,&lt;/p&gt;
+
+&lt;p&gt;Warme Liebe in dem Herzen –&lt;/p&gt;
+
+&lt;p&gt;Ach, mich tötet ihr Gesinge&lt;/p&gt;
+
+&lt;p&gt;Von erlognen Liebesschmerzen.&lt;/p&gt;
+
+&lt;p&gt;胸腔内的心，和爱，心中温暖的爱。啊，她的歌声杀死了难以捉摸的爱之痛中的我。&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Wo die frommen Hütten stehen,&lt;/p&gt;
+
+&lt;p&gt;Wo die Brust sich frei erschließet&lt;/p&gt;
+
+&lt;p&gt;Und die freien Lüfte wehen.&lt;/p&gt;
+
+&lt;p&gt;我想爬上那座山，那里有可望而不可及的简陋木屋，那里我将顺畅地呼吸，自由的风吹拂着。&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Wo die dunklen Tannen ragen,&lt;/p&gt;
+
+&lt;p&gt;Bäche rauschen, Vögel singen,&lt;/p&gt;
+
+&lt;p&gt;Und die stolzen Wolken jagen.&lt;/p&gt;
+
+&lt;p&gt;我想爬上那座山，那里黑色冷杉矗立，小溪潺流，小鸟歌唱，辉煌的云彩掠过。&lt;/p&gt;
+
+&lt;p&gt;Lebet wohl, ihr glatten Säle,&lt;/p&gt;
+
+&lt;p&gt;Glatte Herren, glatte Frauen!&lt;/p&gt;
+
+&lt;p&gt;Auf die Berge will ich steigen,&lt;/p&gt;
+
+&lt;p&gt;Lachend auf euch niederschauen.&lt;/p&gt;
+
+&lt;p&gt;再会，安静的听众，安静的先生，安静的女士，我想爬上那座山，笑着俯视你们。&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-3/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-4/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-5/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-6/</guid>
+      
+        <description></description>
+      
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</guid>
+      
+        <description></description>
       
     </item>
     

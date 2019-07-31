@@ -6,10 +6,34 @@
     <description>Recent content in Posts on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 05 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Die Harzreise Ⅰ Prolog</title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</link>
+      <pubDate>Wed, 31 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</guid>
+      <description>Die Harzreise von Heinrich Heine Schwarze Röcke, seidne Strümpfe,
+Weiße, höfliche Manschetten,
+Sanfte Reden, Embrassieren –
+Ach, wenn sie nur Herzen hätten!
+黑裙，丝质长筒袜，礼貌的白色袖口，温和的言语，令人害羞。啊，如果他们出于真心！
+Herzen in der Brust, und Liebe,
+Warme Liebe in dem Herzen –
+Ach, mich tötet ihr Gesinge
+Von erlognen Liebesschmerzen.
+胸腔内的心，和爱，心中温暖的爱。啊，她的歌声杀死了难以捉摸的爱之痛中的我。
+Auf die Berge will ich steigen,
+Wo die frommen Hütten stehen,
+Wo die Brust sich frei erschließet
+Und die freien Lüfte wehen.
+我想爬上那座山，那里有可望而不可及的简陋木屋，那里我将顺畅地呼吸，自由的风吹拂着。
+Auf die Berge will ich steigen,</description>
+    </item>
     
     <item>
       <title>Rename dir &amp; Gen label</title>
@@ -281,6 +305,76 @@ sudo update-grub sudo reboot  </description>
       <description>175 SELECT FirstName, LAStName, City, State FROM person LEFT JOIN address ON person.personID = address.personID;   左外连接，除去address中person没有的元祖
  176 SELECT max(Salary) AS SecondHighestSalary FROM Employee WHERE salary NOT IN (SELECT max(Salary) FROMEmployee);   子查询得到最大值，外层查询的最大值满足小于子查询的最大值
  177 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT BEGIN RETURN(SELECT DISTINCT c.salary FROM(SELECT a.salary AS salary, (SELECT COUNT(DISTINCT b.salary) FROM employee AS bWHERE b.salary &amp;gt;= a.salary) AS _row FROM employee AS a) AS c WHEREc.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-2/</guid>
+      <description>Schwarze Röcke, seidne Strümpfe,
+Weiße, höfliche Manschetten,
+Sanfte Reden, Embrassieren –
+Ach, wenn sie nur Herzen hätten!
+黑裙，丝质长筒袜，礼貌的白色袖口，温和的言语，令人害羞。啊，如果他们出于真心！
+Herzen in der Brust, und Liebe,
+Warme Liebe in dem Herzen –
+Ach, mich tötet ihr Gesinge
+Von erlognen Liebesschmerzen.
+胸腔内的心，和爱，心中温暖的爱。啊，她的歌声杀死了难以捉摸的爱之痛中的我。
+Auf die Berge will ich steigen,
+Wo die frommen Hütten stehen,
+Wo die Brust sich frei erschließet
+Und die freien Lüfte wehen.
+我想爬上那座山，那里有可望而不可及的简陋木屋，那里我将顺畅地呼吸，自由的风吹拂着。
+Auf die Berge will ich steigen,
+Wo die dunklen Tannen ragen,</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-3/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</guid>
+      <description></description>
     </item>
     
   </channel>

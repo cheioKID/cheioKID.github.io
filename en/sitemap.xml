@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</loc>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/note/rename-dir-gen-label/</loc>
     <lastmod>2019-03-05T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -157,6 +164,42 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-2/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-3/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-4/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-5/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-6/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/algorithm/</loc>
     <lastmod>2018-03-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -256,14 +299,14 @@
   
   <url>
     <loc>https://cheioKID.github.io/tags/deutsch/</loc>
-    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cheioKID.github.io/categories/deutsch/</loc>
-    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -291,7 +334,7 @@
   
   <url>
     <loc>https://cheioKID.github.io/tags/german/</loc>
-    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -334,6 +377,13 @@
   <url>
     <loc>https://cheioKID.github.io/</loc>
     <lastmod>2019-01-22T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/heinrich-heine/</loc>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -438,7 +488,7 @@
   
   <url>
     <loc>https://cheioKID.github.io/post/</loc>
-    <lastmod>2019-03-05T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
