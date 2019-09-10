@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Have a nice day, cheio</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 25 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Sep 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://cheioKID.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Afterglow</title>
+      <link>https://cheioKID.github.io/tags/afterglow/</link>
+      <pubDate>Tue, 10 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/afterglow/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Algorithm</title>
@@ -219,6 +228,15 @@
     </item>
     
     <item>
+      <title>Lyric</title>
+      <link>https://cheioKID.github.io/tags/lyric/</link>
+      <pubDate>Tue, 10 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://cheioKID.github.io/tags/lyric/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Machine Learning</title>
       <link>https://cheioKID.github.io/tags/machine-learning/</link>
       <pubDate>Fri, 25 Jan 2019 00:00:00 +0000</pubDate>
@@ -230,7 +248,7 @@
     <item>
       <title>Music</title>
       <link>https://cheioKID.github.io/tags/music/</link>
-      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 10 Sep 2019 00:00:00 +0000</pubDate>
       
       <guid>https://cheioKID.github.io/tags/music/</guid>
       <description></description>

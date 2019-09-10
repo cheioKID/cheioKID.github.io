@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/post/music/afterglow/</loc>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-1/</loc>
     <lastmod>2019-07-31T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -197,6 +204,13 @@
     <loc>https://cheioKID.github.io/post/deutsch/die-harzreise-7/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://cheioKID.github.io/tags/afterglow/</loc>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -417,6 +431,13 @@
   </url>
   
   <url>
+    <loc>https://cheioKID.github.io/tags/lyric/</loc>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://cheioKID.github.io/tags/machine-learning/</loc>
     <lastmod>2019-01-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -432,14 +453,14 @@
   
   <url>
     <loc>https://cheioKID.github.io/tags/music/</loc>
-    <lastmod>2018-10-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cheioKID.github.io/categories/music/</loc>
-    <lastmod>2018-10-16T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -488,7 +509,7 @@
   
   <url>
     <loc>https://cheioKID.github.io/post/</loc>
-    <lastmod>2019-07-31T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -537,7 +558,7 @@
   
   <url>
     <loc>https://cheioKID.github.io/tags/</loc>
-    <lastmod>2018-03-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
